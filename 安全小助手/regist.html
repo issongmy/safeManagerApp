@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-content {
+				margin-top: 10px;
+			}
+			
+			#timer {
+				color: rgb(169, 169, 169);
+				margin-top: 30px;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div id="main" class="mui-content mui-scroll-wrapper">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>手机</label>
+					<input id='phone' type="number" class="mui-input-clear mui-input" placeholder="请输入手机号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
+					<label>确认</label>
+					<input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="请确认密码">
+				</div>
+				<div class="mui-input-row">
+					<label>公司</label>
+					<select id='company_select'>
+						<option value="A">公司A</option>
+						<option value="B">公司B</option>
+						<option value="C">公司C</option>
+						<option value="D">公司D</option>
+						<option value="E">公司E</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>验证</label>
+					<input id='confirm_code' type="text" class="mui-input-clear mui-input" placeholder="请输入验证码">
+				</div>
+			</form>
+			<div id='timer'></div>
+			<div class="mui-content-padded">
+				<button id='send' class="mui-btn mui-btn-block mui-btn-primary" onclick="send()">获取验证码</button>
+				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary" onclick="regist()">注册</button>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/bmob-min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/md5.min.js"></script>
+		<script src="js/base64.js"></script>
+		<script>
+			//设置一个全局的变量，便于保存验证码
+			mark = false;
+			var code;
+			var phone = document.getElementById("phone");
+			var timer = document.getElementById('timer');
+			var company_selecter = document.getElementById('company_select');
+
+			function createCode() {
+				//首先默认code为空字符串
+				code = '';
+				//设置长度，这里看需求，我这里设置了4
+				var codeLength = 6;
+				var codeV = document.getElementById('confirm_code');
+				//设置随机字符
+				var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+				//循环codeLength 我设置的4就是循环4次
+				for(var i = 0; i < codeLength; i++) {
+					//设置随机数范围,这设置为0 ~ 36
+					var index = Math.floor(Math.random() * 10);
+					//字符串拼接 将每次随机的字符 进行拼接
+					code += random[index];
+				}
+				//将拼接好的字符串赋值给展示的Value
+				//      codeV.value = code;
+			}
+
+			//下面就是判断是否== 的代码，无需解释
+			function validate() {
+				var oValue = document.getElementById('confirm_code').value.toUpperCase();
+				if(oValue == 0) {
+					alert('请输入验证码');
+					return false;
+				} else if(oValue != code) {
+					alert('验证码不正确，请重新输入');
+					return false;
+				} else {
+					return true;
+				}
+				return false;
+			}
+
+			function send() {
+				if(phone.value.length == 0) {
+					plus.nativeUI.toast('请输入手机号');
+					return;
+				} else if(phone.value.length != 11) {
+					plus.nativeUI.toast('手机号格式不正确');
+				} else {
+					createCode();
+					var b = new Base64();
+					var confirm_code = document.getElementById("confirm_code");
+					var success = function(response) {
+						response = JSON.stringify(response);
+						mark = true;
+						settime(document.getElementById('send'));
+					};
+					var url = 'https://app.cloopen.com:8883';
+					url = url + '/2013-12-26/Accounts/8aaf07085c1ab70d015c2f33c41c04f9/SMS/TemplateSMS?sig='
+					var date = new Date();
+					var month = date.getMonth() + 1;
+					var strDate = date.getDate();
+					if(month >= 1 && month <= 9) {
+						month = "0" + month;
+					}
+					if(strDate >= 0 && strDate <= 9) {
+						strDate = "0" + strDate;
+					}
+					var currentdate = date.getFullYear() + month + strDate +
+						date.getHours() + date.getMinutes() +
+						date.getSeconds();
+					var rawStringHash = '8aaf07085c1ab70d015c2f33c41c04f9' + 　'956d3cbb12fb40dfa291ca61864fece1' + currentdate;
+					var rawStringBase = '8aaf07085c1ab70d015c2f33c41c04f9' + ':' + currentdate;
+					var hash = md5(rawStringHash).toLocaleUpperCase();
+					//				plus.nativeUI.toast(hash);
+					var auth = b.encode(rawStringBase);
+					//				plus.nativeUI.toast(auth);
+					url = url + hash;
+					console.log(url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+						'Authorization': auth
+					};
+					var data = {
+						'to': phone.value,
+						'appId': "8aaf07085c1ab70d015c2f33c4e404ff",
+						'templateId': "1",
+						'datas': [code, 1]
+					};
+					mui.ajax(url, {
+						data: data,
+						dataType: 'json',
+						type: 'post',
+						timeout: '2000',
+						success: success,
+						error: function(xhr, type, errorThrown) {
+							console.log(type);
+							plus.nativeUI.toast(type);
+						},
+						headers: headers
+					});
+				}
+			}
+
+			document.getElementById("main").addEventListener("swipeleft", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			function regist() {
+				var password = document.getElementById("password");
+				var passwordConfirmBox = document.getElementById('password_confirm');
+				var confirm_code = document.getElementById('confirm_code');
+				if(password.length < 6) {
+					plus.nativeUI.toast("密码最短6位");
+				} else if(password.value === "") {
+					plus.nativeUI.toast("密码不能为空");
+				} else if(passwordConfirmBox.value != password.value) {
+					plus.nativeUI.toast("两次密码不一致");
+				} else if(phone.value.length !== 11) {
+					plus.nativeUI.toast("手机号格式有误");
+				} else if(!validate()) {
+					plus.nativeUI.toast('验证码错误');
+				} else {
+					Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
+					var User_company = Bmob.Object.extend("User_company");
+					var user_company = new User_company();
+					user_company.set("password", password.value);
+					user_company.set("user-company", company_selecter.value);
+					plus.nativeUI.toast(company_selecter.value);
+					user_company.set("phone", phone.value);
+					user_company.save(null, {
+						success: function(object) {
+							plus.nativeUI.toast("注册成功");
+							mui.openWindow({
+								url: "login.html",
+								id: "login.html"
+							})
+						},
+						error: function(model, error) {
+							plus.nativeUI.toast("注册失败");
+						}
+					});
+				}
+			}
+
+			var countdown = 60;
+			//		var s = 60, t;
+			//		function times(val){
+			//			val.setAttribute('disabled', true);
+			// 			s--;
+			//			
+			//			t = setTimeout('times', 1000);
+			//			if ( s <= 0 ){
+			// 			s = 60;
+			// 			clearTimeout(t);
+			//			}
+			//		}
+			function settime(val) {
+				if(mark) {
+					if(countdown == 0) {
+						val.removeAttribute("disabled");
+						val.value = "获取验证码";
+						countdown = 60;
+						mark = false;
+						timer.innerHTML = '';
+					} else {
+						val.setAttribute("disabled", true);
+						timer.innerHTML = "重新发送(" + countdown + ")";
+						countdown--;
+					}
+					setTimeout(function() {
+						settime(val);
+					}, 1000)
+				}
+			}
+		</script>
+
+		<body>
+
+</html>

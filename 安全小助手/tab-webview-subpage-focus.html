@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title">关注</h1>
+		</header>-->
+		<div id="main" class="mui-content mui-scroll-wrapper">
+		</div>
+		<script src="js/bmob-min.js"></script>
+		<script src="js/bmob.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: false, //默认为false，不监听
+					release: false //默认为false，不监听
+				}
+			});
+			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					backButtonPress++;
+					if(backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
+				};
+				var self = plus.webview.currentWebview();
+				company = self.company;
+				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
+				var Danger = Bmob.Object.extend("Hiddendanger");
+				var query = new Bmob.Query(Danger);
+				query.find("danger_class", "3");
+				query.find({
+					success: function(results) {
+						for(var i = 0; i < results.length; i++) {
+							var object = results[i];
+							if(object !== undefined)
+								addDanger(object.get("name"), object.get("proName"));
+						}
+					},
+					error: function(error) {
+						plus.nativeUI.toast("初始化失败");
+					}
+				});
+
+			});
+
+			//左右滑动事件
+			document.getElementById("main").addEventListener("swipeleft", function() {
+				mui.fire(plus.webview.getWebviewById("main"), "focus_left");
+			});
+			document.getElementById("main").addEventListener("swiperight", function() {
+				mui.fire(plus.webview.getWebviewById("main"), "focus_right");
+			});
+
+			window.addEventListener('refresh', function(event) {
+				location.reload();
+			});
+
+			function addDanger(name, proName) {
+				var ul = document.getElementById("main");
+				var li = document.createElement("div");
+				var con = document.createElement("div");
+				var footer = document.createElement("div");
+				var a = document.createElement("a");
+				var con_inner = document.createElement("div");
+				li.setAttribute("class", "mui-card");
+				con.setAttribute("class", "mui-card-content");
+				footer.setAttribute("class", "mui-card-footer");
+				a.setAttribute("class", "mui-card-link");
+				a.innerHTML = proName;
+				footer.appendChild(a);
+				con_inner.setAttribute("class", "mui-card-content-inner");
+				con_inner.setAttribute("id", "hidden_danger_data");
+				con_inner.innerHTML = name;
+				con.appendChild(con_inner);
+				li.appendChild(con);
+				li.appendChild(footer);
+				ul.appendChild(li);
+			}
+		</script>
+	</body>
+
+</html>

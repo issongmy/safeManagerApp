@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-content {
+				margin-top: 30px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 30px;
+				padding: 10px;
+			}
+			
+			label {
+				font-family: "楷体", "微软雅黑";
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">项目信息</h1>
+		</header>
+		<div id="main" class="mui-content mui-scroll-wrapper">
+			<div class="mui-content">
+				<div class="mui-card">
+					<div class="mui-card-content">
+						<div id="file" class="mui-card-content-inner">
+							安全检查常备资料
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-content">
+				<div class="mui-card">
+					<div class="mui-card-content">
+						<div id="table" class="mui-card-content-inner">
+							安全隐患排查处置表
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/bmob-min.js"></script>
+		<script src="js/bomb.js"></script>
+		<script src="js/bmobSocketIo.js"></script>
+		<script type="text/javascript">
+			var queryObject;
+			var project_name;
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				project_name = self.project_name;
+				var old_back = mui.back;
+				mui.back = function() {
+					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					plus.webview.currentWebview().close();
+					old_back();
+				};
+			});
+
+			document.getElementById("main").addEventListener("swipeleft", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("file").addEventListener('tap', function() {
+				mui.openWindow({
+					url: "safe_info.html",
+					id: "safe_info",
+					extras: {
+						project_name: project_name
+					}
+				});
+			});
+			document.getElementById("table").addEventListener('tap', function() {
+				mui.openWindow({
+					url: "safe_handle_table.html",
+					id: "safe_handle_table",
+					extras: {
+						project_name: project_name
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			body {
+				background: white;
+			}
+			
+			#icon {
+				position: fixed;
+				right: 10px;
+				bottom: 20px;
+			}
+			
+			p {
+				color: blue;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="icon">
+			<p>安全小助手</p>
+		</div>
+		<script src="js/bmob-min.js"></script>
+		<script src="js/bmob.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script>
+			setTimeout("skip()", 1000);
+			
+			function skip() {
+				ph = localStorage.getItem("phone");
+				pa = localStorage.getItem("pass");
+				var page_main = mui.preload({ 
+					url:"tab-webview-main.html", 
+				    id:"main",//默认使用当前页面的url作为id 
+					});
+				var page_login = mui.preload({ 
+					url:"login.html", 
+				    id:"login",//默认使用当前页面的url作为id 
+					});
+				confirm_auto(ph, pa);
+				
+			}
+			
+
+			
+			function confirm_auto(ph, pa) {
+				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
+				var User_company = Bmob.Object.extend("User_company");
+				var query = new Bmob.Query(User_company);
+				query.equalTo("phone", ph)
+				query.find({
+					success: function(results) {
+						var object = results[0];
+						if(object == null){
+							mui.openWindow({
+								url: "login.html",
+								id: "login"
+							});
+							return;
+						}
+						if(object.get("password") === pa) {
+							localStorage.setItem("phone", ph);
+							localStorage.setItem("pass", pa);
+							mui.openWindow({
+								url: "tab-webview-main.html",
+								id: "main",
+								extras: {
+									phonefl: ph,
+									companyfl: object.get("user-company")
+								}
+							});
+						} else {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+							});
+						}
+						plus.webview.currentWebview().close();
+					},
+					error: function(error) {
+						plus.nativeUI.toast("账号或密码错误");
+					}
+				});
+			}	
+		</script>
+	</body>
+
+</html>

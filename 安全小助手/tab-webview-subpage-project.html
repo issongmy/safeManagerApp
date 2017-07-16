@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello 家政帮</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main" class="mui-content mui-scroll-wrapper">
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/bomb.js"></script>
+		<script src="js/bmob-min.js"></script>
+		<script>
+			var company;
+			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					backButtonPress++;
+					if(backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
+				};
+				var self = plus.webview.currentWebview();
+				company = self.company;
+				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
+				var Project = Bmob.Object.extend("Project");
+				var query = new Bmob.Query(Project);
+				query.find("user-company", company);
+				query.find({
+					success: function(results) {
+						for(var i = 0; i < results.length; i++) {
+							var object = results[i];
+							if(object !== undefined)
+								addProject(object.get("proName"));
+						}
+					},
+					error: function(error) {
+						plus.nativeUI.toast("初始化失败");
+					}
+				});
+
+			});
+
+			mui.init({
+				swipeBack: false,
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: false, //默认为false，不监听
+					release: false //默认为false，不监听
+				}
+			});
+
+			mui('.mui-content').on('tap', '.mui-card', function(e) {
+				var node = this.childNodes[0].childNodes[0];
+				console.log(node);
+				var name = node.innerHTML;
+				mui.openWindow({
+					url: "project_content.html",
+					id: "project_content",
+					extras: {
+						project_name: name.replace(/^\s+|\s+$/g, "")
+					}
+				});
+			});
+
+			//左右滑动事件
+			document.getElementById("main").addEventListener("swipeleft", function() {
+				mui.fire(plus.webview.getWebviewById("main"), "project_left");
+			});
+			document.getElementById("main").addEventListener("swiperight", function() {
+				mui.fire(plus.webview.getWebviewById("main"), "project_right");
+			});
+
+			function addProject(proName) {
+				var ul = document.getElementById("main");
+				var li = document.createElement("div");
+				var con = document.createElement("div");
+				var con_inner = document.createElement("div");
+				li.setAttribute("class", "mui-card");
+				con.setAttribute("class", "mui-card-content");
+				con_inner.setAttribute("class", "mui-card-content-inner");
+				con_inner.setAttribute("id", "project");
+				con_inner.innerHTML = proName;
+				con.appendChild(con_inner);
+				li.appendChild(con);
+				ul.appendChild(li);
+			}
+		</script>
+
+	</body>
+
+</html>
