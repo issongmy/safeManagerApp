@@ -34,21 +34,24 @@
 			setTimeout("skip()", 1000);
 			
 			function skip() {
+				console.log(plus.webview.currentWebview().id);
 				ph = localStorage.getItem("phone");
 				pa = localStorage.getItem("pass");
-				var page_main = mui.preload({ 
-					url:"tab-webview-main.html", 
-				    id:"main",//默认使用当前页面的url作为id 
-					});
 				var page_login = mui.preload({ 
 					url:"login.html", 
 				    id:"login",//默认使用当前页面的url作为id 
 					});
 				confirm_auto(ph, pa);
-				
 			}
 			
-
+			window.addEventListener('refresh', function(event) {
+				location.reload();
+			});
+			
+			window.addEventListener('close', function(event) {
+				plus.webview.currentWebview().close();
+			});
+			
 			
 			function confirm_auto(ph, pa) {
 				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
@@ -58,7 +61,7 @@
 				query.find({
 					success: function(results) {
 						var object = results[0];
-						if(object == null){
+						if(object == undefined){
 							mui.openWindow({
 								url: "login.html",
 								id: "login"
@@ -66,14 +69,17 @@
 							return;
 						}
 						if(object.get("password") === pa) {
-							localStorage.setItem("phone", ph);
-							localStorage.setItem("pass", pa);
+							var company = object.get("user-company");
+							console.log(company);
+							var userId = object.get("userIdentity");
+							console.log(userId);
 							mui.openWindow({
 								url: "tab-webview-main.html",
 								id: "main",
 								extras: {
 									phonefl: ph,
-									companyfl: object.get("user-company")
+									companyfl: company,
+									userIdfl: userId
 								}
 							});
 						} else {
@@ -82,7 +88,7 @@
 								id: "login",
 							});
 						}
-						plus.webview.currentWebview().close();
+//						plus.webview.currentWebview().close();
 					},
 					error: function(error) {
 						plus.nativeUI.toast("账号或密码错误");

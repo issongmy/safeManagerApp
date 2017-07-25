@@ -32,17 +32,17 @@
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
-						新消息通知
+						新的审批
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a id="hd" class="mui-navigate-right">
-						隐患反馈
+						我的责任
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
-						通用
+						我的提交
 					</a>
 				</li>
 			</ul>
@@ -57,6 +57,13 @@
 				<li class="mui-table-view-cell">
 					<a id="exit" style="text-align: center;color: #FF3B30;">
 						退出
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a id="logout" style="text-align: center;color: #FF3B30;">
+						注销账号
 					</a>
 				</li>
 			</ul>
@@ -82,9 +89,9 @@
 			mui.openWindow({
 				url: "safe_handle_table.html",
 				id: "safe_handle_table",
-//				extras: {
-//					project_name: project_name
-//				}
+				//				extras: {
+				//					project_name: project_name
+				//				}
 			});
 		});
 		//		document.getElementById("my").addEventListener('tap', function() {
@@ -94,12 +101,15 @@
 		//			mui.fire(main, 'gohome');
 		//		});
 		document.getElementById("exit").addEventListener('tap', function() {
+			plus.runtime.quit();
+		})
+
+		document.getElementById("logout").addEventListener('tap', function() {
+			localStorage.setItem("phone", "");
+			localStorage.setItem("pass", "");
+			localStorage.setItem("r_state", 0);
 			plus.webview.getWebviewById("main").close();
-			plus.webview.currentWebview().close();
-			mui.openWindow({
-				url: "login.html",
-				id: "login",
-			});
+			mui.fire(plus.webview.getWebviewById("HBuilder"), "refresh");
 		})
 	</script>
 

@@ -37,14 +37,6 @@
 					<label>隐患描述</label>
 					<input id='description' type="text" class="mui-input-clear mui-input" placeholder="请输入隐患描述">
 				</div>
-				<!--<div class="mui-input-row">
-					<label>严重程度</label>
-					<select id='danger_class'>
-						<option value="1">一般隐患</option>
-						<option value="2">较大隐患</option>
-						<option value="3">重大隐患</option>
-					</select>
-				</div>-->
 			</form>
 			<p>添加图片(提供隐患截图)</p>
 			<div id='image-list' class="row image-list">
@@ -58,7 +50,7 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
-			var project_name;
+			var dangerId;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
 			mui('.mui-scroll-wrapper').scroll();
@@ -75,7 +67,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				project_name = self.project_name;
+				dangerId = self.id;
 			});
 			mui.init();
 

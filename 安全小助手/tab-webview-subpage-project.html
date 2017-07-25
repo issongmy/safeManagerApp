@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello 家政帮</title>
+		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -26,6 +26,11 @@
 		<script src="js/bmob-min.js"></script>
 		<script>
 			var company;
+			var userName;
+			var dayDangerNum;
+			var dayBigDangerNum;
+			var monthDangerNum;
+			var monthBigDangerNum;
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -43,17 +48,29 @@
 				};
 				var self = plus.webview.currentWebview();
 				company = self.company;
+				userId = self.userId;
 				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
 				var Project = Bmob.Object.extend("Project");
 				var query = new Bmob.Query(Project);
 				query.find("user-company", company);
 				query.find({
 					success: function(results) {
+						if(userId == "admin"){
+							getTotalDangerNum();
+							addAdmin(company);
+						}
+						else if(userId == "supervision")
+							addTitle("监理");
 						for(var i = 0; i < results.length; i++) {
 							var object = results[i];
-							if(object !== undefined)
-								addProject(object.get("proName"));
+							if(object !== undefined) {
+								proName = object.get("proName");
+								getDangerNum(proName);
+								addProject(proName);
+							}
 						}
+						if(userId == "admin")
+							addSupervision("监理");
 					},
 					error: function(error) {
 						plus.nativeUI.toast("初始化失败");
@@ -96,7 +113,37 @@
 				mui.fire(plus.webview.getWebviewById("main"), "project_right");
 			});
 
+			String.prototype.format = function() {
+				var args = arguments;
+				return this.replace(/\{(\d+)\}/g, function(s, i) {
+					return args[i];
+				});
+			}
+
+			function getDangerNum() {
+				dayDangerNum = 1;
+				dayBigDangerNum = 1;
+				monthDangerNum = 4;
+				monthBigDangerNum = 3;
+			}
+			
+			function getTotalDangerNum() {
+				dayDangerNum = 1;
+				dayBigDangerNum = 1;
+				monthDangerNum = 4;
+				monthBigDangerNum = 3;
+			}
+
+			function addTitle(titleName) {
+				var title = document.createElement("h3");
+				title.innerHTML = titleName;
+				var con_main = document.getElementById("main");
+				con_main.appendChild(title);
+			}
+
 			function addProject(proName) {
+				var stringDayDanger = "今日新增安全隐患{0}起，重大隐患{1}起".format(dayDangerNum, dayBigDangerNum);
+				var stringMonthDanger = "本月累计安全隐患{0}起，重大隐患{1}起".format(monthDangerNum, monthBigDangerNum);
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
@@ -106,6 +153,50 @@
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", "project");
 				con_inner.innerHTML = proName;
+				con_day_danger = document.createElement("p");
+				con_month_danger = document.createElement("p");
+				con_day_danger.innerHTML = stringDayDanger;
+				con_month_danger.innerHTML = stringMonthDanger;
+				con_inner.appendChild(con_day_danger);
+				con_inner.appendChild(con_month_danger);
+				con.appendChild(con_inner);
+				li.appendChild(con);
+				ul.appendChild(li);
+			}
+
+			function addAdmin(companyName) {
+				var stringDayDanger = "今日新增安全隐患{0}起，重大隐患{1}起".format(dayDangerNum, dayBigDangerNum);
+				var stringMonthDanger = "本月累计安全隐患{0}起，重大隐患{1}起".format(monthDangerNum, monthBigDangerNum);
+				var ul = document.getElementById("main");
+				var li = document.createElement("div");
+				var con = document.createElement("div");
+				var con_inner = document.createElement("div");
+				li.setAttribute("class", "mui-card");
+				con.setAttribute("class", "mui-card-content");
+				con_inner.setAttribute("class", "mui-card-content-inner");
+				con_inner.setAttribute("id", "project");
+				con_inner.innerHTML = companyName;
+				con_day_danger = document.createElement("p");
+				con_month_danger = document.createElement("p");
+				con_day_danger.innerHTML = stringDayDanger;
+				con_month_danger.innerHTML = stringMonthDanger;
+				con_inner.appendChild(con_day_danger);
+				con_inner.appendChild(con_month_danger);
+				con.appendChild(con_inner);
+				li.appendChild(con);
+				ul.appendChild(li);
+			}
+			
+			function addSupervision(Name) {
+				var ul = document.getElementById("main");
+				var li = document.createElement("div");
+				var con = document.createElement("div");
+				var con_inner = document.createElement("div");
+				li.setAttribute("class", "mui-card");
+				con.setAttribute("class", "mui-card-content");
+				con_inner.setAttribute("class", "mui-card-content-inner");
+				con_inner.setAttribute("id", "supervision");
+				con_inner.innerHTML = Name;
 				con.appendChild(con_inner);
 				li.appendChild(con);
 				ul.appendChild(li);

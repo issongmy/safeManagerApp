@@ -26,25 +26,21 @@
 
 		<!--外观-->
 		<nav id="menu" class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-focus.html">
-				<span class="mui-icon mui-icon-search"></span>
-				<span class="mui-tab-label">关注</span>
-			</a>
-			<a id="1" class="mui-tab-item" href="tab-webview-subpage-frame.html">
-				<span class="mui-icon mui-icon-bars"></span>
-				<span class="mui-tab-label">体系</span>
-			</a>
-			<a id="2" class="mui-tab-item" href="tab-webview-subpage-activity.html">
-				<span class="mui-icon mui-icon-compose"></span>
-				<span class="mui-tab-label">活动</span>
-			</a>
-			<a id="3" class="mui-tab-item" href="tab-webview-subpage-project.html">
+			<a id="defaultTab" class="mui-tab-item" href="tab-webview-subpage-project.html">
 				<span class="mui-icon mui-icon-plus"></span>
 				<!--<span class="mui-badge"></span>-->
 				<span class="mui-tab-label">项目</span>
 			</a>
-			<a id="4" class="mui-tab-item" href="tab-webview-subpage-my.html">
-				<span class="mui-icon mui-icon-starhalf"></span>
+			<a id="1" class="mui-tab-item" href="tab-webview-subpage-activity.html">
+				<span class="mui-icon mui-icon-compose"></span>
+				<span class="mui-tab-label">活动</span>
+			</a>
+			<a id="2" class="mui-tab-item mui-active" href="tab-webview-subpage-focus.html">
+				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-tab-label">关注</span>
+			</a>
+			<a id="3" class="mui-tab-item" href="tab-webview-subpage-my.html">
+				<span class="mui-icon mui-icon-person"></span>
 				<!--<span class="mui-badge"></span>-->
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -53,6 +49,7 @@
 		<script type="text/javascript" charset="utf-8">
 			var phone;
 			var company;
+			var userId;
 
 			//mui初始化
 			mui.init({
@@ -66,7 +63,7 @@
 					release: false //默认为false，不监听
 				}
 			});
-			var subpages = ['tab-webview-subpage-focus.html', 'tab-webview-subpage-frame.html', 'tab-webview-subpage-activity.html', 'tab-webview-subpage-project.html', 'tab-webview-subpage-my.html'];
+			var subpages = ['tab-webview-subpage-project.html', 'tab-webview-subpage-activity.html', 'tab-webview-subpage-focus.html', 'tab-webview-subpage-my.html'];
 			var subpage_style = {
 				top: '45px',
 				bottom: '51px'
@@ -93,11 +90,13 @@
 				var self = plus.webview.currentWebview();
 				phone = self.phonefl;
 				company = self.companyfl;
-
-				for(var i = 0; i < 5; i++) {
+				console.log(company);
+				userId = self.userIdfl;
+				for(var i = 0; i < 4; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
-						company: company
+						company:company,
+						userId:userId
 					});
 					if(i > 0) {
 						sub.hide();
@@ -108,17 +107,29 @@
 					self.append(sub);
 				}
 
-				for(var i = 1; i < 5; i++) {
+				for(var i = 1; i < 4; i++) {
 					var defaultTab = document.getElementById(i.toString());
 					mui.trigger(defaultTab, 'tap');
+
+					var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+					if(defaultTab !== current) {
+						current.classList.remove('mui-active');
+						defaultTab.classList.add('mui-active');
+					}
 				}
 
 				var defaultTab = document.getElementById("defaultTab");
 				mui.trigger(defaultTab, 'tap');
+				
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if(defaultTab !== current) {
+					current.classList.remove('mui-active');
+					defaultTab.classList.add('mui-active');
+				}
 			});
 
 			window.addEventListener("act_left", function(event) {
-				var defaultTab = document.getElementById("1");
+				var defaultTab = document.getElementById("defaultTab");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
@@ -131,7 +142,7 @@
 			});
 
 			window.addEventListener("act_right", function(event) {
-				var defaultTab = document.getElementById("3");
+				var defaultTab = document.getElementById("2");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
@@ -143,18 +154,6 @@
 			});
 
 			window.addEventListener("focus_left", function(event) {
-				var defaultTab = document.getElementById("4");
-				//模拟首页点击
-				mui.trigger(defaultTab, 'tap');
-				//切换选项卡高亮
-				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-				if(defaultTab !== current) {
-					current.classList.remove('mui-active');
-					defaultTab.classList.add('mui-active');
-				}
-			});
-
-			window.addEventListener("focus_right", function(event) {
 				var defaultTab = document.getElementById("1");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
@@ -166,20 +165,8 @@
 				}
 			});
 
-			window.addEventListener("frame_left", function(event) {
-				var defaultTab = document.getElementById("defaultTab");
-				//模拟首页点击
-				mui.trigger(defaultTab, 'tap');
-				//切换选项卡高亮
-				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-				if(defaultTab !== current) {
-					current.classList.remove('mui-active');
-					defaultTab.classList.add('mui-active');
-				}
-			});
-
-			window.addEventListener("frame_right", function(event) {
-				var defaultTab = document.getElementById("2");
+			window.addEventListener("focus_right", function(event) {
+				var defaultTab = document.getElementById("3");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
@@ -191,7 +178,7 @@
 			});
 
 			window.addEventListener("project_left", function(event) {
-				var defaultTab = document.getElementById("2");
+				var defaultTab = document.getElementById("3");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
@@ -203,7 +190,7 @@
 			});
 
 			window.addEventListener("project_right", function(event) {
-				var defaultTab = document.getElementById("4");
+				var defaultTab = document.getElementById("1");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
@@ -227,7 +214,7 @@
 			});
 
 			window.addEventListener("my_left", function(event) {
-				var defaultTab = document.getElementById("3");
+				var defaultTab = document.getElementById("2");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
