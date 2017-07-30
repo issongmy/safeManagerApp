@@ -14,9 +14,6 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav">
-			<h1 id="title" class="mui-title">关注</h1>
-		</header>-->
 		<div id="main" class="mui-content mui-scroll-wrapper">
 		</div>
 		<script src="js/bmob-min.js"></script>
@@ -82,25 +79,58 @@
 				location.reload();
 			});
 
+			String.prototype.format = function() {
+				var args = arguments;
+				return this.replace(/\{(\d+)\}/g, function(s, i) {
+					return args[i];
+				});
+			}
+			
+			mui("#main").on("tap", ".mui-card", function(){
+				mui.openWindow({
+					url: "safe_handle_table.html",
+					id: "safe_handle_table",
+					extras: {
+						
+					}
+				});
+			});
+			
 			function addDanger(name, proName) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
-				var footer = document.createElement("div");
-				var a = document.createElement("a");
 				var con_inner = document.createElement("div");
 				li.setAttribute("class", "mui-card");
 				con.setAttribute("class", "mui-card-content");
-				footer.setAttribute("class", "mui-card-footer");
-				a.setAttribute("class", "mui-card-link");
-				a.innerHTML = proName;
-				footer.appendChild(a);
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", "hidden_danger_data");
-				con_inner.innerHTML = name;
+				var p_pro = document.createElement("p");
+				var p_rea = document.createElement("p");
+				var p_sit = document.createElement("p");
+				p_pro.innerHTML = "责任单位:";
+				p_rea.innerHTML = "关注原因:";
+				p_sit.innerHTML = "隐患概况:";
+				var span_sit = document.createElement("span");
+				span_sit.setAttribute("id", "span_right");
+				span_sit.innerHTML = "(点击打开重大隐患处置表)";
+				var span_rea = document.createEl
+				var span_pro = document.createElement("span");
+				span_pro.setAttribute("id", "span_right");
+				span_pro.innerHTML = proName;
+				var span_rea = document.createElement("span");
+				span_rea.setAttribute("id", "span_right");
+				str_danger = "重大隐患";
+				str_overdate = "逾期未整改";
+				span_rea.innerHTML = str_danger;
+				p_rea.appendChild(span_rea);
+				p_pro.appendChild(span_pro);
+				p_sit.appendChild(span_sit);
+				con_inner.appendChild(p_pro);
+				con_inner.appendChild(p_rea);
+				con_inner.appendChild(p_sit);
 				con.appendChild(con_inner);
 				li.appendChild(con);
-				li.appendChild(footer);
 				ul.appendChild(li);
 			}
 		</script>

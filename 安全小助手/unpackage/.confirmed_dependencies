@@ -1,282 +1,323 @@
 {
-  "tab-webview-subpage-ordertaking.html": {
-    "href": "tab-webview-subpage-ordertaking.html",
-    "resources": [
-      "css/mui.min.css",
-      "js/mui.min.js",
-      "js/mui.picker.js",
-      "js/mui.poppicker.js"
-    ],
-    "refer": [],
-    "priority": 0
-  },
-  "tab-webview-subpage-about.html": {
-    "href": "tab-webview-subpage-about.html",
-    "resources": [
-      "js/mui.min.js",
-      "css/mui.min.css"
-    ],
-    "refer": [],
-    "priority": 0
-  },
-  "tab-webview-subpage-setting.html": {
-    "href": "tab-webview-subpage-setting.html",
-    "resources": [
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "fonts/mui.ttf"
-    ],
-    "refer": [
-      "login.html"
-    ],
-    "priority": 0
-  },
-  "tab-webview-subpage-plus.html": {
-    "href": "tab-webview-subpage-plus.html",
-    "resources": [
-      "css/mui.min.css",
-      "js/mui.min.js",
-      "js/mui.picker.js",
-      "js/mui.poppicker.js",
-      "js/bmob-min.js"
-    ],
-    "refer": [],
-    "priority": 0
-  },
-  "tab-webview-subpage-chat.html": {
-    "href": "tab-webview-subpage-chat.html",
-    "resources": [
-      "css/mui.min.css",
-      "js/bmob.js",
-      "js/bmobSocketIo.js",
-      "js/mui.min.js",
-      "js/bmob-min.js"
-    ],
-    "refer": [],
-    "priority": 0
-  },
-  "tab-webview-main.html": {
-    "href": "tab-webview-main.html",
-    "resources": [
-      "css/mui.min.css",
-      "js/mui.min.js",
-      "tab-webview-subpage-project.html",
-      "fonts/mui.ttf",
-      "js/bmob-min.js",
-      "tab-webview-subpage-focus.html"
-    ],
-    "refer": [
-      "tab-webview-subpage-ordertaking.html",
-      "tab-webview-subpage-about.html",
-      "tab-webview-subpage-setting.html",
-      "tab-webview-subpage-plus.html",
-      "tab-webview-subpage-chat.html",
-      "tab-webview-subpage-frame.html",
-      "tab-webview-subpage-focus.html",
-      "tab-webview-subpage-activity.html",
-      "tab-webview-subpage-project.html",
-      "tab-webview-subpage-my.html"
-    ],
-    "priority": 0
-  },
-  "regist.html": {
-    "href": "regist.html",
-    "resources": [
-      "css/mui.min.css",
-      "js/mui.min.js",
-      "js/bmob-min.js",
-      "js/mui.picker.js",
-      "js/mui.poppicker.js",
-      "fonts/mui.ttf",
-      "js/base64.js",
-      "js/md5.min.js"
-    ],
-    "refer": [
-      "login.html"
-    ],
-    "priority": 0
-  },
-  "login.html": {
-    "href": "login.html",
-    "resources": [
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "js/bmob-min.js",
-      "fonts/mui.ttf",
-      "regist.html"
-    ],
-    "refer": [
-      "tab-webview-main.html",
-      "regist.html"
-    ],
-    "priority": 0
-  },
-  "tab-webview-subpage-frame.html": {
-    "resources": [
-      "js/mui.picker.js",
-      "js/mui.poppicker.js",
-      "css/mui.min.css",
-      "js/bmob-min.js",
-      "fonts/mui.ttf",
-      "js/mui.min.js",
-      "image/3.jpg",
-      "image/2.jpg",
-      "image/1.jpg",
-      "js/mui.previewimage.js",
-      "js/mui.zoom.js"
-    ],
-    "refer": []
-  },
-  "tab-webview-subpage-focus.html": {
-    "resources": [
-      "js/bmob.js",
-      "js/mui.min.js",
-      "js/bmobSocketIo.js",
-      "css/mui.min.css",
-      "js/bmob-min.js"
-    ],
-    "refer": []
-  },
-  "tab-webview-subpage-activity.html": {
-    "resources": [
-      "js/mui.poppicker.js",
-      "js/bmob-min.js",
-      "js/mui.picker.js",
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "js/mui.min.js"
-    ],
-    "refer": [
-      "activity_content.html",
-      "tab-webview-subpage-project.html"
-    ]
-  },
-  "tab-webview-subpage-project.html": {
-    "resources": [
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "js/bmob-min.js"
-    ],
-    "refer": [
-      "project_content.html"
-    ]
-  },
-  "project_content.html": {
-    "resources": [
-      "js/bmobSocketIo.js",
-      "fonts/mui.ttf",
-      "js/bmob-min.js",
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "js/webviewGroup.js",
-      "tab-top-subpage-month.html"
-    ],
-    "refer": [
-      "safe_info.html",
-      "safe_handle_table.html",
-      "tab-top-subpage-month.html",
-      "tab-top-subpage-history.html"
-    ]
-  },
-  "safe_handle_table.html": {
-    "resources": [
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css",
-      "js/bmob.js",
-      "js/bmob-min.js",
-      "css/feedback.css",
-      "js/feedback.js",
-      "js/photo.js"
-    ],
-    "refer": [
-      "tab-webview-subpage-project.html",
-      "tab-webview-main.html",
-      "tab-webview-subpage-focus.html"
-    ]
-  },
-  "activity_content.html": {
-    "resources": [
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "fonts/mui.ttf"
-    ],
-    "refer": []
-  },
-  "safe_teach_table.html": {
-    "resources": [
-      "js/bmob.js",
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css",
-      "js/bmob-min.js"
-    ],
-    "refer": []
-  },
-  "safe_info.html": {
-    "resources": [
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css",
-      "js/mui.js"
-    ],
-    "refer": [
-      "safe_teach_table.html",
-      "safe_tell_table.html"
-    ]
-  },
-  "safe_tell_table.html": {
-    "resources": [
-      "js/bmob.js",
-      "css/mui.min.css",
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "js/bmob-min.js"
-    ],
-    "refer": []
-  },
-  "transition.html": {
-    "refer": [
-      "login.html",
-      "tab-webview-main.html"
-    ],
-    "resources": [
-      "js/bmob.js",
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "js/bmob-min.js"
-    ]
-  },
-  "tab-webview-subpage-my.html": {
-    "resources": [
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css"
-    ],
-    "refer": [
-      "login.html",
-      "safe_info.html",
-      "safe_handle_table.html"
-    ]
-  },
-  "tab-top-subpage-month.html": {
-    "resources": [
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "danger-state.html"
-    ],
-    "refer": [
-      "danger-state.html"
-    ]
-  },
-  "danger-state.html": {
-    "resources": [
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css"
-    ],
-    "refer": [
-      "safe_handle_table.html"
-    ]
-  }
+	"tab-webview-subpage-ordertaking.html": {
+		"href": "tab-webview-subpage-ordertaking.html",
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js"
+		],
+		"refer": [],
+		"priority": 0
+	},
+	"tab-webview-subpage-about.html": {
+		"href": "tab-webview-subpage-about.html",
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [],
+		"priority": 0
+	},
+	"tab-webview-subpage-setting.html": {
+		"href": "tab-webview-subpage-setting.html",
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"login.html"
+		],
+		"priority": 0
+	},
+	"tab-webview-subpage-plus.html": {
+		"href": "tab-webview-subpage-plus.html",
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"js/bmob-min.js"
+		],
+		"refer": [],
+		"priority": 0
+	},
+	"tab-webview-subpage-chat.html": {
+		"href": "tab-webview-subpage-chat.html",
+		"resources": [
+			"css/mui.min.css",
+			"js/bmob.js",
+			"js/bmobSocketIo.js",
+			"js/mui.min.js",
+			"js/bmob-min.js"
+		],
+		"refer": [],
+		"priority": 0
+	},
+	"tab-webview-main.html": {
+		"href": "tab-webview-main.html",
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"tab-webview-subpage-project.html",
+			"fonts/mui.ttf",
+			"js/bmob-min.js",
+			"tab-webview-subpage-focus.html"
+		],
+		"refer": [
+			"tab-webview-subpage-ordertaking.html",
+			"tab-webview-subpage-about.html",
+			"tab-webview-subpage-setting.html",
+			"tab-webview-subpage-plus.html",
+			"tab-webview-subpage-chat.html",
+			"tab-webview-subpage-frame.html",
+			"tab-webview-subpage-focus.html",
+			"tab-webview-subpage-activity.html",
+			"tab-webview-subpage-project.html",
+			"tab-webview-subpage-my.html"
+		],
+		"priority": 0
+	},
+	"regist.html": {
+		"href": "regist.html",
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/bmob-min.js",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"js/base64.js",
+			"js/md5.min.js"
+		],
+		"refer": [
+			"login.html"
+		],
+		"priority": 0
+	},
+	"login.html": {
+		"href": "login.html",
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/bmob-min.js",
+			"fonts/mui.ttf",
+			"regist.html"
+		],
+		"refer": [
+			"tab-webview-main.html",
+			"regist.html"
+		],
+		"priority": 0
+	},
+	"tab-webview-subpage-frame.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.min.css",
+			"js/bmob-min.js",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"image/3.jpg",
+			"image/2.jpg",
+			"image/1.jpg",
+			"js/mui.previewimage.js",
+			"js/mui.zoom.js"
+		],
+		"refer": []
+	},
+	"tab-webview-subpage-focus.html": {
+		"resources": [
+			"js/bmob.js",
+			"js/mui.min.js",
+			"js/bmobSocketIo.js",
+			"css/mui.min.css",
+			"js/bmob-min.js"
+		],
+		"refer": [
+			"safe_handle_table.html"
+		]
+	},
+	"tab-webview-subpage-activity.html": {
+		"resources": [
+			"js/mui.poppicker.js",
+			"js/bmob-min.js",
+			"js/mui.picker.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"activity_content.html",
+			"tab-webview-subpage-project.html"
+		]
+	},
+	"tab-webview-subpage-project.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/bmob-min.js"
+		],
+		"refer": [
+			"project_content.html"
+		]
+	},
+	"project_content.html": {
+		"resources": [
+			"js/bmobSocketIo.js",
+			"fonts/mui.ttf",
+			"js/bmob-min.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/webviewGroup.js",
+			"tab-top-subpage-month.html"
+		],
+		"refer": [
+			"safe_info.html",
+			"safe_handle_table.html",
+			"tab-top-subpage-month.html",
+			"tab-top-subpage-history.html"
+		]
+	},
+	"safe_handle_table.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/bmob.js",
+			"js/bmob-min.js",
+			"css/feedback.css",
+			"js/feedback.js",
+			"js/photo.js"
+		],
+		"refer": [
+			"tab-webview-subpage-project.html",
+			"tab-webview-main.html",
+			"tab-webview-subpage-focus.html"
+		]
+	},
+	"activity_content.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"safe_teach_table.html": {
+		"resources": [
+			"js/bmob.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/bmob-min.js"
+		],
+		"refer": []
+	},
+	"safe_info.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/mui.js"
+		],
+		"refer": [
+			"safe_teach_table.html",
+			"safe_tell_table.html"
+		]
+	},
+	"safe_tell_table.html": {
+		"resources": [
+			"js/bmob.js",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/bmob-min.js"
+		],
+		"refer": []
+	},
+	"transition.html": {
+		"refer": [
+			"login.html",
+			"tab-webview-main.html"
+		],
+		"resources": [
+			"js/bmob.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/bmob-min.js"
+		]
+	},
+	"tab-webview-subpage-my.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"login.html",
+			"safe_info.html",
+			"safe_handle_table.html",
+			"new_approve.html",
+			"my_submit.html",
+			"my_responsibility.html"
+		]
+	},
+	"tab-top-subpage-month.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"danger-state.html"
+		],
+		"refer": [
+			"danger-state.html"
+		]
+	},
+	"danger-state.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"safe_handle_table.html"
+		]
+	},
+	"my_responsibility.html": {
+		"refer": [
+			"safe_handle_table.html",
+			"activity_approve.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"my_submit.html": {
+		"refer": [
+			"safe_handle_table.html"
+		]
+	},
+	"activity_approve.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"new_approve.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.min.js",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/bmob-min.js"
+		],
+		"refer": [
+			"activity_approve.html"
+		]
+	}
 }

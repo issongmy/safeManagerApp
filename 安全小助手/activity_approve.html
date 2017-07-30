@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			#bt1{
+				margin-top: 300px
+			}	
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+		<div id="main" class="mui-content mui-scroll-wrapper">
+			<div class="mui-card">
+				<div class="mui-card-header" id="title"></div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner" id="content">
+					</div>
+				</div>
+				<!--<div class="mui-card-footer"></div>-->
+			</div>
+		<div id="bt1" class="mui-content-padded">
+				<button id='submit' class="mui-btn mui-btn-block mui-btn-primary" onclick="submit()">提交</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='return' class="mui-btn mui-btn-block mui-btn-primary" onclick="return()">退回</button>
+		</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			var title;
+			var content;
+			mui.init();
+			mui.plusReady(function() {
+				var titleObj = document.getElementById("title");
+				var contentObj = document.getElementById("content");
+				self = plus.webview.currentWebview();
+				title = self.title;
+				titleObj.innerHTML = title;
+				content = self.content;
+				contentObj.innerHTML = content;
+			});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("main").addEventListener("swipeleft", function() {
+				plus.webview.currentWebview().close();
+			});
+			
+//			function submit(){
+//				
+//			};
+//			
+//			function return(){
+//				
+//			};
+		</script>
+	</body>
+
+</html>

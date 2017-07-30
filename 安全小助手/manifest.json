@@ -328,7 +328,9 @@
 					"css/mui.min.css",
 					"js/bmob-min.js"
 				],
-				"refer": [],
+				"refer": [
+					"safe_handle_table.html"
+				],
 				"priority": 0
 			},
 			"tab-webview-subpage-activity.html": {
@@ -458,7 +460,10 @@
 				"refer": [
 					"login.html",
 					"safe_info.html",
-					"safe_handle_table.html"
+					"safe_handle_table.html",
+					"new_approve.html",
+					"my_submit.html",
+					"my_responsibility.html"
 				],
 				"priority": 0
 			},
@@ -479,6 +484,48 @@
 				],
 				"refer": [
 					"safe_handle_table.html"
+				],
+				"priority": 0
+			},
+			"my_responsibility.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"safe_handle_table.html",
+					"activity_approve.html"
+				],
+				"priority": 0
+			},
+			"my_submit.html": {
+				"resources": [],
+				"refer": [
+					"safe_handle_table.html"
+				],
+				"priority": 0
+			},
+			"activity_approve.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"new_approve.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/mui.min.js",
+					"js/mui.poppicker.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/bmob-min.js"
+				],
+				"refer": [
+					"activity_approve.html"
 				],
 				"priority": 0
 			}
