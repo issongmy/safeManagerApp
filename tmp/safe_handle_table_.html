@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/feedback.css" rel="stylesheet" />
+		<style>
+			.mui-content-padded {
+				margin-top: 30px;
+			}
+			
+			.pic {
+				margin-right: 10px;
+			}
+			p{
+				color: black;
+				font-size: 18px;
+			}
+			.row{
+				height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">安全隐患排查处置表</h1>
+		</header>
+		<div id="main" class="mui-content mui-scroll-wrapper">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>隐患名称</label>
+					<input id='name' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>隐患编号</label>
+					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>检查时间</label>
+					<input id='time' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>检查人</label>
+					<input id='people_name' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>当前状态</label>
+					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>隐患级别</label>
+					<input id='class' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>隐患描述</label>
+					<input id='description' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>处置意见</label>
+					<input id='view' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>处置期限</label>
+					<input id='deadline' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>责任人</label>
+					<input id='res_name' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+			</form>
+			<p>隐患截图</p>
+			<div id='image-list' class="row image-list">
+			</div>
+			<!--<div class="mui-content-padded">
+				<button id='submit' class="mui-btn mui-btn-block mui-btn-primary" onclick="submit()">提交</button>
+			</div>-->
+		</div>
+		<script src="js/bmob.js"></script>
+		<script src="js/bmob-min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/photo.js"></script>
+		<script type="text/javascript">
+			var dangerId;
+			var mark = false;
+			var imgContenter = document.getElementById("image-list");
+
+			mui('.image-list').on('tap', '.pic', function(e) {
+				mark = true;
+				imgContenter.removeChild(this);
+			});
+			
+			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					plus.webview.currentWebview().close();
+				};
+				var self = plus.webview.currentWebview();
+				dangerId = self.id;
+			});
+			mui.init();
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			function addImg(path) {
+				var mainimg = document.createElement("img");
+				mainimg.setAttribute("class", "pic");
+				mainimg.src = path;
+				mainimg.width = 80;
+				mainimg.height = 80;
+				imgContenter.appendChild(mainimg);
+			}
+		</script>
+	</body>
+
+</html>
