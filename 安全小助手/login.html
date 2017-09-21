@@ -14,6 +14,27 @@
 		</script>
 
 		<style>
+			body{
+				text-align: center;
+				position:relative;	
+			}
+			
+			#rule{
+				left: 50px;
+				bottom:20px;
+				position: fixed;
+				font-size:small;
+			}
+			
+			#welcome{
+				margin-top: 60px;
+				text-align: center;
+			}
+			
+			.mui-bar{
+				background: #4cd964;
+			}
+			
 			.area {
 				margin: 20px auto 0px auto;
 			}
@@ -106,28 +127,53 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
 		</header>
+		<div id="welcome" class="mui-content">
+			<h3>欢迎来到安全管理小助手</h3>
+		</div>
 		<div class="mui-content">
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手机</label>
-					<input id='phone' type="number" class="mui-input-clear mui-input" placeholder="请输入账号">
+					<input id='phone' type="number" class="mui-input-clear mui-input" placeholder="请输入手机号" onfocus="hideRule()" onblur="showRule_()">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
-					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+					<input id='password' type="password" cla	ss="mui-input-clear mui-input" placeholder="请输入密码" onfocus="hideRule()" onblur="showRule()">
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="confirm()">登录</button>
+				<button id='login' class="mui-btn-green mui-btn-block mui-btn-primary"  onclick="confirm()" >确认</button>
 			</div>
+		</div>
+		<div id="rule">
+			点击登陆即表示您同意<a>《隐私条例及服务条款》</a>
 		</div>
 		<script src="js/bmob-min.js"></script>
 		<script src="js/bomb.js"></script>
 		<script>
+			
+			
 			var mark = false;
 			var rememberPass = document.getElementById("rememberPass");
 			var autoLogin = document.getElementById("autoLogin");
 
+			function hideRule(){
+				document.getElementById("rule").style.display="none";
+				setTimeout(function(){
+					document.getElementById("rule").style.display="none"
+					},1000);
+			}
+			
+			function showRule(){
+				setTimeout(function(){
+					document.getElementById("rule").style.display="inline"
+					},1000);
+			}
+			
+			function showRule_(){
+				document.getElementById("rule").style.display="inline";
+			};
+			
 			mui.plusReady(function() {
 				var mainPage = mui.preload({
 					"id": 'main',
@@ -153,10 +199,6 @@
 					confirm_auto(ph, pa);
 				}
 			});
-
-//			document.getElementById("reg").addEventListener("tap", function() {
-//				mui.openWindow("regist.html");
-//			});
 
 			function confirm() {
 				var phone = document.getElementById("phone");
