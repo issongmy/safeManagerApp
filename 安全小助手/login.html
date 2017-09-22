@@ -151,8 +151,6 @@
 		<script src="js/bmob-min.js"></script>
 		<script src="js/bomb.js"></script>
 		<script>
-			
-			
 			var mark = false;
 			var rememberPass = document.getElementById("rememberPass");
 			var autoLogin = document.getElementById("autoLogin");
@@ -162,19 +160,38 @@
 				setTimeout(function(){
 					document.getElementById("rule").style.display="none"
 					},1000);
-			}
+			};
 			
 			function showRule(){
 				setTimeout(function(){
 					document.getElementById("rule").style.display="inline"
 					},1000);
-			}
+			};
 			
 			function showRule_(){
 				document.getElementById("rule").style.display="inline";
 			};
 			
 			mui.plusReady(function() {
+				document.addEventListener("netchange",onNetChange,false);
+						function onNetChange(){
+						　　//获取当前网络类型
+						　　var nt = plus.networkinfo.getCurrentType();
+						　　switch(nt){
+						　　　　case plus.networkinfo.CONNECTION_ETHERNET:
+						　　　　case plus.networkinfo.CONNECTION_WIFI:
+						　　　　　　mui.toast("当前网络为WiFi");
+						　　　　　　break;
+						　　　　case plus.networkinfo.CONNECTION_CELL2G:
+						　　　　case plus.networkinfo.CONNECTION_CELL3G:
+						　　　　case plus.networkinfo.CONNECTION_CELL4G:
+						　　　　　　mui.toast("当前网络非WiFi");
+						　　　　　　break;
+						　　　　default:
+						　　　　　　mui.toast("当前没有网络");
+						　　　　　　break;
+						　　}
+						}
 				var mainPage = mui.preload({
 					"id": 'main',
 					"url": 'tab-webview-main.html'

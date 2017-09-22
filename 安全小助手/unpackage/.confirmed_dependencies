@@ -304,7 +304,9 @@
 		"refer": [
 			"safe_handle_table.html"
 		],
-		"resources": []
+		"resources": [
+			"fonts/mui.ttf"
+		]
 	},
 	"activity_approve.html": {
 		"resources": [

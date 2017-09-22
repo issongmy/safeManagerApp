@@ -119,6 +119,9 @@
 				"devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
 				"frameworks": []
 			},
+			"statusbar":{
+				"immersed": true
+			},
 			"google": {
 				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
@@ -505,7 +508,9 @@
 				"priority": 0
 			},
 			"my_submit.html": {
-				"resources": [],
+				"resources": [
+					"fonts/mui.ttf"
+				],
 				"refer": [
 					"safe_handle_table.html"
 				],

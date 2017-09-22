@@ -14,12 +14,20 @@
 			body {
 				background-color: #efeff4;
 			}
+			p{
+				margin-top:5px;
+				margin-left: 30px;
+			}
+			.Number{
+				text-decoration: underline;
+				color: #007aff;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="main" class="mui-content mui-scroll-wrapper">
-
+			
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/bomb.js"></script>
@@ -133,8 +141,8 @@
 			}
 
 			function addProject(proName) {
-				var stringDayDanger = "今日新增安全隐患{0}起，重大隐患{1}起".format(dayDangerNum, dayBigDangerNum);
-				var stringMonthDanger = "本月累计安全隐患{0}起，重大隐患{1}起".format(monthDangerNum, monthBigDangerNum);
+				var stringDayDanger = "今日新增安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(dayDangerNum, dayBigDangerNum);
+				var stringMonthDanger = "本月累计安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(monthDangerNum, monthBigDangerNum);
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
@@ -143,7 +151,7 @@
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", "project");
-				con_inner.innerHTML = proName;
+				con_inner.innerHTML = "项目:" + "<span class=\"Number\">" + proName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
 				con_day_danger.innerHTML = stringDayDanger;
@@ -156,8 +164,8 @@
 			}
 
 			function addAdmin(companyName) {
-				var stringDayDanger = "今日新增安全隐患{0}起，重大隐患{1}起".format(dayDangerNum, dayBigDangerNum);
-				var stringMonthDanger = "本月累计安全隐患{0}起，重大隐患{1}起".format(monthDangerNum, monthBigDangerNum);
+				var stringDayDanger = "今日新增安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(dayDangerNum, dayBigDangerNum);
+				var stringMonthDanger = "本月累计安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(monthDangerNum, monthBigDangerNum);
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
@@ -166,7 +174,7 @@
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", "project");
-				con_inner.innerHTML = companyName;
+				con_inner.innerHTML = "公司:"+"<span class=\"Number\">" + companyName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
 				con_day_danger.innerHTML = stringDayDanger;
