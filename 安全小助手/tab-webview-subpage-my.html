@@ -86,9 +86,8 @@
 		})
 
 		document.getElementById("logout").addEventListener('tap', function() {
-			localStorage.setItem("phone", "");
+			localStorage.setItem("username", "");
 			localStorage.setItem("pass", "");
-			localStorage.setItem("r_state", 0);
 			plus.webview.getWebviewById("main").close();
 			mui.fire(plus.webview.getWebviewById("HBuilder"), "refresh");
 		})

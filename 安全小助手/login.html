@@ -133,8 +133,8 @@
 		<div class="mui-content">
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
-					<label>手机</label>
-					<input id='phone' type="number" class="mui-input-clear mui-input" placeholder="请输入手机号" onfocus="hideRule()" onblur="showRule_()">
+					<label>用户</label>
+					<input id='username' type="number" class="mui-input-clear mui-input" placeholder="请输入用户名" onfocus="hideRule()" onblur="showRule_()">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -152,8 +152,8 @@
 		<script src="js/bomb.js"></script>
 		<script>
 			var mark = false;
-			var rememberPass = document.getElementById("rememberPass");
 			var autoLogin = document.getElementById("autoLogin");
+			var baseurl = "http://123.206.87.22/";
 
 			function hideRule(){
 				document.getElementById("rule").style.display="none";
@@ -210,80 +210,72 @@
 					}, 1000);
 					return false;
 				};
-				if(localStorage.getItem("r_state") == 1) {
-					ph = localStorage.getItem("phone");
-					pa = localStorage.getItem("pass");
-					confirm_auto(ph, pa);
-				}
+				ph = localStorage.getItem("username");
+				pa = localStorage.getItem("pass");
+				confirm_auto(ph, pa);
 			});
-
+			
 			function confirm() {
-				var phone = document.getElementById("phone");
+				var username = document.getElementById("username");
 				var password = document.getElementById("password");
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var User_company = Bmob.Object.extend("User_company");
-				var query = new Bmob.Query(User_company);
-				if(phone.value === "" || password.value === "") {
-					plus.nativeUI.toast("账号或密码不能为空");
-					return;
+				if(username.value === "") {
+					plus.nativeUI.toast("用户名不能为空");
+				}else if(password.value === "") {
+					plus.nativeUI.toast("密码不能为空");
 				} else {
-					query.equalTo("phone", phone.value)
-					query.find({
-						success: function(results) {
-							var object = results[0];
-							console.log(object);
-							if(object.get("password") === password.value) {
-								localStorage.setItem("phone", phone.value);
-								localStorage.setItem("pass", password.value);
-								localStorage.setItem("r_state", 1);
-								mui.openWindow({
-									url: "tab-webview-main.html",
-									id: "main",
-									extras: {
-										phonefl: phone.value,
-										companyfl: object.get("user-company"),
-										userIdfl: object.get("userIdentity")
-									}
-								});
-							} else {
-								plus.nativeUI.toast("账号或密码错误");
-							}
+					url = baseurl + "userLogin";
+					console.log(url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					var data = {
+						'userName': username.value,
+						'userPass': password.value
+					};
+					console.log(username.value);
+					console.log(password.value);
+					mui.ajax(url, {
+						type: "post",
+						data: data,
+						success: function() {
+							localStorage.setItem("username", username.value);
+							localStorage.setItem("pass", password.value);
+							mui.openWindow({
+								url:"tab-webview-main.html"
+							});
 						},
-						error: function(error) {
-							plus.nativeUI.toast("账号或密码错误");
+						error: function() {
+							plus.nativeUI.toast("登录失败!");
 						}
 					});
 				}
 			}
-
+			
 			function confirm_auto(ph, pa) {
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var User_company = Bmob.Object.extend("User_company");
-				var query = new Bmob.Query(User_company);
-				query.equalTo("phone", ph)
-				query.find({
-					success: function(results) {
-						var object = results[0];
-						if(object.get("password") == pa) {
-							localStorage.setItem("phone", ph);
-							localStorage.setItem("pass", pa);
+					url = baseurl + "checkUser";
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					var data = {
+						'userName': ph,
+						'userPass': pa
+					};
+					mui.ajax(url, {
+						type: "post",
+						data: data,
+						success: function() {
 							mui.openWindow({
-								url: "tab-webview-main.html",
-								id: "main",
-								extras: {
-									phonefl: ph,
-									companyfl: object.get("user-company"),
-									userIdfl: object.get("userIdentity")
-								}
+								url:"tab-webview-main.html", 
+				    			id:"main" 
 							});
-						} else {
-							plus.nativeUI.toast("账号或密码错误");
+						},
+						error: function() {
+							plus.nativeUI.toast("登录失败!");
 						}
-					},
-					error: function(error) {
-						plus.nativeUI.toast("账号或密码错误");
-					}
-				});
+					});
+				
 			}
 		</script>
 	</body>
