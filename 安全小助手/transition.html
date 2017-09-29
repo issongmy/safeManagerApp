@@ -31,44 +31,42 @@
 		<script src="js/bmob.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script>
-			var baseurl = "http://123.206.87.22";
+			var baseurl = "http://123.206.87.22/";
 
 			function skip() {
 				ph = localStorage.getItem("username");
 				pa = localStorage.getItem("pass");
 				console.log(ph);
 				console.log(pa);
-				var page_login = mui.preload({
-					url: "login.html",
-					id: "login"
-				});
-				if(ph == null || pa == null || ph == "" || pa == "") {
+				if(ph == null || pa == null) {
+					console.log("Hi");
 					mui.openWindow({
 						url: "login.html",
 						id: "login"
 					});
+					console.log("Hei");
+					return;
 				}
+				var all = plus.webview.all();
+				console.log(all.length);
 				confirm_auto(ph, pa);
 			}
-
-			window.addEventListener('refresh', function(event) {
-				location.reload();
-			});
 
 			window.addEventListener('close', function(event) {
 				plus.webview.currentWebview().close();
 			});
 
 			mui.plusReady(function() {
-				var mainPage = mui.preload({
-					"id": 'main',
-					"url": 'tab-webview-main.html'
-				});
 				setTimeout("skip()", 1000);
 			});
-
+			
+			window.addEventListener('refresh', function(event) {
+				location.reload();
+			});
+			
 			function confirm_auto(ph, pa) {
-				url = baseurl + "checkUser";
+				console.log("Here");
+				url = baseurl + "userLogin";
 				var headers = {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json;charset=utf-8',
@@ -83,11 +81,10 @@
 					success: function() {
 						mui.openWindow({
 							url: "tab-webview-main.html",
-							id: "main"
 						});
 					},
 					error: function() {
-
+						
 					}
 				});
 			}

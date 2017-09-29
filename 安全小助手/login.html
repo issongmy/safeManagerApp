@@ -134,7 +134,7 @@
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>用户</label>
-					<input id='username' type="number" class="mui-input-clear mui-input" placeholder="请输入用户名" onfocus="hideRule()" onblur="showRule_()">
+					<input id='username' type="text" class="mui-input-clear mui-input" placeholder="请输入用户名" onfocus="hideRule()" onblur="showRule_()">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -192,10 +192,6 @@
 						　　　　　　break;
 						　　}
 						}
-				var mainPage = mui.preload({
-					"id": 'main',
-					"url": 'tab-webview-main.html'
-				});
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
@@ -210,9 +206,17 @@
 					}, 1000);
 					return false;
 				};
-				ph = localStorage.getItem("username");
-				pa = localStorage.getItem("pass");
-				confirm_auto(ph, pa);
+//				ph = localStorage.getItem("username");
+//				pa = localStorage.getItem("pass");
+//				confirm_auto(ph, pa);
+			});
+			
+			window.addEventListener('refresh', function(event) {
+				var username = document.getElementById("username");
+				var password = document.getElementById("password");
+				userName.value = "";
+				password.value = "";
+				console.log("HHHHHHHH");
 			});
 			
 			function confirm() {
@@ -224,7 +228,6 @@
 					plus.nativeUI.toast("密码不能为空");
 				} else {
 					url = baseurl + "userLogin";
-					console.log(url);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
@@ -252,31 +255,31 @@
 				}
 			}
 			
-			function confirm_auto(ph, pa) {
-					url = baseurl + "checkUser";
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					var data = {
-						'userName': ph,
-						'userPass': pa
-					};
-					mui.ajax(url, {
-						type: "post",
-						data: data,
-						success: function() {
-							mui.openWindow({
-								url:"tab-webview-main.html", 
-				    			id:"main" 
-							});
-						},
-						error: function() {
-							plus.nativeUI.toast("登录失败!");
-						}
-					});
-				
-			}
+//			function confirm_auto(ph, pa) {
+//					url = baseurl + "user";
+//					var headers = {
+//						'Accept': 'application/json',
+//						'Content-Type': 'application/json;charset=utf-8',
+//					};
+//					var data = {
+//						'userName': ph,
+//						'userPass': pa
+//					};
+//					mui.ajax(url, {
+//						type: "post",
+//						data: data,
+//						success: function() {
+//							mui.openWindow({
+//								url:"tab-webview-main.html", 
+//				    			id:"main" 
+//							});
+//						},
+//						error: function() {
+//							plus.nativeUI.toast("登录失败!");
+//						}
+//					});
+//				
+//			}
 		</script>
 	</body>
 

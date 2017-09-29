@@ -86,10 +86,25 @@
 		})
 
 		document.getElementById("logout").addEventListener('tap', function() {
-			localStorage.setItem("username", "");
-			localStorage.setItem("pass", "");
-			plus.webview.getWebviewById("main").close();
+			localStorage.removeItem("username");
+			localStorage.removeItem("pass");
+			var all = plus.webview.all();
+			console.log(all.length);
+			for(var i=0;i<all.length;i++){
+				console.log(all[i].id);
+			}
+			plus.webview.close("main");
+			plus.webview.close("login");
+			plus.webview.close("tab-webview-main.html");
 			mui.fire(plus.webview.getWebviewById("HBuilder"), "refresh");
+			plus.webview.close("tab-webview-subpage-my.html");
+			plus.webview.close("tab-webview-subpage-focus.html");
+			plus.webview.close(" tab-webview-subpage-activity.html");
+			plus.webview.close(" tab-webview-subpage-project.html");
+			plus.webview.close("tab-webview-subpage-my.html");
+			plus.webview.close("tab-webview-subpage-focus.html");
+			plus.webview.close(" tab-webview-subpage-activity.html");
+			plus.webview.close(" tab-webview-subpage-project.html");
 		})
 		
 		document.getElementById("myapprove").addEventListener("tap", function(){

@@ -470,7 +470,8 @@
 					"safe_handle_table.html",
 					"new_approve.html",
 					"my_submit.html",
-					"my_responsibility.html"
+					"my_responsibility.html",
+					"transition.html"
 				],
 				"priority": 0
 			},
