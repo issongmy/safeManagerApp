@@ -14,11 +14,13 @@
 			body {
 				background-color: #efeff4;
 			}
-			p{
-				margin-top:5px;
+			
+			p {
+				margin-top: 5px;
 				margin-left: 30px;
 			}
-			.Number{
+			
+			.Number {
 				text-decoration: underline;
 				color: #007aff;
 			}
@@ -26,19 +28,25 @@
 	</head>
 
 	<body>
-		<div id="main" class="mui-content mui-scroll-wrapper">
-			
+		<div id="main">
+
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/bomb.js"></script>
 		<script src="js/bmob-min.js"></script>
 		<script>
-			var company;
-			var userName;
+			var userClass;
+			var companyId;
+			var userId;
+			var subsidiaryId;
+			var supervisionCompanyId;
+			var baseUrl = "http://123.206.87.22";
+
 			var dayDangerNum;
 			var dayBigDangerNum;
 			var monthDangerNum;
 			var monthBigDangerNum;
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -55,35 +63,135 @@
 					return false;
 				};
 				var self = plus.webview.currentWebview();
-				company = self.company;
+				userClass = self.userClass;
+				companyId = self.companyId;
 				userId = self.userId;
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var Project = Bmob.Object.extend("Project");
-				var query = new Bmob.Query(Project);
-				query.find("user-company", company);
-				query.find({
-					success: function(results) {
-						if(userId == "admin")
-							addAdmin(company);
-						else if(userId == "supervision")
-							addTitle("监理");
-						for(var i = 0; i < results.length; i++) {
-							var object = results[i];
-							if(object !== undefined) {
-								proName = object.get("proName");
-								getDangerNum();
-								getTotalDangerNum();
-								addProject(proName);
-							}
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
+				console.log(userClass);
+				if(userClass == "1") {
+					var request_url = baseUrl + "/subsidiary/dangeCount?subsidiaryId=" + subsidiaryId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
+							addProject("测试");
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
 						}
-						if(userId == "admin")
-							addSupervision("监理");
-					},
-					error: function(error) {
-						plus.nativeUI.toast("初始化失败");
-					}
-				});
+					});
+				}
+				if(userClass == "3") {
+					var request_url = baseUrl + "/supervision/subs?supervisionCompanyId=" + supervisionCompanyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							addSupervision("中建一局");
+							var extend = eval(result.extend);
+							var projectList = extend.subsidiaryList;
+							console.log(projectList.length);
+							for(var i = 0; i < projectList.length; i++) {
+								var pro_company = projectList[i].subsidiaryName;
+								var projectId = projectList[i].subsidiaryId;
+								addProject(pro_company);
+								//								var request_url = baseUrl + "/subsidiary/dangeCount?subsidiaryId=" + projectId;
+								//								console.log(request_url);
+								//								var headers = {
+								//									'Accept': 'application/json',
+								//									'Content-Type': 'application/json;charset=utf-8',
+								//								};
+								//								mui.ajax(request_url, {
+								//									type: "get",
+								//									success: function(result) {
+								//										var extend = eval(result.extend);
+								//										getDangerNum(extend.todayAdded,extend.todayImportant,extend.monthAdded,extend.monthImportant);
+								//										addProject(pro_company);
+								//									},
+								//									error: function() {
+								//										plus.nativeUI.toast("请求失败!");
+								//									}
+								//								});
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
+				if(userClass == "2") {
+					//为业主用户
+					var request_url = baseUrl + "/company/todayDangers?companyId=" + companyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							getTotalDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
+							addAdmin("中建一局");
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
 
+					var request_url = baseUrl + "/company/units?companyId=" + companyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							var projectList = extend.subsidiaryList;
+							console.log(projectList.length);
+							var supervisionList = extend.supervisionCompanyList;
+
+							for(var i = 0; i < projectList.length; i++) {
+								var pro_company = projectList[i].subsidiaryName;
+								var projectId = projectList[i].subsidiaryId;
+								addProject(pro_company);
+								//								var request_url = baseUrl + "/subsidiary/dangeCount?subsidiaryId=" + projectId;
+								//								console.log(request_url);
+								//								var headers = {
+								//									'Accept': 'application/json',
+								//									'Content-Type': 'application/json;charset=utf-8',
+								//								};
+								//								mui.ajax(request_url, {
+								//									type: "get",
+								//									success: function(result) {
+								//										var extend = eval(result.extend);
+								//										getDangerNum(extend.todayAdded,extend.todayImportant,extend.monthAdded,extend.monthImportant);
+								//										addProject(pro_company);
+								//									},
+								//									error: function() {
+								//										plus.nativeUI.toast("请求失败!");
+								//									}
+								//								});
+							}
+							for(var i = 0; i < supervisionList.length; i++) {
+								var super_company = supervisionList[i].supervisionCompanyName;
+								addSupervision(super_company);
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
 			});
 
 			mui.init({
@@ -99,10 +207,10 @@
 				}
 			});
 
-			mui('.mui-content').on('tap', '.mui-card', function(e) {
+			mui('#main').on('tap', '.mui-card', function(e) {
 				var node = this.childNodes[0].childNodes[0];
-				console.log(node);
-				var name = node.innerHTML;
+				var name = node.id;
+				console.log(name);
 				mui.openWindow({
 					url: "project_content.html",
 					id: "project_content",
@@ -119,18 +227,18 @@
 				});
 			}
 
-			function getDangerNum() {
-				dayDangerNum = 1;
-				dayBigDangerNum = 1;
-				monthDangerNum = 4;
-				monthBigDangerNum = 3;
+			function getDangerNum(d1, d2, d3, d4) {
+				dayDangerNum = d1;
+				dayBigDangerNum = d2;
+				monthDangerNum = d3;
+				monthBigDangerNum = d4;
 			}
-			
-			function getTotalDangerNum() {
-				dayDangerNum = 1;
-				dayBigDangerNum = 1;
-				monthDangerNum = 4;
-				monthBigDangerNum = 3;
+
+			function getTotalDangerNum(d1, d2, d3, d4) {
+				dayDangerNum = d1;
+				dayBigDangerNum = d2;
+				monthDangerNum = d3;
+				monthBigDangerNum = d4;
 			}
 
 			function addTitle(titleName) {
@@ -140,7 +248,7 @@
 				con_main.appendChild(title);
 			}
 
-			function addProject(proName) {
+			function addProject(proName, proId) {
 				var stringDayDanger = "今日新增安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(dayDangerNum, dayBigDangerNum);
 				var stringMonthDanger = "本月累计安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(monthDangerNum, monthBigDangerNum);
 				var ul = document.getElementById("main");
@@ -150,7 +258,7 @@
 				li.setAttribute("class", "mui-card");
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
-				con_inner.setAttribute("id", "project");
+				con_inner.setAttribute("id", proId);
 				con_inner.innerHTML = "项目:" + "<span class=\"Number\">" + proName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
@@ -174,7 +282,7 @@
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", "project");
-				con_inner.innerHTML = "公司:"+"<span class=\"Number\">" + companyName + "</span>";
+				con_inner.innerHTML = "业主:" + "<span class=\"Number\">" + companyName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
 				con_day_danger.innerHTML = stringDayDanger;
@@ -185,7 +293,7 @@
 				li.appendChild(con);
 				ul.appendChild(li);
 			}
-			
+
 			function addSupervision(Name) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
@@ -195,7 +303,7 @@
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", "supervision");
-				con_inner.innerHTML = Name;
+				con_inner.innerHTML = "监理:" + Name;
 				con.appendChild(con_inner);
 				li.appendChild(con);
 				ul.appendChild(li);

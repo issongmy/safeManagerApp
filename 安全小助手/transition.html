@@ -78,11 +78,21 @@
 				mui.ajax(url, {
 					type: "post",
 					data: data,
-					success: function() {
-						mui.openWindow({
-							url: "tab-webview-main.html",
-						});
-					},
+						success: function(result) {
+							var extend = eval(result.extend);
+							var user = eval(extend.user);
+							mui.openWindow({
+								url:"tab-webview-main.html",
+								id:"main",
+								extras:{
+									userId:user.userId,
+									userClass:user.userCategory,
+									companyId:user.companyId,
+									subsidiaryId:user.subsidiaryId,
+									supervisionCompanyId:user.supervisionCompanyId
+								}
+							});
+						},
 					error: function() {
 						
 					}

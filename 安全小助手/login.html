@@ -206,17 +206,6 @@
 					}, 1000);
 					return false;
 				};
-//				ph = localStorage.getItem("username");
-//				pa = localStorage.getItem("pass");
-//				confirm_auto(ph, pa);
-			});
-			
-			window.addEventListener('refresh', function(event) {
-				var username = document.getElementById("username");
-				var password = document.getElementById("password");
-				userName.value = "";
-				password.value = "";
-				console.log("HHHHHHHH");
 			});
 			
 			function confirm() {
@@ -241,11 +230,22 @@
 					mui.ajax(url, {
 						type: "post",
 						data: data,
-						success: function() {
+						success: function(result) {
+							var extend = eval(result.extend);
+							console.log(result.code);
+							var user = extend.user;
 							localStorage.setItem("username", username.value);
 							localStorage.setItem("pass", password.value);
 							mui.openWindow({
-								url:"tab-webview-main.html"
+								url:"tab-webview-main.html",
+								id:"main",
+								extras:{
+									userId:user.userId,
+									userClass:user.userCategory,
+									companyId:user.companyId,
+									subsidiaryId:user.subsidiaryId,
+									supervisionCompanyId:user.supervisionCompanyId
+								}
 							});
 						},
 						error: function() {
@@ -254,32 +254,6 @@
 					});
 				}
 			}
-			
-//			function confirm_auto(ph, pa) {
-//					url = baseurl + "user";
-//					var headers = {
-//						'Accept': 'application/json',
-//						'Content-Type': 'application/json;charset=utf-8',
-//					};
-//					var data = {
-//						'userName': ph,
-//						'userPass': pa
-//					};
-//					mui.ajax(url, {
-//						type: "post",
-//						data: data,
-//						success: function() {
-//							mui.openWindow({
-//								url:"tab-webview-main.html", 
-//				    			id:"main" 
-//							});
-//						},
-//						error: function() {
-//							plus.nativeUI.toast("登录失败!");
-//						}
-//					});
-//				
-//			}
 		</script>
 	</body>
 

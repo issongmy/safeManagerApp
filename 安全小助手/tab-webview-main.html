@@ -51,9 +51,11 @@
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			var phone;
-			var company;
+			var userClass;
+			var companyId;
 			var userId;
+			var subsidiaryId;
+			var supervisionCompanyId;
 
 			//mui初始化
 			mui.init({
@@ -92,16 +94,21 @@
 					return false;
 				};
 				var self = plus.webview.currentWebview();
-				phone = self.phonefl;
-				company = self.companyfl;
-				console.log(company);
-				userId = self.userIdfl;
+				userClass = self.userClass;
+				console.log(userClass);
+				companyId = self.companyId;
+				userId = self.userId;
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
 				for(var i = 0; i < 4; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
-						company:company,
-						userId:userId
-					});
+								userId:userId,
+								userClass:userClass,
+								companyId:companyId,
+								subsidiaryId:subsidiaryId,
+								supervisionCompanyId:supervisionCompanyId
+							});
 					if(i > 0) {
 						sub.hide();
 					} else {

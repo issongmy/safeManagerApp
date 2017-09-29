@@ -20,6 +20,13 @@
 		<script src="js/bmob.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
+			var userClass;
+			var companyId;
+			var userId;
+			var subsidiaryId;
+			var supervisionCompanyId;
+			var baseUrl = "http://123.206.87.22";
+			
 			mui.init({
 				gestureConfig: {
 					tap: true, //默认为true
@@ -47,24 +54,65 @@
 					return false;
 				};
 				var self = plus.webview.currentWebview();
-				company = self.company;
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var Danger = Bmob.Object.extend("Hiddendanger");
-				var query = new Bmob.Query(Danger);
-				query.find("danger_class", "3");
-				query.find({
-					success: function(results) {
-						for(var i = 0; i < results.length; i++) {
-							var object = results[i];
-							if(object !== undefined)
-								addDanger(object.get("name"), object.get("proName"));
+				userClass = self.userClass;
+				companyId = self.companyId;
+				userId = self.userId;
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
+				if(userClass == "1"){
+					var request_url = baseUrl + "/subsidiary/focus?subsidiaryId=" + subsidiaryId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
+							addProject("测试");
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
 						}
-					},
-					error: function(error) {
-						plus.nativeUI.toast("初始化失败");
-					}
-				});
-
+					});
+				}
+				if(userClass == "2"){
+					var request_url = baseUrl + "/company/focus?companyId=" + companyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
+							addProject("测试");
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
+				if(userClass == "3"){
+					var request_url = baseUrl + "/supervision/focus?supervisionCompanyId=" + supervisionCompanyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
+							addProject("测试");
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
 			});
 
 			window.addEventListener('refresh', function(event) {

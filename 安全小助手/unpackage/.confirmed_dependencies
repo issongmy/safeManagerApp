@@ -333,7 +333,12 @@
 	"safe_handle_table_.html": {
 		"resources": [
 			"css/feedback.css",
-			"js/photo.js"
+			"js/photo.js",
+			"js/bmob.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/bmob-min.js"
 		]
 	}
 }
