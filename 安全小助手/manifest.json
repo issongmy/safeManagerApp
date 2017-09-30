@@ -500,7 +500,10 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"js/bmob-min.js"
 				],
 				"refer": [
 					"safe_handle_table.html",
@@ -510,7 +513,9 @@
 			},
 			"my_submit.html": {
 				"resources": [
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"safe_handle_table.html"

@@ -12,6 +12,7 @@
 			.mui-bar {
 				background: #4cd964;
 			}
+			
 			.item-class {
 				float: right;
 			}
@@ -26,7 +27,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">新的审批</h1>
+			<h1 class="mui-title">我的责任</h1>
 		</header>
 		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -42,134 +43,97 @@
 		</script>
 		<script src="js/bomb.js"></script>
 		<script type="text/javascript">
-			var mark = true;
-			var actArray;
-			var mycompany;
+			var baseUrl = "http://123.206.87.22";
 			mui.plusReady(function() {
-				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					backButtonPress++;
-					if(backButtonPress > 1) {
-						plus.runtime.quit();
-					} else {
-						plus.nativeUI.toast('再按一次退出应用');
-					}
-					setTimeout(function() {
-						backButtonPress = 0;
-					}, 1000);
-					return false;
-				};
 				var self = plus.webview.currentWebview();
-				mycompany = self.company;
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var Activity = Bmob.Object.extend("Activity");
-				var query = new Bmob.Query(Activity);
-				query.find({
-					success: function(results) {
-						actArray = results;
-						if(results.length > 6) {
-							for(var i = 0; i < 6; i++) {
-								var object = results[i];
-								if(object !== undefined)
-									addAct(object.get("title"), object.get("desc"), object.get("content"));
-							}
-						} else {
-							for(var i = 0; i < results.length; i++) {
-								var object = results[i];
-								if(object !== undefined)
-									addAct(object.get("title"), object.get("desc"), object.get("content"));
+				var userClass = self.userClass;
+				var ompanyId = self.companyId;
+				var userId = self.userId;
+				var subsidiaryId = self.subsidiaryId;
+				var supervisionCompanyId = self.supervisionCompanyId;
+				console.log(userClass);
+				console.log(userId);
+				var request_url = baseUrl + "/user/responsibility?userId=" + userId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						console.log(result.length);
+						var extend = eval(result.extend);
+						var dangerList = extend.list;
+						for(var i = 0; i < dangerList.length; i++) {
+							var dangerId = dangerList[i].dangerId;
+							var level = dangerList[i].severity;
+							var state = dangerList[i].currentState;
+							if(state == "1") {
+								if(level) {
+									addDanger(dangerId, "重大隐患", "提交审核中");
+								} else {
+									addDanger(dangerId, "一般隐患", "提交审核中");
+								}
+							} else if(state == "2") {
+								if(level) {
+									addDanger(dangerId, "重大隐患", "整改中");
+								} else {
+									addDanger(dangerId, "一般隐患", "整改中");
+								}
+							} else if(state == "3") {
+								if(level) {
+									addDanger(dangerId, "重大隐患", "整改审核中");
+								} else {
+									addDanger(dangerId, "一般隐患", "整改审核中");
+								}
+							} else {
+								if(level) {
+									addDanger(dangerId, "重大隐患", "整改完毕");
+								} else {
+									addDanger(dangerId, "一般隐患", "整改完毕");
+								}
 							}
 						}
 					},
-					error: function(error) {
-						plus.nativeUI.toast("初始化失败");
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
 					}
 				});
 			});
 
-			mui.init({
-				swipeBack: false,
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				},
-				gestureConfig: {
-					tap: true, //默认为true
-					doubletap: true, //默认为false
-					longtap: true, //默认为false
-					swipe: true, //默认为true
-					drag: true, //默认为true
-					hold: false, //默认为false，不监听
-					release: false //默认为false，不监听
-				}
-			});
-
-			/**
-			 * 下拉刷新具体业务实现
-			 */
-			function pulldownRefresh() {
-				setTimeout(function() {
-					location.reload();
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 500);
-			}
-			var count = 0;
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((mark)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 3; i < len; i++) {
-						if(orderArray[i] == undefined) {
-							mark = true;
-							break;
-						}
-						var li = addOrderLi(orderArray[i].get("account"), orderArray[i].get("demand"), orderArray[i].get("date"), orderArray[i].get("adress"));
-						table.appendChild(li);
-					}
-				}, 1000);
-			}
-			
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
-				var title = node[0].getAttribute("id");
-				var desc = node[1].innerHTML;
-				var content = node[2].innerHTML;
+				var id = node[0].getAttribute("id");
 				mui.openWindow({
-					url: "activity_approve.html",
-					id: "activity_approve.html",
+					url: "safe_handle_table.html",
+					id: "safe_handle_table",
 					extras: {
+						id: id
 					}
 				});
 			});
 
-			function addAct(title, desc, content) {
-				var ul = document.getElementById("activity");
+			function addDanger(dangerNum, level, state) {
+				var ul = document.getElementById("dangerList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
-				var p2 = document.createElement("p");
+				var span_num = document.createElement("span");
+				span_num.setAttribute("id", "span_left");
+				span_num.innerHTML = dangerNum;
+				var span_other = document.createElement("span");
+				span_other.setAttribute("id", "span_right");
+				span_other.innerHTML = level + " " + state;
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", title);
-				a.innerHTML = title;
-				p2.innerHTML = content;
-				p2.setAttribute("hidden", 'true');
+				a.setAttribute("id", dangerNum);
+				a.appendChild(span_num);
+				a.appendChild(span_other);
 				liObj.appendChild(a);
-				liObj.appendChild(p2);
 				ul.appendChild(liObj);
 			}
 			
-			document.getElementById("close").addEventListener("tap", function(){
+			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
 		</script>

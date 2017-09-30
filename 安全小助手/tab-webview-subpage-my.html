@@ -86,6 +86,31 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
+		
+		mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					backButtonPress++;
+					if(backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
+				};
+				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
+				companyId = self.companyId;
+				userId = self.userId;
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
+				console.log(userClass);
+				
+		});
 
 		document.getElementById("exit").addEventListener('tap', function() {
 			plus.runtime.quit();
@@ -118,7 +143,11 @@
 				url: "new_approve.html",
 				id: "new_approve.html",
 				extras:{
-					
+					userId:userId,
+					userClass:userClass,
+					companyId:companyId,
+					subsidiaryId:user.subsidiaryId,
+					supervisionCompanyId:supervisionCompanyId
 				}
 			});
 		});
@@ -128,7 +157,11 @@
 				url: "my_responsibility.html",
 				id: "my_responsibility.html",
 				extras:{
-					
+					userId:userId,
+					userClass:userClass,
+					companyId:companyId,
+					subsidiaryId:subsidiaryId,
+					supervisionCompanyId:supervisionCompanyId
 				}
 			});
 		});
@@ -138,7 +171,11 @@
 				url: "my_submit.html",
 				id: "my_submit.html",
 				extras:{
-					
+					userId:userId,
+					userClass:userClass,
+					companyId:companyId,
+					subsidiaryId:subsidiaryId,
+					supervisionCompanyId:supervisionCompanyId
 				}
 			});
 		});

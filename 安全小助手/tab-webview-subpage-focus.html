@@ -69,8 +69,6 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
-							addProject("测试");
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -87,8 +85,6 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
-							addProject("测试");
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -105,8 +101,6 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
-							addProject("测试");
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -135,7 +129,7 @@
 				});
 			});
 			
-			function addDanger(name, proName) {
+			function addDanger(proName) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");

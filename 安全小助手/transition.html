@@ -65,22 +65,22 @@
 			});
 			
 			function confirm_auto(ph, pa) {
-				console.log("Here");
-				url = baseurl + "userLogin";
-				var headers = {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json;charset=utf-8',
-				};
-				var data = {
-					'userName': ph,
-					'userPass': pa
-				};
-				mui.ajax(url, {
-					type: "post",
-					data: data,
+					url = baseurl + "userLogin";
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					var data = {
+						'userName': ph,
+						'userPass': pa
+					};
+					mui.ajax(url, {
+						type: "post",
+						data: data,
 						success: function(result) {
 							var extend = eval(result.extend);
-							var user = eval(extend.user);
+							console.log(result.code);
+							var user = extend.user;
 							mui.openWindow({
 								url:"tab-webview-main.html",
 								id:"main",
@@ -93,10 +93,10 @@
 								}
 							});
 						},
-					error: function() {
-						
-					}
-				});
+						error: function() {
+							plus.nativeUI.toast("登录失败!");
+						}
+					});
 			}
 		</script>
 	</body>
