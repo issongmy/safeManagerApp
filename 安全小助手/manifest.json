@@ -358,7 +358,8 @@
 					"js/bmob-min.js"
 				],
 				"refer": [
-					"project_content.html"
+					"project_content.html",
+					"project_content_.html"
 				],
 				"priority": 0
 			},
@@ -554,6 +555,41 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"js/bmob-min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"project_content_.html": {
+				"resources": [
+					"js/bmobSocketIo.js",
+					"js/webviewGroup.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/bmob-min.js",
+					"danger-state.html",
+					"month.html"
+				],
+				"refer": [
+					"safe_handle_table.html",
+					"tab-top-subpage-month.html"
+				],
+				"priority": 0
+			},
+			"month.html": {
+				"resources": [
+					"danger-state.html",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"danger-state_.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"danger-state_.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

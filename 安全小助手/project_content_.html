@@ -120,12 +120,6 @@
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#" data-wid="tab-top-subpage-month.html">
-							本月隐患
-						</a>
-						<a class="mui-control-item" href="#" data-wid="tab-top-subpage-history.html">
-							历史记录
-						</a>
 					</div>
 				</div>
 			</div>
@@ -153,14 +147,8 @@
 				var currentId = plus.webview.currentWebview().id;
 				var group = new webviewGroup(currentId, {
 					items: [{
-						id: "tab-top-subpage-month.html",
-						url: "tab-top-subpage-month.html",
-						extras: {
-							
-						}
-					}, {
-						id: "tab-top-subpage-history.html",
-						url: "tab-top-subpage-history.html",
+						id: "month.html",
+						url: "month.html",
 						extras: {
 							
 						}

@@ -68,7 +68,39 @@
 					mui.ajax(request_url, {
 						type: "get",
 						success: function(result) {
+							console.log(result.length);
 							var extend = eval(result.extend);
+							var dangerList = extend.list;
+							for(var i = 0; i < dangerList.length; i++) {
+								var dangerId = dangerList[i].dangerId;
+								var level = dangerList[i].severity;
+								var state = dangerList[i].currentState;
+								if(state == "1") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "提交审核中");
+									} else {
+										addDanger(dangerId, "一般隐患", "提交审核中");
+									}
+								} else if(state == "2") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改中");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改中");
+									}
+								} else if(state == "3") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改审核中");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改审核中");
+									}
+								} else {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改完毕");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改完毕");
+									}
+								}
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -81,10 +113,43 @@
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
 					};
+					console.log(request_url);
 					mui.ajax(request_url, {
 						type: "get",
 						success: function(result) {
+							console.log(result.length);
 							var extend = eval(result.extend);
+							var dangerList = extend.list;
+							for(var i = 0; i < dangerList.length; i++) {
+								var dangerId = dangerList[i].dangerId;
+								var level = dangerList[i].severity;
+								var state = dangerList[i].currentState;
+								if(state == "1") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "提交审核中");
+									} else {
+										addDanger(dangerId, "一般隐患", "提交审核中");
+									}
+								} else if(state == "2") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改中");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改中");
+									}
+								} else if(state == "3") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改审核中");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改审核中");
+									}
+								} else {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改完毕");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改完毕");
+									}
+								}
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -100,7 +165,39 @@
 					mui.ajax(request_url, {
 						type: "get",
 						success: function(result) {
+							console.log(result.length);
 							var extend = eval(result.extend);
+							var dangerList = extend.list;
+							for(var i = 0; i < dangerList.length; i++) {
+								var dangerId = dangerList[i].dangerId;
+								var level = dangerList[i].severity;
+								var state = dangerList[i].currentState;
+								if(state == "1") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "提交审核中");
+									} else {
+										addDanger(dangerId, "一般隐患", "提交审核中");
+									}
+								} else if(state == "2") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改中");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改中");
+									}
+								} else if(state == "3") {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改审核中");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改审核中");
+									}
+								} else {
+									if(level) {
+										addDanger(dangerId, "重大隐患", "整改完毕");
+									} else {
+										addDanger(dangerId, "一般隐患", "整改完毕");
+									}
+								}
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");

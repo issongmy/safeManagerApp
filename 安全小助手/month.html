@@ -11,7 +11,7 @@
 			html,
 			body {
 				background-color: #efeff4;
-			}
+			},
 		</style>
 	</head>
 
@@ -20,21 +20,15 @@
 			<a id="defaultTab" class="mui-tab-item" href="danger-state.html">
 				<span class="mui-tab-label">隐患排查</span>
 			</a>
-			<a class="mui-tab-item" href="http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls">
-				<span class="mui-tab-label">安全交底</span>
-			</a>
-			<a class="mui-tab-item" href="http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls">
-				<span class="mui-tab-label">三级教育</span>
-			</a>
 			<a class="mui-tab-item" href="http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.docx">
 				<span class="mui-tab-label">基本资料</span>
 			</a>
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			 //mui初始化
+			//mui初始化
 			mui.init();
-			var subpages = ['danger-state.html', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.docx'];
+			var subpages = ['danger-state_.html', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.docx'];
 			var subpage_style = {
 				top: '5x',
 				bottom: '51px'
@@ -44,7 +38,7 @@
 			
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < 2; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 					if (i > 0) {

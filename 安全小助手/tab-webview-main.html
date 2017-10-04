@@ -56,6 +56,7 @@
 			var userId;
 			var subsidiaryId;
 			var supervisionCompanyId;
+			var companyName;
 
 			//mui初始化
 			mui.init({
@@ -100,6 +101,7 @@
 				userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
 				supervisionCompanyId = self.supervisionCompanyId;
+				companyName = self.companyName;
 				for(var i = 0; i < 4; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
@@ -107,7 +109,8 @@
 								userClass:userClass,
 								companyId:companyId,
 								subsidiaryId:subsidiaryId,
-								supervisionCompanyId:supervisionCompanyId
+								supervisionCompanyId:supervisionCompanyId,
+								companyName:companyName
 							});
 					if(i > 0) {
 						sub.hide();
