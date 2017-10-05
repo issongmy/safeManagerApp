@@ -73,33 +73,13 @@
 							var dangerList = extend.list;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
-								var level = dangerList[i].severity;
-								var state = dangerList[i].currentState;
-								if(state == "1") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "提交审核中");
-									} else {
-										addDanger(dangerId, "一般隐患", "提交审核中");
-									}
-								} else if(state == "2") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改中");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改中");
-									}
-								} else if(state == "3") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改审核中");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改审核中");
-									}
+								var projectName = dangerList[i].subsidiary.subsidiaryName;
+								var reason = dangerList[i].reason;
+								if(reason == "1") {
+									addDanger(dangerId, projectName, "重大隐患")
 								} else {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改完毕");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改完毕");
-									}
-								}
+									addDanger(dangerId, projectName, "逾期未整改");
+								} 
 							}
 						},
 						error: function() {
@@ -122,33 +102,13 @@
 							var dangerList = extend.list;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
-								var level = dangerList[i].severity;
-								var state = dangerList[i].currentState;
-								if(state == "1") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "提交审核中");
-									} else {
-										addDanger(dangerId, "一般隐患", "提交审核中");
-									}
-								} else if(state == "2") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改中");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改中");
-									}
-								} else if(state == "3") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改审核中");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改审核中");
-									}
+								var projectName = dangerList[i].subsidiary.subsidiaryName;
+								var reason = dangerList[i].reason;
+								if(reason == "1") {
+									addDanger(dangerId, projectName, "重大隐患")
 								} else {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改完毕");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改完毕");
-									}
-								}
+									addDanger(dangerId, projectName, "逾期未整改");
+								} 
 							}
 						},
 						error: function() {
@@ -170,33 +130,13 @@
 							var dangerList = extend.list;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
-								var level = dangerList[i].severity;
-								var state = dangerList[i].currentState;
-								if(state == "1") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "提交审核中");
-									} else {
-										addDanger(dangerId, "一般隐患", "提交审核中");
-									}
-								} else if(state == "2") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改中");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改中");
-									}
-								} else if(state == "3") {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改审核中");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改审核中");
-									}
+								var projectName = dangerList[i].subsidiary.subsidiaryName;
+								var reason = dangerList[i].reason;
+								if(reason == "1") {
+									addDanger(dangerId, projectName, "重大隐患")
 								} else {
-									if(level) {
-										addDanger(dangerId, "重大隐患", "整改完毕");
-									} else {
-										addDanger(dangerId, "一般隐患", "整改完毕");
-									}
-								}
+									addDanger(dangerId, projectName, "逾期未整改");
+								} 
 							}
 						},
 						error: function() {
@@ -219,14 +159,15 @@
 			
 			mui("#main").on("tap", ".mui-card", function(){
 				mui.openWindow({
-					url: "safe_handle_table.html",
-					id: "safe_handle_table",
+					url: "safe_handle_table_.html",
+					id: "safe_handle_table_",
 					extras: {
+						
 					}
 				});
 			});
 			
-			function addDanger(proName) {
+			function addDanger(dangerId, proName, reason) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
@@ -234,7 +175,7 @@
 				li.setAttribute("class", "mui-card");
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
-				con_inner.setAttribute("id", "hidden_danger_data");
+				con_inner.setAttribute("id", dangerId);
 				var p_pro = document.createElement("p");
 				var p_rea = document.createElement("p");
 				var p_sit = document.createElement("p");
@@ -250,9 +191,7 @@
 				span_pro.innerHTML = proName;
 				var span_rea = document.createElement("span");
 				span_rea.setAttribute("id", "span_right");
-				str_danger = "重大隐患";
-				str_overdate = "逾期未整改";
-				span_rea.innerHTML = str_danger;
+				span_rea.innerHTML = reason;
 				p_rea.appendChild(span_rea);
 				p_pro.appendChild(span_pro);
 				p_sit.appendChild(span_sit);

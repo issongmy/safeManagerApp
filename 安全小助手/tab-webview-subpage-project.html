@@ -41,6 +41,8 @@
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var companyName;
+			var subsidiaryName;
+			var supervisionCompanyName;
 			var baseUrl = "http://123.206.87.22";
 
 			var dayDangerNum;
@@ -70,10 +72,13 @@
 				subsidiaryId = self.subsidiaryId;
 				supervisionCompanyId = self.supervisionCompanyId;
 				companyName = self.companyName;
+				subsidiaryName = self.subsidiaryName;
+				supervisionCompanyName = self.supervisionCompanyName;
 				console.log(userClass);
 				var mark = false;
 				if(userClass == "1") {
 					var request_url = baseUrl + "/subsidiary/dangerCount?subsidiaryId=" + subsidiaryId;
+					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
@@ -82,8 +87,12 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
-							addProject("测试");
+							console.log(extend.monthAdded);
+							dayDangerNum = extend.todayAdded;
+							dayBigDangerNum = extend.todayImportant;
+							monthDangerNum = extend.monthAdded;
+							monthBigDangerNum = extend.monthImportant;
+							addProject(subsidiaryName, subsidiaryId);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -99,7 +108,7 @@
 					mui.ajax(request_url, {
 						type: "get",
 						success: function(result) {
-							addSupervision("中建一局");
+							addSupervision(supervisionCompanyName);
 							var extend = eval(result.extend);
 							var projectList = extend.subsidiaryList;
 							console.log(projectList.length);
@@ -190,7 +199,7 @@
 									plus.nativeUI.toast("请求失败!");
 								}
 							});
-							setTimeout(function(){
+							setTimeout(function() {
 								var request_url = baseUrl + "/company/units?companyId=" + companyId;
 								var headers = {
 									'Accept': 'application/json',
@@ -210,7 +219,7 @@
 										plus.nativeUI.toast("请求失败!");
 									}
 								});
-							},500);
+							}, 500);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -220,26 +229,30 @@
 			});
 
 			mui('#main').on('tap', '.mui-card', function(e) {
-					var node = this.childNodes[0].childNodes[0];
-					var name = node.id;
-					var tmp = name.split(",");
-					if(tmp[1] == "2" || tmp[1] == "3"){
-						mui.openWindow({
-							url: "project_content_.html",
-							id: "project_content_",
-							extras: {
-								id: name.replace(/^\s+|\s+$/g, "")
-							}
-						});
-					}else{
-						mui.openWindow({
-							url: "project_content.html",
-							id: "project_content",
-							extras: {
-								id: name.replace(/^\s+|\s+$/g, "")
-							}
-						});
-					}
+				var node = this.childNodes[0].childNodes[0];
+				var name = node.id;
+				var tmp = name.split(",");
+				if(tmp[1] == "2" || tmp[1] == "3") {
+					mui.openWindow({
+						url: "project_content_.html",
+						id: "project_content_",
+						extras: {
+							id_: tmp[0],
+							class_: tmp[1]
+						}
+					});
+				} else {
+					mui.openWindow({
+						url: "project_content.html",
+						id: "project_content",
+						extras: {
+							id_: tmp[0],
+							class_: tmp[1],
+							userId: tmp[2],
+							companyId: tmp[3]
+						}
+					});
+				}
 			});
 
 			String.prototype.format = function() {
@@ -266,7 +279,7 @@
 				li.setAttribute("class", "mui-card");
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
-				con_inner.setAttribute("id", proId + "," + "1");
+				con_inner.setAttribute("id", proId + "," + "1" + "," + userId + "," + companyId);
 				con_inner.innerHTML = "项目:" + "<span class=\"Number\">" + proName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
@@ -310,7 +323,7 @@
 				li.setAttribute("class", "mui-card");
 				con.setAttribute("class", "mui-card-content");
 				con_inner.setAttribute("class", "mui-card-content-inner");
-				con_inner.setAttribute("id", superId+ "," + "3");
+				con_inner.setAttribute("id", superId + "," + "3");
 				con_inner.innerHTML = "监理:" + "," + superName;
 				con.appendChild(con_inner);
 				li.appendChild(con);

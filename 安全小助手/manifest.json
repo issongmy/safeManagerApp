@@ -389,7 +389,8 @@
 					"js/bmob-min.js",
 					"css/feedback.css",
 					"js/feedback.js",
-					"js/photo.js"
+					"js/photo.js",
+					"safe_handle_table.html"
 				],
 				"refer": [
 					"tab-webview-subpage-project.html",
@@ -587,6 +588,14 @@
 				"priority": 0
 			},
 			"danger-state_.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"tab-top-subpage-history.html": {
 				"resources": [
 					"js/mui.min.js",
 					"css/mui.min.css"

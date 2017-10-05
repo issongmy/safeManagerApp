@@ -8,7 +8,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
-		<style>			
+		<style>
 			.mui-bar {
 				background: #4cd964;
 			}
@@ -32,17 +32,63 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
+			var id_;
+			var baseUrl = "http://123.206.87.22";
 			mui.init();
+
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
+				id_ = self.id_;
+				var request_url = baseUrl + "/subsidiary/monthDangers?subsidiaryId=" + id_;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var dangerList = extend.list;
+						for(var i = 0; i < dangerList.length; i++) {
+							var dangerId = dangerList[i].dangerId;
+							var position = dangerList[i].dangerPosition;
+							var level = dangerList[i].severity;
+							var state = dangerList[i].currentState;
+							if(state == "1") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "提交审核中");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "提交审核中");
+								}
+							} else if(state == "2") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改中");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改中");
+								}
+							} else if(state == "3") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改审核中");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改审核中");
+								}
+							} else {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改完毕");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改完毕");
+								}
+							}
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
 
-				addDanger("20170701", "隐患部位", "一般隐患", "整改中");
-				addDanger("20170702", "隐患部位", "一般隐患", "整改中");
-				addDanger("20170703", "隐患部位", "重大隐患", "整改中");
-				addDanger("20170704", "隐患部位", "一般隐患", "已整改");
-				addDanger("20170705", "隐患部位", "一般隐患", "已整改");
-				addDanger("20170706", "隐患部位", "重大隐患", "已整改");
 			});
+
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
 				var id = node[0].getAttribute("id");
@@ -50,12 +96,12 @@
 					url: "safe_handle_table_.html",
 					id: "safe_handle_table_",
 					extras: {
-						id: id
+						id_: id_
 					}
 				});
 			});
 
-			function addDanger(dangerNum, dangerPos,level, state) {
+			function addDanger(dangerNum, dangerPos, level, state) {
 				var ul = document.getElementById("dangerList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");

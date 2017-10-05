@@ -190,12 +190,14 @@
 			"js/bmob-min.js",
 			"css/feedback.css",
 			"js/feedback.js",
-			"js/photo.js"
+			"js/photo.js",
+			"safe_handle_table.html"
 		],
 		"refer": [
 			"tab-webview-subpage-project.html",
 			"tab-webview-main.html",
-			"tab-webview-subpage-focus.html"
+			"tab-webview-subpage-focus.html",
+			"safe_handle_table.html"
 		]
 	},
 	"activity_content.html": {
@@ -378,6 +380,12 @@
 		]
 	},
 	"danger-state_.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"tab-top-subpage-history.html": {
 		"resources": [
 			"js/mui.min.js",
 			"css/mui.min.css"

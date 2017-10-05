@@ -18,6 +18,7 @@
 			
 			.pic {
 				margin-right: 10px;
+				margin:0 auto;
 			}
 			
 			p{
@@ -91,7 +92,8 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
-			var dangerId;
+			var id_;
+			var class_;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
 
@@ -107,7 +109,10 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				dangerId = self.id;
+				id_ = self.id_;
+				class_ = self.class_;
+				console.log(id_);
+				console.log(class_);
 			});
 			mui.init();
 

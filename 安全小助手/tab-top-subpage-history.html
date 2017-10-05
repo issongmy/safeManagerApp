@@ -11,7 +11,93 @@
 	<body>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			var id_;
+			var baseUrl = "http://123.206.87.22";
+			mui.init();
+
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				id_ = self.id_;
+				var request_url = baseUrl + "/subsidiary/historyDangers?subsidiaryId=" + id_;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var dangerList = extend.list;
+						for(var i = 0; i < dangerList.length; i++) {
+							var dangerId = dangerList[i].dangerId;
+							var position = dangerList[i].dangerPosition;
+							var level = dangerList[i].severity;
+							var state = dangerList[i].currentState;
+							if(state == "1") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "提交审核中");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "提交审核中");
+								}
+							} else if(state == "2") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改中");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改中");
+								}
+							} else if(state == "3") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改审核中");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改审核中");
+								}
+							} else {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改完毕");
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改完毕");
+								}
+							}
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+
+			});
+
+			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+				var node = this.childNodes;
+				var id = node[0].getAttribute("id");
+				mui.openWindow({
+					url: "safe_handle_table_.html",
+					id: "safe_handle_table_",
+					extras: {
+						id_: id_
+					}
+				});
+			});
+
+			function addDanger(dangerNum, dangerPos, level, state) {
+				var ul = document.getElementById("dangerList");
+				var liObj = document.createElement("li");
+				var a = document.createElement("p");
+				var span_num = document.createElement("span");
+				span_num.setAttribute("id", "span_left");
+				span_num.innerHTML = dangerNum + " " + dangerPos;
+				var span_other = document.createElement("span");
+				span_other.setAttribute("id", "span_right");
+				span_other.innerHTML = level + " " + state;
+				liObj.setAttribute("class", "mui-table-view-cell");
+				a.setAttribute("class", "mui-navigate-right");
+				a.setAttribute("id", dangerNum);
+				a.appendChild(span_num);
+				a.appendChild(span_other);
+				liObj.appendChild(a);
+				ul.appendChild(liObj);
+			}
 		</script>
 	</body>
 

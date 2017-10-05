@@ -136,14 +136,19 @@
 		<script src="js/bomb.js"></script>
 		<script src="js/bmobSocketIo.js"></script>
 		<script type="text/javascript">
-			var queryObject;
-			var project_name;
+			var id_;
+			var class_;
+			var userId;
+			var companyId;
 
 			mui.init();
 
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
-				project_name = self.project_name;
+				id_ = self.id_;
+				class_ = self.class_;
+				userId = self.userId;
+				companyId = self.companyId;
 				var old_back = mui.back;
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
@@ -156,13 +161,15 @@
 						id: "tab-top-subpage-month.html",
 						url: "tab-top-subpage-month.html",
 						extras: {
-							
+							id_:id_,
+							class_:class_
 						}
 					}, {
 						id: "tab-top-subpage-history.html",
 						url: "tab-top-subpage-history.html",
 						extras: {
-							
+							id_:id_,
+							class_:class_
 						}
 					}],
 					onChange: function(obj) {
@@ -190,12 +197,14 @@
 			});
 
 			document.getElementById("submit").addEventListener("tap", function() {
-
 					mui.openWindow({
 						url: "safe_handle_table.html",
 						id: "safe_handle_table",
 						extras: {
-							id: ""
+							id_:id_,
+							class_:class_,
+							userId:userId,
+							companyId:companyId
 						}
 					});
 			});
