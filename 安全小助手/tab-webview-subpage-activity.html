@@ -38,6 +38,7 @@
 			var userId;
 			var subsidiaryId;
 			var supervisionCompanyId;
+			var baseUrl = "http://123.206.87.22";
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -55,75 +56,36 @@
 					return false;
 				};
 				var self = plus.webview.currentWebview();
-				mycompany = self.company;
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var Activity = Bmob.Object.extend("Activity");
-				var query = new Bmob.Query(Activity);
-				query.find({
-					success: function(results) {
-						actArray = results;
-						if(results.length > 6) {
-							for(var i = 0; i < 6; i++) {
-								var object = results[i];
-								if(object !== undefined)
-									addAct(object.get("title"), object.get("desc"), object.get("content"));
-							}
-						} else {
-							for(var i = 0; i < results.length; i++) {
-								var object = results[i];
-								if(object !== undefined)
-									addAct(object.get("title"), object.get("desc"), object.get("content"));
-							}
+				userClass = self.userClass;
+				companyId = self.companyId;
+				userId = self.userId;
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
+				var request_url = baseUrl + "/user/activityList?companyId=" + companyId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8'
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var actList = extend.list;
+						for(var i=0;i<actList.length;i++){
+							var activityId = actList[i].activityId;
+							var activityDate = actList[i].activityDate;
+							var activityTitle = actList[i].activityTitle;
+							var activityContent = actList[i].activityContent;
+							var activityCategoryId = actList[i].activityCategoryId;					
+							addAct(activityTitle, activityDate, activityContent);
 						}
 					},
-					error: function(error) {
-						plus.nativeUI.toast("初始化失败");
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
 					}
-				});
+					});
 			});
-
-			mui.init({
-				swipeBack: false,
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				},
-			});
-
-			/**
-			 * 下拉刷新具体业务实现
-			 */
-			function pulldownRefresh() {
-				setTimeout(function() {
-					location.reload();
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 500);
-			}
-			var count = 0;
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((mark)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 3; i < len; i++) {
-						if(orderArray[i] == undefined) {
-							mark = true;
-							break;
-						}
-						var li = addOrderLi(orderArray[i].get("account"), orderArray[i].get("demand"), orderArray[i].get("date"), orderArray[i].get("adress"));
-						table.appendChild(li);
-					}
-				}, 1000);
-			}
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
@@ -140,7 +102,7 @@
 				});
 			});
 
-			function addAct(title, desc, content) {
+			function addAct(title, date, content) {
 				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -150,13 +112,24 @@
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", title);
 				a.innerHTML = title;
-				p1.innerHTML = desc;
+				p1.innerHTML = convUnixTimestamp(date);
 				p2.innerHTML = content;
 				p2.setAttribute("hidden", 'true');
 				liObj.appendChild(a);
 				liObj.appendChild(p1);
 				liObj.appendChild(p2);
 				ul.appendChild(liObj);
+			}
+			
+			function convUnixTimestamp(timeStamp) {
+				var date = new Date(parseInt(timeStamp));
+				var Y = date.getFullYear() + '-';
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+				var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+				var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+				return Y + M + D + h + m + s;
 			}
 		</script>
 	</body>

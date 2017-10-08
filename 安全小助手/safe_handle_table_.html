@@ -18,15 +18,15 @@
 			
 			.pic {
 				margin-right: 10px;
-				margin:0 auto;
+				margin: 0 auto;
 			}
 			
-			p{
+			p {
 				color: black;
 				font-size: 18px;
 			}
 			
-			.row{
+			.row {
 				height: 100px;
 			}
 		</style>
@@ -39,10 +39,6 @@
 		</header>
 		<div id="main" class="mui-content mui-scroll-wrapper">
 			<form class="mui-input-group">
-				<div class="mui-input-row">
-					<label>隐患名称</label>
-					<input id='name' type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
 				<div class="mui-input-row">
 					<label>隐患编号</label>
 					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
@@ -92,7 +88,7 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
-			var id_;
+			var dangerId;
 			var class_;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
@@ -101,7 +97,7 @@
 				mark = true;
 				imgContenter.removeChild(this);
 			});
-			
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -109,10 +105,34 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				id_ = self.id_;
-				class_ = self.class_;
-				console.log(id_);
-				console.log(class_);
+				var dangerNumber = self.dangerNumber;
+				var checkTime = self.checkTime;
+				var checkUser = self.checkUser;
+				var state = self.state;
+				var level = self.level;
+				var description = self.description;
+				var rectificationMeasures = self.rectificationMeasures;
+				var rectificationPeriod = self.rectificationPeriod;
+				var responsibilityUser = self.responsibilityUser;
+				var dangerImgPath = self.dangerImgPath;
+				document.getElementById("num").value = dangerNumber;
+				if(checkTime == "")
+					document.getElementById("time").value = "";
+				else{
+					document.getElementById("time").value = convUnixTimestamp(checkTime);
+				}
+				document.getElementById("people_name").value = checkUser;
+				document.getElementById("state").value = state;
+				document.getElementById("class").value = level;
+				document.getElementById("description").value = description;
+				document.getElementById("view").value = rectificationMeasures;
+				if(rectificationPeriod == "") 
+					document.getElementById("deadline").value = "";
+				else{
+					document.getElementById("deadline").value = convUnixTimestamp(rectificationPeriod);
+				}
+				document.getElementById("res_name").value = responsibilityUser;
+				addImg(dangerImgPath);
 			});
 			mui.init();
 
@@ -127,6 +147,17 @@
 				mainimg.width = 80;
 				mainimg.height = 80;
 				imgContenter.appendChild(mainimg);
+			}
+
+			function convUnixTimestamp(timeStamp) {
+				var date = new Date(parseInt(timeStamp));
+				var Y = date.getFullYear() + '-';
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+				var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+				var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+				return Y + M + D + h + m + s;
 			}
 		</script>
 	</body>

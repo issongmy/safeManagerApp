@@ -29,147 +29,76 @@
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">新的审批</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<ul id="activity" class="mui-table-view mui-table-view-chevron">
-				</ul>
-			</div>
+		<div id="main" class="mui-content">
+			
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.picker.js"></script>
 		<script src="js/mui.poppicker.js"></script>
 		<script src="js/bmob-min.js">
-			//Bmob.initialize("a1f13b7b63583b190ed6892a0488a02b","38b375d47da756112ccc020e72075385")
 		</script>
 		<script src="js/bomb.js"></script>
 		<script type="text/javascript">
-			var mark = true;
-			var actArray;
-			var mycompany;
+			var userClass;
+			var companyId;
+			var userId;
+			var subsidiaryId;
+			var supervisionCompanyId;
+			var companyName;
+			var subsidiaryName;
+			var supervisionCompanyName;
+			var baseUrl = "http://123.206.87.22";
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
-					backButtonPress++;
-					if(backButtonPress > 1) {
-						plus.runtime.quit();
-					} else {
-						plus.nativeUI.toast('再按一次退出应用');
-					}
-					setTimeout(function() {
-						backButtonPress = 0;
-					}, 1000);
-					return false;
+					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				mycompany = self.company;
-				Bmob.initialize("3af36b72fde1e7e82511f7fbff079aad", "17b6f310b41b257cf6c73b4037ad6e41");
-				var Activity = Bmob.Object.extend("Activity");
-				var query = new Bmob.Query(Activity);
-				query.find({
-					success: function(results) {
-						actArray = results;
-						if(results.length > 6) {
-							for(var i = 0; i < 6; i++) {
-								var object = results[i];
-								if(object !== undefined)
-									addAct(object.get("title"), object.get("desc"), object.get("content"));
-							}
-						} else {
-							for(var i = 0; i < results.length; i++) {
-								var object = results[i];
-								if(object !== undefined)
-									addAct(object.get("title"), object.get("desc"), object.get("content"));
-							}
-						}
-					},
-					error: function(error) {
-						plus.nativeUI.toast("初始化失败");
-					}
-				});
+				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
+				companyId = self.companyId;
+				userId = self.userId;
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
+				companyName = self.companyName;
+				subsidiaryName = self.subsidiaryName;
+				supervisionCompanyName = self.supervisionCompanyName;
+				console.log(userClass);
+				addItem("安全隐患", "1");
+				if(userClass == "2" || userClass == "3" || userClass == "301" || userClass == "401"){
+					addItem("三级教育", "2");
+					addItem("安全教育", "3");
+				}
+				if(userClass == "2" || userClass == "401")
+					addItem("安全基本资料", "4");
 			});
-
-			mui.init({
-				swipeBack: false,
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				},
-				gestureConfig: {
-					tap: true, //默认为true
-					doubletap: true, //默认为false
-					longtap: true, //默认为false
-					swipe: true, //默认为true
-					drag: true, //默认为true
-					hold: false, //默认为false，不监听
-					release: false //默认为false，不监听
+			
+			mui("#main").on("tap", ".mui-card-content-inner", function(){
+				var class_ = this.id;
+				if(class_ == "1"){
+					
+				}else if(class_ == "2"){
+					
+				}else if(class_ == "3"){
+					
+				}else{
+					
 				}
 			});
-
-			/**
-			 * 下拉刷新具体业务实现
-			 */
-			function pulldownRefresh() {
-				setTimeout(function() {
-					location.reload();
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 500);
-			}
-			var count = 0;
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((mark)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 3; i < len; i++) {
-						if(orderArray[i] == undefined) {
-							mark = true;
-							break;
-						}
-						var li = addOrderLi(orderArray[i].get("account"), orderArray[i].get("demand"), orderArray[i].get("date"), orderArray[i].get("adress"));
-						table.appendChild(li);
-					}
-				}, 1000);
-			}
 			
-			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
-				var node = this.childNodes;
-				var title = node[0].getAttribute("id");
-//				var desc = node[1].innerHTML;
-				var content = node[1].innerHTML;
-				mui.openWindow({
-					url: "activity_approve.html",
-					id: "activity_approve.html",
-					extras: {
-						title: title,
-						content: content
-					}
-				});
-			});
-
-			function addAct(title, desc, content) {
-				var ul = document.getElementById("activity");
-				var liObj = document.createElement("li");
-				var a = document.createElement("p");
-				var p2 = document.createElement("p");
-				liObj.setAttribute("class", "mui-table-view-cell");
-				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", title);
-				a.innerHTML = desc;
-				p2.innerHTML = content;
-				p2.setAttribute("hidden", 'true');
-				liObj.appendChild(a);
-				liObj.appendChild(p2);
-				ul.appendChild(liObj);
+			function addItem(itemName, class_) {
+				var ul = document.getElementById("main");
+				var li = document.createElement("div");
+				var con = document.createElement("div");
+				var con_inner = document.createElement("div");
+				li.setAttribute("class", "mui-card");
+				con.setAttribute("class", "mui-card-content-inner");
+				con.setAttribute("id", class_);
+				con.innerHTML = itemName;
+				li.appendChild(con);
+				ul.appendChild(li);
 			}
 			
 			document.getElementById("close").addEventListener("tap", function(){

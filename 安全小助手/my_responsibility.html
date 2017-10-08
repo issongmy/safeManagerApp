@@ -13,13 +13,12 @@
 				background: #4cd964;
 			}
 			
-			.item-class {
-				float: right;
+			#span_left {
+				float: left
 			}
 			
-			.mui-navigate-right {
-				color: black;
-				font-size: medium;
+			#span_right {
+				float: right
 			}
 		</style>
 	</head>
@@ -43,17 +42,21 @@
 		</script>
 		<script src="js/bomb.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			baseUrl = "http://123.206.87.22";
+			mui.init();
 			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					plus.webview.currentWebview().close();
+				};
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
-				var ompanyId = self.companyId;
+				var companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
-				console.log(userId);
-				var request_url = baseUrl + "/user/responsibility?userId=" + userId;
+				var request_url = baseUrl + "/user/checkDangers?userId=" + userId;
 				console.log(request_url);
 				var headers = {
 					'Accept': 'application/json',
@@ -62,36 +65,52 @@
 				mui.ajax(request_url, {
 					type: "get",
 					success: function(result) {
-						console.log(result.length);
 						var extend = eval(result.extend);
 						var dangerList = extend.list;
 						for(var i = 0; i < dangerList.length; i++) {
 							var dangerId = dangerList[i].dangerId;
+							var position = dangerList[i].dangerPosition;
 							var level = dangerList[i].severity;
 							var state = dangerList[i].currentState;
+							var description = dangerList[i].dangerDescription;
+							var rectificationMeasures = dangerList[i].rectificationMeasures;
+							var rectificationPeriod = dangerList[i].rectificationPeriod;
+							var dangerNumber = dangerList[i].dangerNumber;
+							var checkTime = dangerList[i].checkTime;
+							var checkUser = dangerList[i].checkUser;
+							var responsibilityUser = dangerList[i].responsibleUserId;
+							var dangerImgPath = dangerList[i].dangerImgPath;
 							if(state == "1") {
 								if(level) {
-									addDanger(dangerId, "重大隐患", "提交审核中");
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								} else {
-									addDanger(dangerId, "一般隐患", "提交审核中");
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								}
 							} else if(state == "2") {
 								if(level) {
-									addDanger(dangerId, "重大隐患", "整改中");
+									addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								} else {
-									addDanger(dangerId, "一般隐患", "整改中");
+									addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								}
 							} else if(state == "3") {
 								if(level) {
-									addDanger(dangerId, "重大隐患", "整改审核中");
+									addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								} else {
-									addDanger(dangerId, "一般隐患", "整改审核中");
+									addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								}
 							} else {
 								if(level) {
-									addDanger(dangerId, "重大隐患", "整改完毕");
+									addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								} else {
-									addDanger(dangerId, "一般隐患", "整改完毕");
+									addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
 								}
 							}
 						}
@@ -104,18 +123,38 @@
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
-				var id = node[0].getAttribute("id");
+				var dangerNumber = node[0].value;
+				var checkTime = node[1].value;
+				var checkUser = node[2].value;
+				var state = node[3].value;
+				var level = node[4].value;
+				var description = node[5].value;
+				var rectificationMeasures = node[6].value;
+				var rectificationPeriod = node[7].value;
+				var responsibilityUser = node[8].value;
+				var dangerImgPath = node[9].value;
 				mui.openWindow({
-					url: "safe_handle_table.html",
-					id: "safe_handle_table",
+					url: "safe_handle_table_.html",
+					id: "safe_handle_table_",
 					extras: {
-						id: id
+						dangerNumber,
+						checkTime, 
+						checkUser,
+						state, 
+						level,
+						description,
+						rectificationMeasures,
+						rectificationPeriod, 
+						responsibilityUser,
+						dangerImgPath
 					}
 				});
 			});
 
-			function addDanger(dangerNum, level, state) {
-				var ul = document.getElementById("dangerList");
+			function addDanger(dangerNum, dangerPos, level, state, dangerNumber,
+				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath) {
+				var main = document.getElementById("main");					
+				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
@@ -129,13 +168,63 @@
 				a.setAttribute("id", dangerNum);
 				a.appendChild(span_num);
 				a.appendChild(span_other);
+				var hidden_input = document.createElement("input");
+				hidden_input.setAttribute("type", "hidden");
+				hidden_input.setAttribute("id", "dangerNumber");
+				hidden_input.setAttribute("value", dangerNumber);
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "checkTime";
+				hidden_input.value = checkTime;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "checkUser";
+				hidden_input.value = checkUser;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "state";
+				hidden_input.value = state;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "level";
+				hidden_input.value = level;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "description";
+				hidden_input.value = description;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "rectificationMeasures";
+				hidden_input.value = rectificationMeasures;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "rectificationPeriod";
+				hidden_input.value = rectificationPeriod;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "responsibilityUser";
+				hidden_input.value = responsibilityUser;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "dangerImgPath";
+				hidden_input.value = dangerImgPath;
+				liObj.appendChild(hidden_input);				
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-			
-			document.getElementById("close").addEventListener("tap", function() {
-				plus.webview.currentWebview().close();
-			});
+				
+		document.getElementById("close").addEventListener("tap", function() {
+			plus.webview.currentWebview().close();
+		});	
 		</script>
 	</body>
 

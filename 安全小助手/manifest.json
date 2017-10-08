@@ -332,7 +332,8 @@
 					"js/bmob-min.js"
 				],
 				"refer": [
-					"safe_handle_table.html"
+					"safe_handle_table.html",
+					"safe_handle_table_.html"
 				],
 				"priority": 0
 			},
@@ -390,7 +391,8 @@
 					"css/feedback.css",
 					"js/feedback.js",
 					"js/photo.js",
-					"safe_handle_table.html"
+					"safe_handle_table.html",
+					"js/jquery.js"
 				],
 				"refer": [
 					"tab-webview-subpage-project.html",
@@ -509,7 +511,8 @@
 				],
 				"refer": [
 					"safe_handle_table.html",
-					"activity_approve.html"
+					"activity_approve.html",
+					"safe_handle_table_.html"
 				],
 				"priority": 0
 			},
@@ -520,7 +523,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"safe_handle_table.html"
+					"safe_handle_table.html",
+					"safe_handle_table_.html"
 				],
 				"priority": 0
 			},

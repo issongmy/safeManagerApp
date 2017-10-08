@@ -40,6 +40,11 @@
 			var content;
 			mui.init();
 			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					plus.webview.currentWebview().close();
+				};
 				var titleObj = document.getElementById("title");
 				var contentObj = document.getElementById("content");
 				self = plus.webview.currentWebview();
