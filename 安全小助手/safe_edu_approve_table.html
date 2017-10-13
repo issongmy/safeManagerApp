@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/feedback.css" rel="stylesheet" />
+		<style>
+			.mui-bar {
+				background: #4cd964;
+			}
+			
+			.mui-content-padded {
+				margin-top: 30px;
+			}
+			
+			.pic {
+				margin-right: 10px;
+				margin: 0 auto;
+			}
+			
+			p {
+				color: black;
+				font-size: 18px;
+			}
+			
+			.row {
+				height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">安全教育审批</h1>
+		</header>
+		<div id="main" class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>审批编号</label>
+					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>提交时间</label>
+					<input id='time' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>当前状态</label>
+					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>审批资料</label>
+					<input id='info' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					plus.webview.currentWebview().close();
+				};
+				var self = plus.webview.currentWebview();
+				var companyId = self.companyId;
+				var safetyTestsId = self.safetyTestsId;
+				var uploadTime = self.uploadTime;
+				var currentState = self.currentState;
+				var safetyTestsHtml = self.safetyTestsHtml;
+				document.getElementById("num").value = safetyTestsId;
+				if(checkTime == "")
+					document.getElementById("time").value = "";
+				else{
+					document.getElementById("time").value = convUnixTimestamp(uploadTime);
+				}
+				if(currentState)
+					document.getElementById("state").value = "审核完成";
+				else
+					document.getElementById("state").value = "待审核";
+				document.getElementById("info").value = safetyTestsHtml;
+			});
+			mui.init();
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+			
+			document.getElementById("approve").addEventListener("tap", function() {
+				
+			});
+
+			function convUnixTimestamp(timeStamp) {
+				var date = new Date(parseInt(timeStamp));
+				var Y = date.getFullYear() + '-';
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+				var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+				var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+				return Y + M + D + h + m + s;
+			}
+		</script>
+	</body>
+</html>

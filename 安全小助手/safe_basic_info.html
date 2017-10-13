@@ -27,7 +27,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">新的审批</h1>
+			<h1 class="mui-title">安全基本资料</h1>
 		</header>
 		<div id="main" class="mui-content">
 			
@@ -66,23 +66,19 @@
 				subsidiaryName = self.subsidiaryName;
 				supervisionCompanyName = self.supervisionCompanyName;
 				console.log(userClass);
-				if(userClass=="2" || userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401"){
-					addItem("安全隐患", "1");
-				}
-				if(userClass=="2" || userClass == "201" || userClass == "301" || userClass == "401"){
-					addItem("三级教育", "2");
-					addItem("安全教育", "3");
-				}
-				if(userClass=="2" || userClass == "201" || userClass == "401")
-					addItem("安全基本资料", "4");
+				addItem("组织机构", "1");
+				addItem("岗位职责", "2");
+				addItem("应急预案", "3");
+				addItem("专职人员", "4");
+				addItem("特种人员", "5");
 			});
 			
 			mui("#main").on("tap", ".mui-card-content-inner", function(){
 				var class_ = this.id;
 				if(class_ == "1"){
 					mui.openWindow({
-						url: "safe_danger_approve.html",
-						id: "safe_danger_approve",
+						url: "info_1.html",
+						id: "info_1",
 						extras:{
 							userClass: userClass,
 							companyId: companyId,
@@ -93,8 +89,8 @@
 					});
 				}else if(class_ == "2"){
 					mui.openWindow({
-						url: "three_edu_approve.html",
-						id: "three_edu_approve",
+						url: "info_2.html",
+						id: "info_2",
 						extras:{
 							userClass: userClass,
 							companyId: companyId,
@@ -105,8 +101,20 @@
 					});
 				}else if(class_ == "3"){
 					mui.openWindow({
-						url: "safe_edu_approve.html",
-						id: "safe_edu_approve",
+						url: "info_3.html",
+						id: "info_3",
+						extras:{
+							userClass: userClass,
+							companyId: companyId,
+							userId: userId,
+							subsidiaryId: subsidiaryId,
+							supervisionCompanyId: supervisionCompanyId
+						}
+					});
+				}else if(class_ == "4"){
+					mui.openWindow({
+						url: "info_4.html",
+						id: "info_4",
 						extras:{
 							userClass: userClass,
 							companyId: companyId,
@@ -117,8 +125,8 @@
 					});
 				}else{
 					mui.openWindow({
-						url: "safe_basic_info.html",
-						id: "safe_basic_info",
+						url: "info_5.html",
+						id: "info_5",
 						extras:{
 							userClass: userClass,
 							companyId: companyId,

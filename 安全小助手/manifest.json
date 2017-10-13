@@ -547,7 +547,11 @@
 					"js/bmob-min.js"
 				],
 				"refer": [
-					"activity_approve.html"
+					"activity_approve.html",
+					"safe_danger_approve.html",
+					"three_edu_approve.html",
+					"safe_basic_info.html",
+					"safe_edu_approve.html"
 				],
 				"priority": 0
 			},
@@ -600,6 +604,47 @@
 				"priority": 0
 			},
 			"tab-top-subpage-history.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"safe_danger_approve.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"three_edu_approve.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"safe_basic_info.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/mui.min.js",
+					"js/mui.poppicker.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/bmob-min.js"
+				],
+				"refer": [
+					"safe_danger_approve.html",
+					"three_edu_approve.html"
+				],
+				"priority": 0
+			},
+			"safe_edu_approve.html": {
 				"resources": [
 					"js/mui.min.js",
 					"css/mui.min.css"

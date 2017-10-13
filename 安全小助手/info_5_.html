@@ -34,53 +34,41 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全隐患排查处置表</h1>
+			<h1 class="mui-title">特种人员持证审批</h1>
 		</header>
-		<div id="main" class="mui-content mui-scroll-wrapper">
+		<div id="main" class="mui-content">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
-					<label>隐患编号</label>
-					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>证件号</label>
+					<input id='id' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
-					<label>检查时间</label>
-					<input id='time' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>姓名</label>
+					<input id='name' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
-					<label>检查人</label>
-					<input id='people_name' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>身份证号</label>
+					<input id='idNumber' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>岗位名称</label>
+					<input id='job' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>资料分类</label>
+					<input id='category' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
 					<label>当前状态</label>
 					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
-					<label>隐患级别</label>
-					<input id='class' type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
-				<div class="mui-input-row">
-					<label>隐患描述</label>
-					<input id='description' type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
-				<div class="mui-input-row">
-					<label>处置意见</label>
-					<input id='view' type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
-				<div class="mui-input-row">
-					<label>处置期限</label>
-					<input id='deadline' type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
-				<div class="mui-input-row">
-					<label>责任人</label>
-					<input id='res_name' type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
 			</form>
 			<p>隐患截图</p>
 			<div id='image-list' class="row image-list">
 			</div>
-			<!--<div class="mui-content-padded">
-				<button id='submit' class="mui-btn mui-btn-block mui-btn-primary" onclick="submit()">提交</button>
-			</div>-->
+			<div class="mui-content-padded">
+				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
+			</div>
 		</div>
 		<script src="js/bmob.js"></script>
 		<script src="js/bmob-min.js"></script>
@@ -104,34 +92,29 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var dangerNumber = self.dangerNumber;
-				var checkTime = self.checkTime;
-				var checkUser = self.checkUser;
-				var state = self.state;
-				var level = self.level;
-				var description = self.description;
-				var rectificationMeasures = self.rectificationMeasures;
-				var rectificationPeriod = self.rectificationPeriod;
-				var responsibilityUser = self.responsibilityUser;
-				var dangerImgPath = self.dangerImgPath;
-				document.getElementById("num").value = dangerNumber;
-				if(checkTime == "")
-					document.getElementById("time").value = "";
-				else{
-					document.getElementById("time").value = convUnixTimestamp(checkTime);
-				}
-				document.getElementById("people_name").value = checkUser;
-				document.getElementById("state").value = state;
-				document.getElementById("class").value = level;
-				document.getElementById("description").value = description;
-				document.getElementById("view").value = rectificationMeasures;
-				if(rectificationPeriod == "") 
-					document.getElementById("deadline").value = "";
-				else{
-					document.getElementById("deadline").value = convUnixTimestamp(rectificationPeriod);
-				}
-				document.getElementById("res_name").value = responsibilityUser;
-				addImg(dangerImgPath);
+				var specialStaffId = self.specialStaffId;
+				var specialStaffImgPath = self.specialStaffImgPath;
+				var job = self.job;
+				var name = self.name;
+				var idNumber = self.idNumber;
+				var specialStaffIdNumber = self.specialStaffIdNumber;
+				var category = self.category;
+				var currentState = self.currentState;
+				document.getElementById("id").value = specialStaffIdNumber;
+				document.getElementById("name").value = name;
+				document.getElementById("job").value = job;
+				document.getElementById("idNumber").value = idNumber;
+				if(category == "1")
+					document.getElementById("category").value = "项目";
+				else if(category == "2")
+					document.getElementById("category").value = "监理";
+				else 
+					document.getElementById("category").value = "业主";
+				if(currentState)
+					document.getElementById("currentState").value = "已发布";
+				else
+					document.getElementById("currentState").value = "未发布";
+				addImg(specialStaffImgPath);
 			});
 			mui.init();
 
