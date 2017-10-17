@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -75,9 +76,17 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
-			var dangerId;
+			var baseUrl = "http://123.206.87.22";;
 			var class_;
 			var mark = false;
+			var specialStaffId;
+			var specialStaffImgPath;
+			var job;
+			var name;
+			var idNumber;
+			var specialStaffIdNumber;
+			var category;
+			var currentState;
 			var imgContenter = document.getElementById("image-list");
 
 			mui('.image-list').on('tap', '.pic', function(e) {
@@ -92,14 +101,14 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var specialStaffId = self.specialStaffId;
-				var specialStaffImgPath = self.specialStaffImgPath;
-				var job = self.job;
-				var name = self.name;
-				var idNumber = self.idNumber;
-				var specialStaffIdNumber = self.specialStaffIdNumber;
-				var category = self.category;
-				var currentState = self.currentState;
+				specialStaffId = self.specialStaffId;
+				specialStaffImgPath = self.specialStaffImgPath;
+				job = self.job;
+				name = self.name;
+				idNumber = self.idNumber;
+				specialStaffIdNumber = self.specialStaffIdNumber;
+				category = self.category;
+				currentState = self.currentState;
 				document.getElementById("id").value = specialStaffIdNumber;
 				document.getElementById("name").value = name;
 				document.getElementById("job").value = job;
@@ -108,7 +117,7 @@
 					document.getElementById("category").value = "项目";
 				else if(category == "2")
 					document.getElementById("category").value = "监理";
-				else 
+				else
 					document.getElementById("category").value = "业主";
 				if(currentState)
 					document.getElementById("currentState").value = "已发布";
@@ -120,6 +129,59 @@
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("approve").addEventListener("tap", function() {
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/specialStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							specialSaffId: specialSaffId,
+							companyId: companyId,
+							job: job,
+							name: name,
+							idNumber: idNumber,
+							specialStaffIdNumber: specialStaffIdNumber
+						},
+						success: function(result) {
+
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
+				if(companyId == "401"){
+					var request_url = baseUrl + "/safetyDirector/specialStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							specialSaffId: specialSaffId,
+							companyId: companyId,
+							job: job,
+							name: name,
+							idNumber: idNumber,
+							specialStaffIdNumber: specialStaffIdNumber
+						},
+						success: function(result) {
+							
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
 			});
 
 			function addImg(path) {
@@ -143,4 +205,5 @@
 			}
 		</script>
 	</body>
+
 </html>

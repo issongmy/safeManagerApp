@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -61,6 +62,13 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
+			var safetyTestsId;
+			var uploadTime;
+			var currentState;
+			var safetyTestsHtml;			
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -68,15 +76,15 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var companyId = self.companyId;
-				var safetyTestsId = self.safetyTestsId;
-				var uploadTime = self.uploadTime;
-				var currentState = self.currentState;
-				var safetyTestsHtml = self.safetyTestsHtml;
+				companyId = self.companyId;
+				safetyTestsId = self.safetyTestsId;
+				uploadTime = self.uploadTime;
+				currentState = self.currentState;
+				safetyTestsHtml = self.safetyTestsHtml;
 				document.getElementById("num").value = safetyTestsId;
 				if(checkTime == "")
 					document.getElementById("time").value = "";
-				else{
+				else {
 					document.getElementById("time").value = convUnixTimestamp(uploadTime);
 				}
 				if(currentState)
@@ -90,9 +98,92 @@
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
-			
+
 			document.getElementById("approve").addEventListener("tap", function() {
-				
+				if(companyId == "101") {
+					var request_url = baseUrl + "/company/safetyTest";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							"testId": safetyTestsId,
+							"companyId ": companyId 
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/safetyTest";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							"testId": safetyTestsId,
+							"companyId ": companyId 
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "301"){
+					var request_url = baseUrl + "/supervision/safetyTest";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							"testId": safetyTestsId,
+							"companyId ": companyId 
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "401"){
+					var request_url = baseUrl + "/safetyDirector/safetyTest";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							"testId": safetyTestsId,
+							"companyId ": companyId 
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
 			});
 
 			function convUnixTimestamp(timeStamp) {
@@ -107,4 +198,5 @@
 			}
 		</script>
 	</body>
+
 </html>

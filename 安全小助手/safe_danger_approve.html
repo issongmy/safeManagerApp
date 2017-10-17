@@ -35,7 +35,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -324,20 +324,23 @@
 				var rectificationPeriod = node[7].value;
 				var responsibilityUser = node[8].value;
 				var dangerImgPath = node[9].value;
+				var dangerId = node[10].id;
 				mui.openWindow({
 					url: "safe_handle_table_approve.html",
 					id: "safe_handle_table_approve",
 					extras: {
-						dangerNumber,
-						checkTime, 
-						checkUser,
-						state, 
-						level,
-						description,
-						rectificationMeasures,
-						rectificationPeriod, 
-						responsibilityUser,
-						dangerImgPath
+						dangerId: dangerId,
+						companyId: companyId,
+						dangerNumber: dangerNumber,
+						checkTime: checkTime, 
+						checkUser: checkUser,
+						state: state, 
+						level: level,
+						description: description,
+						rectificationMeasures: rectificationMeasures,
+						rectificationPeriod: rectificationPeriod, 
+						responsibilityUser: responsibilityUser,
+						dangerImgPath: dangerImgPath
 					}
 				});
 			});

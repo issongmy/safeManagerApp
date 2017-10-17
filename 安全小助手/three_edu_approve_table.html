@@ -61,6 +61,10 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
+			var safetyEduId;			
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -68,8 +72,8 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var companyId = self.companyId;
-				var safetyEduId = self.safetyEduId;
+				companyId = self.companyId;
+				safetyEduId = self.safetyEduId;
 				var uploadTime = self.uploadTime;
 				var currentState = self.currentState;
 				var safetyEduHtml = self.safetyEduHtml;
@@ -92,7 +96,70 @@
 			});
 			
 			document.getElementById("approve").addEventListener("tap", function() {
-				
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/safetyEdu";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							"safetyEduId": safetyEduId,
+							"companyId": companyId
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "301"){
+					var request_url = baseUrl + "/supervision/safetyEdu";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							"safetyEduId": safetyEduId,
+							"companyId": companyId
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "401"){
+					var request_url = baseUrl + "/safetyDirector/safetyEdu";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						success: function(result) {
+						data: {
+							"safetyEduId": safetyEduId,
+							"companyId": companyId
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
 			});
 
 			function convUnixTimestamp(timeStamp) {

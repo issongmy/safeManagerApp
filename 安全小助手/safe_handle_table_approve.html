@@ -88,7 +88,18 @@
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
 			var dangerId;
+			var company;
 			var class_;
+			var dangerNumber;
+			var checkTime;
+			var checkUser;
+			var state;
+			var level;
+			var description;
+			var rectificationMeasures;
+			var rectificationPeriod;
+			var responsibilityUser;
+			var dangerImgPath;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
 
@@ -104,16 +115,18 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var dangerNumber = self.dangerNumber;
-				var checkTime = self.checkTime;
-				var checkUser = self.checkUser;
-				var state = self.state;
-				var level = self.level;
-				var description = self.description;
-				var rectificationMeasures = self.rectificationMeasures;
-				var rectificationPeriod = self.rectificationPeriod;
-				var responsibilityUser = self.responsibilityUser;
-				var dangerImgPath = self.dangerImgPath;
+				dangerNumber = self.dangerNumber;
+				companyId = self.companyId;
+				dangerId = self.dangerId;
+				checkTime = self.checkTime;
+				checkUser = self.checkUser;
+				state = self.state;
+				level = self.level;
+				description = self.description;
+				rectificationMeasures = self.rectificationMeasures;
+				rectificationPeriod = self.rectificationPeriod;
+				responsibilityUser = self.responsibilityUser;
+				dangerImgPath = self.dangerImgPath;
 				document.getElementById("num").value = dangerNumber;
 				if(checkTime == "")
 					document.getElementById("time").value = "";
@@ -137,6 +150,117 @@
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("approve").addEventListener("tap", function() {
+				if(companyId == "101") {
+					var request_url = baseUrl + "/subsidiary/danger";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							"dangerId": dangerId,
+							"companyId": companyId,
+							"dangerNumber": dangerNumber,
+							"severity": level,
+							"dangerDescription": description,
+							"rectificationMeasures": rectificationMeasures,
+							"rectificationPeriod": rectificationPeriod, 
+							"responsibilityUserId": responsibilityUser
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/danger";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							"dangerId": dangerId,
+							"companyId": companyId,
+							"dangerNumber": dangerNumber,
+							"severity": level,
+							"dangerDescription": description,
+							"rectificationMeasures": rectificationMeasures,
+							"rectificationPeriod": rectificationPeriod, 
+							"responsibilityUserId": responsibilityUser							
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "301"){
+					var request_url = baseUrl + "/supervision/danger";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							"dangerId": dangerId,
+							"companyId": companyId,
+							"dangerNumber": dangerNumber,
+							"severity": level,
+							"dangerDescription": description,
+							"rectificationMeasures": rectificationMeasures,
+							"rectificationPeriod": rectificationPeriod, 
+							"responsibilityUserId": responsibilityUser							
+						},						
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "401"){
+					var request_url = baseUrl + "/safetyDirector/danger";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							"dangerId": dangerId,
+							"companyId": companyId,
+							"dangerNumber": dangerNumber,
+							"severity": level,
+							"dangerDescription": description,
+							"rectificationMeasures": rectificationMeasures,
+							"rectificationPeriod": rectificationPeriod, 
+							"responsibilityUserId": responsibilityUser							
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
 			});
 
 			function addImg(path) {

@@ -79,6 +79,13 @@
 			var class_;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
+			var companyId;
+			var majorStaffIdNumber;
+			var job;
+			var name;
+			var idNumber;
+			var majorStaffId;
+			
 
 			mui('.image-list').on('tap', '.pic', function(e) {
 				mark = true;
@@ -92,12 +99,13 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var majorStaffId = self.majorStaffId;
+				companyId = self.companyId;
+				majorStaffId = self.majorStaffId;
 				var majorStaffImgPath = self.majorStaffImgPath;
-				var job = self.job;
-				var name = self.name;
-				var idNumber = self.idNumber;
-				var majorStaffIdNumber = self.majorStaffIdNumber;
+				job = self.job;
+				name = self.name;
+				idNumber = self.idNumber;
+				majorStaffIdNumber = self.majorStaffIdNumber;
 				var category = self.category;
 				var currentState = self.currentState;
 				document.getElementById("id").value = majorStaffIdNumber;
@@ -120,6 +128,59 @@
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
+			});
+			
+			document.getElementById("approve").addEventListener("tap", function(){
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/majorStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							companyId: companyId,
+							majorStaffIdNumber: majorStaffIdNumber,
+							job: job,
+							name: name,
+							idNumber: idNumber,
+							majorStaffId: majorStaffId
+						},
+						success: function(result) {
+
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
+				if(companyId == "401"){
+					var request_url = baseUrl + "/safetyDirector/majorStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							companyId: companyId,
+							majorStaffIdNumber: majorStaffIdNumber,
+							job: job,
+							name: name,
+							idNumber: idNumber,
+							majorStaffId: majorStaffId
+						},
+						success: function(result) {
+							
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
 			});
 
 			function addImg(path) {

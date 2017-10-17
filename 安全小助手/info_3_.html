@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -61,6 +62,10 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
+			var preplanId;
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -68,9 +73,9 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var companyId = self.companyId;
+				companyId = self.companyId;
 				var category = self.category;
-				var preplanId = self.preplanId;
+				preplanId = self.preplanId;
 				var preplanPath = self.preplanPath;
 				var currentState = self.currentState;
 				document.getElementById("num").value = preplanId;
@@ -86,9 +91,50 @@
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
-			
+
 			document.getElementById("approve").addEventListener("tap", function() {
-				
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/preplan";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							companyId: company,
+							preplanId: preplanId
+						},
+						success: function(result) {
+
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
+				if(companyId == "401") {
+					var request_url = baseUrl + "/safetyDirector/preplan";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data:{
+							companyId: company,
+							preplanId: preplanId
+						},
+						success: function(result) {
+
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
 			});
 
 			function convUnixTimestamp(timeStamp) {
@@ -103,4 +149,5 @@
 			}
 		</script>
 	</body>
+
 </html>
