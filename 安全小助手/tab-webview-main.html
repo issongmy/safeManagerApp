@@ -15,7 +15,7 @@
 			}
 			
 			#title_header{
-				background: #4cd964;
+				background: #fff;
 			}
 		</style>
 	</head>
@@ -52,6 +52,7 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			var userClass;
+			var userName;
 			var companyId;
 			var userId;
 			var subsidiaryId;
@@ -98,7 +99,8 @@
 				};
 				var self = plus.webview.currentWebview();
 				userClass = self.userClass;
-				console.log(userClass);
+				userName = self.userName;
+				console.log(userName);
 				companyId = self.companyId;
 				userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
@@ -110,6 +112,7 @@
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
 								userId:userId,
+								userName: userName,
 								userClass:userClass,
 								companyId:companyId,
 								subsidiaryId:subsidiaryId,

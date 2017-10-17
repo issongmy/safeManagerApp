@@ -9,10 +9,10 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style type="text/css">
-			
 			.mui-bar {
 				background: #4cd964;
 			}
+			
 			.item-class {
 				float: right;
 			}
@@ -30,7 +30,7 @@
 			<h1 class="mui-title">安全基本资料</h1>
 		</header>
 		<div id="main" class="mui-content">
-			
+
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.picker.js"></script>
@@ -48,7 +48,7 @@
 			var subsidiaryName;
 			var supervisionCompanyName;
 			var baseUrl = "http://123.206.87.22";
-			
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -72,14 +72,14 @@
 				addItem("专职人员", "4");
 				addItem("特种人员", "5");
 			});
-			
-			mui("#main").on("tap", ".mui-card-content-inner", function(){
+
+			mui("#main").on("tap", ".mui-card-content-inner", function() {
 				var class_ = this.id;
-				if(class_ == "1"){
+				if(class_ == "1") {
 					mui.openWindow({
 						url: "info_1.html",
 						id: "info_1",
-						extras:{
+						extras: {
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -87,11 +87,11 @@
 							supervisionCompanyId: supervisionCompanyId
 						}
 					});
-				}else if(class_ == "2"){
+				} else if(class_ == "2") {
 					mui.openWindow({
 						url: "info_2.html",
 						id: "info_2",
-						extras:{
+						extras: {
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -99,11 +99,11 @@
 							supervisionCompanyId: supervisionCompanyId
 						}
 					});
-				}else if(class_ == "3"){
+				} else if(class_ == "3") {
 					mui.openWindow({
 						url: "info_3.html",
 						id: "info_3",
-						extras:{
+						extras: {
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -111,11 +111,11 @@
 							supervisionCompanyId: supervisionCompanyId
 						}
 					});
-				}else if(class_ == "4"){
+				} else if(class_ == "4") {
 					mui.openWindow({
 						url: "info_4.html",
 						id: "info_4",
-						extras:{
+						extras: {
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -123,11 +123,11 @@
 							supervisionCompanyId: supervisionCompanyId
 						}
 					});
-				}else{
+				} else {
 					mui.openWindow({
 						url: "info_5.html",
 						id: "info_5",
-						extras:{
+						extras: {
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -137,7 +137,7 @@
 					});
 				}
 			});
-			
+
 			function addItem(itemName, class_) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
@@ -150,8 +150,8 @@
 				li.appendChild(con);
 				ul.appendChild(li);
 			}
-			
-			document.getElementById("close").addEventListener("tap", function(){
+
+			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
 		</script>

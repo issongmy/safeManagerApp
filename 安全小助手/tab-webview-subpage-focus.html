@@ -23,6 +23,7 @@
 			var userClass;
 			var companyId;
 			var userId;
+			var userName;
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var baseUrl = "http://123.206.87.22";
@@ -54,6 +55,7 @@
 					return false;
 				};
 				var self = plus.webview.currentWebview();
+				userName = self.userName;
 				userClass = self.userClass;
 				companyId = self.companyId;
 				userId = self.userId;
@@ -287,6 +289,7 @@
 					url: "safe_handle_table_.html",
 					id: "safe_handle_table_",
 					extras: {
+						userName: userName,
 						dangerNumber,
 						checkTime,
 						checkUser,

@@ -35,7 +35,8 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var userName;
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -44,13 +45,12 @@
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
+				userName = self.userName;
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
-				console.log(userId);
 				var request_url = baseUrl + "/user/checkDangers?userId=" + userId;
 				console.log(request_url);
 				var headers = {
@@ -132,6 +132,8 @@
 					url: "safe_handle_table_.html",
 					id: "safe_handle_table_",
 					extras: {
+						mark: "sub",
+						userName: userName,
 						dangerNumber,
 						checkTime, 
 						checkUser,

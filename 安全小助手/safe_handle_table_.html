@@ -104,6 +104,8 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				var userName = self.userName;
+				var mark = self.mark;
 				var dangerNumber = self.dangerNumber;
 				var checkTime = self.checkTime;
 				var checkUser = self.checkUser;
@@ -120,7 +122,11 @@
 				else{
 					document.getElementById("time").value = convUnixTimestamp(checkTime);
 				}
-				document.getElementById("people_name").value = checkUser;
+				if(mark == "sub")
+					document.getElementById("people_name").value = userName;
+				else{
+					document.getElementById("people_name").value = checkUser;
+				}
 				document.getElementById("state").value = state;
 				document.getElementById("class").value = level;
 				document.getElementById("description").value = description;
