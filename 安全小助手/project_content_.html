@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -113,7 +112,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a id="submit" class="mui-btn mui-btn-link mui-pull-right">隐患上传</a>
+			<a id="submit" style="float:right;margin-top: 10px;" >
+				<img id="submit" src="image/share.png" width="18px"/>
+			</a>
 			<h1 class="mui-title">隐患情况</h1>
 		</header>
 		<div id="main" class="mui-content mui-scroll-wrapper">
@@ -126,9 +127,6 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/bmob-min.js"></script>
-		<script src="js/bomb.js"></script>
-		<script src="js/bmobSocketIo.js"></script>
 		<script type="text/javascript">
 			var id_;
 			var class_;

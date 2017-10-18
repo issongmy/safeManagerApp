@@ -1,98 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<title></title>
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
-			html,
-			body {
-				background-color: #fff;
+			.mui-bar {
+				background: #fff;
+			}
+			
+			#span_left {
+				float: left
+			}
+			
+			#span_right {
+				float: right
 			}
 		</style>
 	</head>
 
 	<body>
-		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item" href="danger-state.html">
-				<span class="mui-tab-label">隐患排查</span>
-			</a>
-			<a class="mui-tab-item" href="http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls">
-				<span class="mui-tab-label">安全交底</span>
-			</a>
-			<a class="mui-tab-item" href="http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls">
-				<span class="mui-tab-label">三级教育</span>
-			</a>
-			<a class="mui-tab-item" href="http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.docx">
-				<span class="mui-tab-label">基本资料</span>
-			</a>
-		</nav>
+		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul id="dangerList" class="mui-table-view mui-table-view-chevron">
+				</ul>
+			</div>
+		</div>
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			 //mui初始化
+		<script type="text/javascript">
+			var id_;
+			var baseUrl = "http://123.206.87.22";
 			mui.init();
-			var subpages = ['danger-state.html', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.xls', 'http://dcsapi.com/?k=187082898&url=http://smyz.me/docs/1.docx'];
-			var subpage_style = {
-				top: '5x',
-				bottom: '51px'
-			};
-			
-			var aniShow = {};
-			
+
 			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					plus.webview.currentWebview().close();
+				};
 				var self = plus.webview.currentWebview();
-				var id_ = self.id_;
-				for (var i = 0; i < 4; i++) {
-					var temp = {};
-					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style,{
-						id_:id_
-					});
-					if (i > 0) {
-						sub.hide();
-					}else{
-						temp[subpages[i]] = "true";
-						mui.extend(aniShow,temp);
+				id_ = self.id_;
+				var request_url = baseUrl + "/subsidiary/monthDangers?subsidiaryId=" + id_;
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var dangerList = extend.list;
+						for(var i = 0; i < dangerList.length; i++) {
+							var dangerId = dangerList[i].dangerId;
+							var position = dangerList[i].dangerPosition;
+							var level = dangerList[i].severity;
+							var state = dangerList[i].currentState;
+							var description = dangerList[i].dangerDescription;
+							var rectificationMeasures = dangerList[i].rectificationMeasures;
+							var rectificationPeriod = dangerList[i].rectificationPeriod;
+							var dangerNumber = dangerList[i].dangerNumber;
+							var checkTime = dangerList[i].checkTime;
+							var checkUser = dangerList[i].checkUser;
+							var responsibilityUser = dangerList[i].responsibleUserId;
+							var dangerImgPath = dangerList[i].dangerImgPath;
+							if(state == "1") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								} else {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								}
+							} else if(state == "2") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								}
+							} else if(state == "3") {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								}
+							} else {
+								if(level) {
+									addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								} else {
+									addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+								}
+							}
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
 					}
-					self.append(sub);
-				}
+				});
+
 			});
-			 //当前激活选项
-			var activeTab = subpages[0];
-			 //选项卡点击事件
-			mui('.mui-bar-tab').on('tap', 'a', function(e) {
-				var targetTab = this.getAttribute('href');
-				if (targetTab == activeTab) {
-					return;
-				}
-				if(mui.os.ios||aniShow[targetTab]){
-					plus.webview.show(targetTab);
-				}else{
-					//否则，使用fade-in动画，且保存变量
-					var temp = {};
-					temp[targetTab] = "true";
-					mui.extend(aniShow,temp);
-					plus.webview.show(targetTab,"fade-in",300);
-				}
-				//隐藏当前;
-				plus.webview.hide(activeTab);
-				//更改当前活跃的选项卡
-				activeTab = targetTab;
+
+			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+				var node = this.childNodes;
+				var dangerNumber = node[0].value;
+				var checkTime = node[1].value;
+				var checkUser = node[2].value;
+				var state = node[3].value;
+				var level = node[4].value;
+				var description = node[5].value;
+				var rectificationMeasures = node[6].value;
+				var rectificationPeriod = node[7].value;
+				var responsibilityUser = node[8].value;
+				var dangerImgPath = node[9].value;
+				mui.openWindow({
+					url: "safe_handle_table_.html",
+					id: "safe_handle_table_",
+					extras: {
+						dangerNumber,
+						checkTime, 
+						checkUser,
+						state, 
+						level,
+						description,
+						rectificationMeasures,
+						rectificationPeriod, 
+						responsibilityUser,
+						dangerImgPath
+					}
+				});
 			});
-			 //自定义事件，模拟点击“首页选项卡”
-			document.addEventListener('gohome', function() {
-				var defaultTab = document.getElementById("defaultTab");
-				//模拟首页点击
-				mui.trigger(defaultTab, 'tap');
-				//切换选项卡高亮
-				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-				if (defaultTab !== current) {
-					current.classList.remove('mui-active');
-					defaultTab.classList.add('mui-active');
-				}
-			});
+
+			function addDanger(dangerNum, dangerPos, level, state, dangerNumber,
+				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath) {
+				var main = document.getElementById("main");					
+				var ul = document.getElementById("activity");
+				var liObj = document.createElement("li");
+				var a = document.createElement("p");
+				var span_num = document.createElement("span");
+				span_num.setAttribute("id", "span_left");
+				span_num.innerHTML = dangerNum;
+				var span_other = document.createElement("span");
+				span_other.setAttribute("id", "span_right");
+				span_other.innerHTML = level + " " + state;
+				liObj.setAttribute("class", "mui-table-view-cell");
+				a.setAttribute("class", "mui-navigate-right");
+				a.setAttribute("id", dangerNum);
+				a.appendChild(span_num);
+				a.appendChild(span_other);
+				var hidden_input = document.createElement("input");
+				hidden_input.setAttribute("type", "hidden");
+				hidden_input.setAttribute("id", "dangerNumber");
+				hidden_input.setAttribute("value", dangerNumber);
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "checkTime";
+				hidden_input.value = checkTime;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "checkUser";
+				hidden_input.value = checkUser;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "state";
+				hidden_input.value = state;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "level";
+				hidden_input.value = level;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "description";
+				hidden_input.value = description;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "rectificationMeasures";
+				hidden_input.value = rectificationMeasures;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "rectificationPeriod";
+				hidden_input.value = rectificationPeriod;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "responsibilityUser";
+				hidden_input.value = responsibilityUser;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "dangerImgPath";
+				hidden_input.value = dangerImgPath;
+				liObj.appendChild(hidden_input);				
+				liObj.appendChild(a);
+				ul.appendChild(liObj);
+			}
 		</script>
 	</body>
 

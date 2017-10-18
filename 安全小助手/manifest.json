@@ -372,7 +372,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"js/webviewGroup.js",
-					"tab-top-subpage-month.html"
+					"tab-top-subpage-month.html",
+					"danger-state.html"
 				],
 				"refer": [
 					"safe_info.html",
@@ -492,11 +493,17 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/bmobSocketIo.js",
+					"js/webviewGroup.js",
+					"js/bmob-min.js",
+					"tab-top-subpage-month.html",
+					"image/share.png"
 				],
 				"refer": [
 					"safe_handle_table.html",
-					"safe_handle_table_.html"
+					"safe_handle_table_.html",
+					"tab-top-subpage-history.html"
 				],
 				"priority": 0
 			},
@@ -577,7 +584,8 @@
 					"css/mui.min.css",
 					"js/bmob-min.js",
 					"danger-state.html",
-					"month.html"
+					"month.html",
+					"image/share.png"
 				],
 				"refer": [
 					"safe_handle_table.html",
