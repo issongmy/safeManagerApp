@@ -25,12 +25,19 @@
 					<div class="mui-card-content-inner" id="content">
 					</div>
 				</div>
+				<div class="mui-card-footer">
+					<img src="image/attachment.gif" width="15px">
+					<span style="margin-left: 6px" id="attachment"></span>
+				</div>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			var title;
 			var content;
+			var activityAppendixPath;
+			var date;
+			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -44,15 +51,20 @@
 				title = self.title;
 				titleObj.innerHTML = title;
 				content = self.content;
-				contentObj.innerHTML = content;
+				date = self.date;
+				contentObj.innerHTML = content + "\n" + date;
+				activityAppendixPath = self.activityAppendixPath;
+				if(activityAppendixPath != null){
+					document.getElementById("attachment").innerHTML = activityAppendixPath;
+				}
 			});
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
-
-			document.getElementById("main").addEventListener("swipeleft", function() {
-				plus.webview.currentWebview().close();
+			
+			document.getElementById("attachment").addEventListener("tap", function(){
+				
 			});
 		</script>
 	</body>

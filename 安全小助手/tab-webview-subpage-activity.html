@@ -63,6 +63,7 @@
 				supervisionCompanyId = self.supervisionCompanyId;
 				var request_url = baseUrl + "/user/activityList?companyId=" + companyId;
 				console.log(request_url);
+				console.log(request_url);
 				var headers = {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json;charset=utf-8'
@@ -77,8 +78,9 @@
 							var activityDate = actList[i].activityDate;
 							var activityTitle = actList[i].activityTitle;
 							var activityContent = actList[i].activityContent;
+							var activityAppendixPath = actList[i].activityAppendixPath;
 							var activityCategoryId = actList[i].activityCategoryId;					
-							addAct(activityTitle, activityDate, activityContent);
+							addAct(activityTitle, activityDate, activityContent, activityAppendixPath);
 						}
 					},
 					error: function() {
@@ -90,19 +92,22 @@
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
 				var title = node[0].getAttribute("id");
-				var desc = node[1].innerHTML;
+				var date = node[1].innerHTML;
 				var content = node[2].innerHTML;
+				var activityAppendixPath = node[3].value;
 				mui.openWindow({
 					url: "activity_content.html",
 					id: "activity_content",
 					extras: {
 						title: title,
-						content: content
+						date: date,
+						content: content,
+						activityAppendixPath: activityAppendixPath
 					}
 				});
 			});
 
-			function addAct(title, date, content) {
+			function addAct(title, date, content, activityAppendixPath) {
 				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -118,6 +123,11 @@
 				liObj.appendChild(a);
 				liObj.appendChild(p1);
 				liObj.appendChild(p2);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "activityAppendixPath";
+				hidden_input.value = activityAppendixPath;
+				liObj.appendChild(hidden_input);				
 				ul.appendChild(liObj);
 			}
 			
