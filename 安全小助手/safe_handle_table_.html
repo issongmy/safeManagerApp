@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -81,7 +82,7 @@
 						隐患截图
 					</div>
 				</div>
-				<div id='image-list' class="mui-card-content" >
+				<div id='image-list' class="mui-card-content">
 					<!--<img src="image/Smile.png" alt="" width="100%"/>-->
 				</div>
 				<!--<div class="mui-card-footer">
@@ -91,15 +92,19 @@
 				</div>-->
 			</div>
 		</div>
-		<script src="js/bmob.js"></script>
-		<script src="js/bmob-min.js"></script>
+		<script src="js/mui.zoom.js"></script>
+		<script src="js/mui.previewimage.js"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/mui.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
+			
+//			mui.previewImage();
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -120,41 +125,65 @@
 				var rectificationPeriod = self.rectificationPeriod;
 				var responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
+				console.log(dangerImgPath);
 				if(dangerNumber == "")
 					document.getElementById("num").value = "暂无";
 				else
-					document.getElementById("num").value = dangerNumber; 
+					document.getElementById("num").value = dangerNumber;
 				if(checkTime == "")
 					document.getElementById("time").value = "暂无";
-				else{
+				else {
 					document.getElementById("time").value = convUnixTimestamp(checkTime);
 				}
 				if(mark == "sub")
 					document.getElementById("people_name").value = userName;
-				else{
-					document.getElementById("people_name").value = checkUser;
+				else {
+					var request_url = baseUrl + "/userName?userId=" + checkUser;
+					console.log(request_url);
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							console.log(result.extend.userName);
+							document.getElementById("people_name").value = result.extend.userName;
+						},
+						error: function() {
+
+						}
+					});
 				}
 				document.getElementById("state").value = state;
 				document.getElementById("class").value = level;
-				if(description == ""){
+				if(description == "") {
 					document.getElementById("description").value = "暂无";
-				}
-				else{
+				} else {
 					document.getElementById("description").value = description;
 				}
-				if(rectificationMeasures == ""){
+				if(rectificationMeasures == "") {
 					document.getElementById("view").value = "暂无";
-				}
-				else{
+				} else {
 					document.getElementById("view").value = rectificationMeasures;
 				}
-				if(rectificationPeriod == "") 
+				if(rectificationPeriod == "")
 					document.getElementById("deadline").value = "暂无";
-				else{
+				else {
 					document.getElementById("deadline").value = convUnixTimestamp(rectificationPeriod);
 				}
-				document.getElementById("res_name").value = responsibilityUser;
-//				addImg(dangerImgPath);
+				var request_url = baseUrl + "/userName?userId=" + responsibilityUser;
+				console.log(request_url);
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						document.getElementById("res_name").value = result.extend.userName;
+					},
+					error: function() {
+						
+					}
+				});
+				if(dangerImgPath == null || dangerImgPath == "")
+					addImg("image/zw.jpg");
+				else{
+					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
+				}
 			});
 			mui.init();
 
@@ -166,7 +195,10 @@
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
 				mainimg.src = path;
-				mainimg.width = "100%";
+				mainimg.setAttribute("data-preview-src", "");
+				mainimg.setAttribute("data-preview-group", "1");
+				mainimg.width = document.body.clientWidth;
+				mainimg.height = document.body.clientWidth;
 				imgContenter.appendChild(mainimg);
 			}
 
@@ -182,4 +214,5 @@
 			}
 		</script>
 	</body>
+
 </html>

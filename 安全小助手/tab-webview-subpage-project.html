@@ -35,7 +35,6 @@
 		<script src="js/bomb.js"></script>
 		<script src="js/bmob-min.js"></script>
 		<script>
-//			var count = 0;
 			var pro_info = new Array();
 			var userClass;
 			var companyId;
@@ -189,7 +188,9 @@
 												dayBigDangerNum = extend.todayImportant;
 												monthDangerNum = extend.monthAdded;
 												monthBigDangerNum = extend.monthImportant;
-												addProject(pro_[0], pro_[1]);
+												var projectId = extend.subsidiary.subsidiaryId;
+												var projectName = extend.subsidiary.subsidiaryName;
+												addProject(projectName, projectId);
 											},
 											error: function() {
 												plus.nativeUI.toast("请求失败!");
@@ -222,7 +223,7 @@
 										plus.nativeUI.toast("请求失败!");
 									}
 								});
-							}, 250);
+							}, 500);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");

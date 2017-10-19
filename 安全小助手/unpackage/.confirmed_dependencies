@@ -281,7 +281,8 @@
 		"resources": [
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"danger-state.html"
+			"danger-state.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"danger-state.html",
@@ -366,7 +367,12 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"js/bmob-min.js",
-			"image/Smile.png"
+			"image/Smile.png",
+			"image/zw.jpg",
+			"image/pin.png",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"js/mui.js"
 		]
 	},
 	"project_content_.html": {
@@ -409,7 +415,11 @@
 	"tab-top-subpage-history.html": {
 		"resources": [
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"safe_handle_table_.html"
 		]
 	},
 	"safe_danger_approve.html": {
