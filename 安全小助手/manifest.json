@@ -487,7 +487,9 @@
 					"css/mui.min.css",
 					"danger-state.html"
 				],
-				"refer": [],
+				"refer": [
+					"safe_handle_table_.html"
+				],
 				"priority": 0
 			},
 			"danger-state.html": {
@@ -571,7 +573,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"js/bmob-min.js"
+					"js/bmob-min.js",
+					"image/Smile.png"
 				],
 				"refer": [],
 				"priority": 0

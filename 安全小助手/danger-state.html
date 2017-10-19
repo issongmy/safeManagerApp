@@ -155,7 +155,9 @@
 				var old_back = mui.back;
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
-					plus.webview.currentWebview().close();
+					var self = plus.webview.currentWebview();
+					self.parent().evalJS('mui.back();');
+					self.close();
 					old_back();
 				};
 				var currentId = plus.webview.currentWebview().id;

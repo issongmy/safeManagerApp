@@ -284,7 +284,8 @@
 			"danger-state.html"
 		],
 		"refer": [
-			"danger-state.html"
+			"danger-state.html",
+			"safe_handle_table_.html"
 		]
 	},
 	"danger-state.html": {
@@ -364,7 +365,8 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"js/bmob-min.js"
+			"js/bmob-min.js",
+			"image/Smile.png"
 		]
 	},
 	"project_content_.html": {

@@ -35,6 +35,8 @@
 		<script src="js/bomb.js"></script>
 		<script src="js/bmob-min.js"></script>
 		<script>
+//			var count = 0;
+			var pro_info = new Array();
 			var userClass;
 			var companyId;
 			var userId;
@@ -158,6 +160,7 @@
 							mark = true;
 
 							var request_url = baseUrl + "/company/units?companyId=" + companyId;
+							console.log(request_url);
 							var headers = {
 								'Accept': 'application/json',
 								'Content-Type': 'application/json;charset=utf-8',
@@ -167,13 +170,12 @@
 								success: function(result) {
 									var extend = eval(result.extend);
 									var projectList = extend.subsidiaryList;
-									console.log(projectList.length);
 									var i = 0;
 									for(i = 0; i < projectList.length; i++) {
 										var pro_company = projectList[i].subsidiaryName;
 										var projectId = projectList[i].subsidiaryId;
+										pro_info.push([pro_company, projectId]);
 										var request_url = baseUrl + "/subsidiary/dangerCount?subsidiaryId=" + projectId;
-										console.log(request_url);
 										var headers = {
 											'Accept': 'application/json',
 											'Content-Type': 'application/json;charset=utf-8',
@@ -181,13 +183,13 @@
 										mui.ajax(request_url, {
 											type: "get",
 											success: function(result) {
+												var pro_ = pro_info.shift(); 
 												var extend = eval(result.extend);
-												console.log(extend.monthAdded);
 												dayDangerNum = extend.todayAdded;
 												dayBigDangerNum = extend.todayImportant;
 												monthDangerNum = extend.monthAdded;
 												monthBigDangerNum = extend.monthImportant;
-												addProject(pro_company, projectId);
+												addProject(pro_[0], pro_[1]);
 											},
 											error: function() {
 												plus.nativeUI.toast("请求失败!");
@@ -200,6 +202,7 @@
 								}
 							});
 							setTimeout(function() {
+								
 								var request_url = baseUrl + "/company/units?companyId=" + companyId;
 								var headers = {
 									'Accept': 'application/json',
@@ -260,6 +263,13 @@
 				return this.replace(/\{(\d+)\}/g, function(s, i) {
 					return args[i];
 				});
+			}
+			
+			function assign(a, b, c, d){
+				dayDangerNum = a;
+				dayBigDangerNum = b;
+				monthDangerNum = c;
+				monthBigDangerNum = d;
 			}
 
 			function addTitle(titleName) {
