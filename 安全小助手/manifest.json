@@ -599,7 +599,8 @@
 				],
 				"refer": [
 					"safe_handle_table.html",
-					"tab-top-subpage-month.html"
+					"tab-top-subpage-month.html",
+					"danger-state_.html"
 				],
 				"priority": 0
 			},
@@ -616,7 +617,10 @@
 			"danger-state_.html": {
 				"resources": [
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"image/share.png",
+					"fonts/mui.ttf",
+					"js/webviewGroup.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -1,31 +1,165 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="utf-8">
 		<title></title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
-		<style>			
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
 			.mui-bar {
 				background: #fff;
 			}
 			
-			#span_left {
-				float: left
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
 			}
 			
-			#span_right {
-				float: right
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			a {
+				font-size: 20px;
+				margin-left: 30px;
+			}
+			
+			,
+			#submit {
+				float: right;
 			}
 		</style>
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a id="submit" style="float:right;margin-top: 10px;" >
+				<img id="submit" src="image/share.png" width="18px"/>
+			</a>
+			<h1 class="mui-title">隐患情况</h1>
+		</header>
 		<script src="js/mui.min.js"></script>
+		<script src="js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			var id_;
+			var class_;
+
+			mui.init();
+
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				id_ = self.id_;
+				class_ = self.class_;
+				console.log(id_);
+				console.log(class_);
+				var old_back = mui.back;
+				mui.back = function() {
+					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					var self = plus.webview.currentWebview();
+					self.parent().evalJS('mui.back();');
+					self.close();
+					old_back();
+				};
+			});
+
+			mui.back = function() {
+				var _self = plus.webview.currentWebview();
+				_self.close("auto");
+			}
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("submit").addEventListener("tap", function() {
+					mui.openWindow({
+						url: "safe_handle_table.html",
+						id: "safe_handle_table",
+						extras: {
+							id_: id_,
+							class_:class_
+						}
+					});
+			});
 		</script>
 	</body>
 

@@ -391,7 +391,8 @@
 			"safe_handle_table.html",
 			"danger-state.html",
 			"tab-top-subpage-month.html",
-			"month.html"
+			"month.html",
+			"danger-state_.html"
 		]
 	},
 	"month.html": {
@@ -409,7 +410,10 @@
 	"danger-state_.html": {
 		"resources": [
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"image/share.png",
+			"fonts/mui.ttf",
+			"js/webviewGroup.js"
 		]
 	},
 	"tab-top-subpage-history.html": {
