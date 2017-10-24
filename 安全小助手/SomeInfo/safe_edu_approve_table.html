@@ -5,8 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/feedback.css" rel="stylesheet" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/feedback.css" rel="stylesheet" />
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -35,7 +35,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全组织机构审批</h1>
+			<h1 class="mui-title">安全教育审批</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
@@ -44,27 +44,27 @@
 					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
-					<label>当前状态</label>
-					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>提交时间</label>
+					<input id='time' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
-					<label>资料分类</label>
-					<input id='category' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>当前状态</label>
+					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
 					<label>审批资料</label>
 					<input id='info' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 			</form>
-			<div class="mui-content-padded">
-				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
-			</div>
 		</div>
-		<script src="js/mui.min.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var companyId;
-			var instituteId;
+			var safetyTestsId;
+			var uploadTime;
+			var currentState;
+			var safetyTestsHtml;			
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -74,67 +74,26 @@
 				};
 				var self = plus.webview.currentWebview();
 				companyId = self.companyId;
-				var category = self.category;
-				instituteId = self.instituteId;
-				var institutePath = self.institutePath;
+				safetyTestsId = self.safetyTestsId;
+				uploadTime = self.uploadTime;
 				currentState = self.currentState;
-				document.getElementById("num").value = instituteId;
-				document.getElementById("category").value = category;
+				safetyTestsHtml = self.safetyTestsHtml;
+				document.getElementById("num").value = safetyTestsId;
+				if(checkTime == "")
+					document.getElementById("time").value = "";
+				else {
+					document.getElementById("time").value = convUnixTimestamp(uploadTime);
+				}
 				if(currentState)
-					document.getElementById("state").value = "已发布";
+					document.getElementById("state").value = "审核完成";
 				else
-					document.getElementById("state").value = "未发布";
-				document.getElementById("info").value = institutePath;
+					document.getElementById("state").value = "待审核";
+				document.getElementById("info").value = safetyTestsHtml;
 			});
 			mui.init();
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
-			});
-
-			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
-					var request_url = baseUrl + "/company/institute";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data:{
-							instituteId: instituteId,
-							companyId: companyId
-						},
-						success: function(result) {
-								
-						},	
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(companyId == "401") {
-					var request_url = baseUrl + "/safetyDirector/institute";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data:{
-							instituteId: instituteId,
-							companyId: companyId
-						},
-						success: function(result) {
-							
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
 			});
 
 			function convUnixTimestamp(timeStamp) {

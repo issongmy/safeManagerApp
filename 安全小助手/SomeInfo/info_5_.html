@@ -35,37 +35,63 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全组织机构审批</h1>
+			<h1 class="mui-title">特种人员持证审批</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
-					<label>审批编号</label>
-					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>证件号</label>
+					<input id='id' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
-					<label>当前状态</label>
-					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>姓名</label>
+					<input id='name' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>身份证号</label>
+					<input id='idNumber' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>岗位名称</label>
+					<input id='job' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
 					<label>资料分类</label>
 					<input id='category' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
-					<label>审批资料</label>
-					<input id='info' type="text" class="mui-input-clear mui-input" disabled="true">
+					<label>当前状态</label>
+					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 			</form>
-			<div class="mui-content-padded">
-				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
+			<p>隐患截图</p>
+			<div id='image-list' class="row image-list">
 			</div>
 		</div>
+		<script src="js/bmob.js"></script>
+		<script src="js/bmob-min.js"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/photo.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";;
+			var class_;
+			var mark = false;
+			var specialStaffId;
+			var specialStaffImgPath;
+			var job;
+			var name; 
 			var companyId;
-			var instituteId;
-			
+			var idNumber;
+			var specialStaffIdNumber;
+			var category;
+			var currentState;
+			var imgContenter = document.getElementById("image-list");
+
+			mui('.image-list').on('tap', '.pic', function(e) {
+				mark = true;
+				imgContenter.removeChild(this);
+			});
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -74,17 +100,29 @@
 				};
 				var self = plus.webview.currentWebview();
 				companyId = self.companyId;
-				var category = self.category;
-				instituteId = self.instituteId;
-				var institutePath = self.institutePath;
+				specialStaffId = self.specialStaffId;
+				specialStaffImgPath = self.specialStaffImgPath;
+				job = self.job;
+				name = self.name;
+				idNumber = self.idNumber;
+				specialStaffIdNumber = self.specialStaffIdNumber;
+				category = self.category;
 				currentState = self.currentState;
-				document.getElementById("num").value = instituteId;
-				document.getElementById("category").value = category;
+				document.getElementById("id").value = specialStaffIdNumber;
+				document.getElementById("name").value = name;
+				document.getElementById("job").value = job;
+				document.getElementById("idNumber").value = idNumber;
+				if(category == "1")
+					document.getElementById("category").value = "项目";
+				else if(category == "2")
+					document.getElementById("category").value = "监理";
+				else
+					document.getElementById("category").value = "业主";
 				if(currentState)
 					document.getElementById("state").value = "已发布";
 				else
 					document.getElementById("state").value = "未发布";
-				document.getElementById("info").value = institutePath;
+				addImg(specialStaffImgPath);
 			});
 			mui.init();
 
@@ -92,50 +130,14 @@
 				plus.webview.currentWebview().close();
 			});
 
-			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
-					var request_url = baseUrl + "/company/institute";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data:{
-							instituteId: instituteId,
-							companyId: companyId
-						},
-						success: function(result) {
-								
-						},	
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(companyId == "401") {
-					var request_url = baseUrl + "/safetyDirector/institute";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data:{
-							instituteId: instituteId,
-							companyId: companyId
-						},
-						success: function(result) {
-							
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-			});
+			function addImg(path) {
+				var mainimg = document.createElement("img");
+				mainimg.setAttribute("class", "pic");
+				mainimg.src = path;
+				mainimg.width = 80;
+				mainimg.height = 80;
+				imgContenter.appendChild(mainimg);
+			}
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));
@@ -149,5 +151,4 @@
 			}
 		</script>
 	</body>
-
 </html>

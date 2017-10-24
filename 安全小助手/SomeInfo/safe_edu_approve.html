@@ -1,13 +1,12 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -26,7 +25,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">三级教育审批</h1>
+			<h1 class="mui-title">安全教育审批</h1>
 		</header>
 		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -34,26 +33,27 @@
 				</ul>
 			</div>
 		</div>
-		<script src="js/mui.min.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			baseUrl = "http://123.206.87.22";
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					plus.webview.currentWebview().close();
+				mui.back = function() {
+					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					var self = plus.webview.currentWebview();
+					self.parent().evalJS('mui.back();');
+					self.close();
+					old_back();
 				};
 				var self = plus.webview.currentWebview();
+				var from = self.from;
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
-				console.log(userId);
-				if(userClass == "101") {
-					var request_url = baseUrl + "/subsidiary/notApprovalDangers?subsidiaryId=" + subsidiaryId + "&companyId=" + companyId;
+					var request_url = baseUrl + "subsidiary/safetyTest?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -65,133 +65,58 @@
 							var extend = eval(result.extend);
 							var eduList = extend.list;
 							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
+								var safetyTestsId = eduList[i].safetyTestsId;
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
-								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
+								var safetyTestsHtml = eduList[i].safetyTestsHtml;
+								addEdu(safetyTestsId, uploadTime, currentState, safetyTestsHtml);
 							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
 					});
-				}
-				if(userClass == "201" || userClass == "2") {
-					var request_url = baseUrl + "/company/notApprovalEdu?companyId=1" + companyId;
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "get",
-						success: function(result) {
-							var extend = eval(result.extend);
-							var eduList = extend.list;
-							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
-								var uploadTime = eduList[i].uploadTime;
-								var currentState = eduList[i].currentState;
-								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
-							}
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(userClass == "301") {
-					var request_url = baseUrl + "/supervision/notApprovalEdu?supervisionCompanyId=1" + supervisionCompanyId + "&companyId=" + companyId;
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "get",
-						success: function(result) {
-							var extend = eval(result.extend);
-							var eduList = extend.list;
-							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
-								var uploadTime = eduList[i].uploadTime;
-								var currentState = eduList[i].currentState;
-								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
-							}
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(userClass == "401") {
-					var request_url = baseUrl + "/safetyDirector/notApprovalEdu?companyId=" + companyId;
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "get",
-						success: function(result) {
-							var extend = eval(result.extend);
-							var eduList = extend.list;
-							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
-								var uploadTime = eduList[i].uploadTime;
-								var currentState = eduList[i].currentState;
-								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
-							}
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
 			});
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
-				var safetyEduId = node[0].value;
+				var safetyTestsId = node[0].value;
 				var uploadTime = node[1].value;
 				var currentState = node[2].value;
-				var safetyEduHtml = node[3].value;
+				var safetyTestsHtml = node[3].value;
 				mui.openWindow({
-					url: "three_edu_approve_table.html",
-					id: "three_edu_approve_table",
+					url: "safe_edu_approve_table.html",
+					id: "safe_edu_approve_table",
 					extras: {
 						companyId: companyId,
-						safetyEduId: safetyEduId,
+						safetyTestsId: safetyTestsId,
 						uploadTime: uploadTime,
 						currentState: currentState,
-						safetyEduHtml: safetyEduHtml												
+						safetyTestsHtml: safetyTestsHtml												
 					}
 				});
 			});
 
-			function addEdu(safetyEduId, uploadTime, currentState, safetyEudHtml) {
+			function addEdu(safetyTestsId, uploadTime, currentState, safetyEudHtml) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = safetyEduId;
+				span_num.innerHTML = safetyTestsId;
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = convUnixTimestamp(uploadTime);
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", safetyEduId);
+				a.setAttribute("id", safetyTestsId);
 				a.appendChild(span_num);
 				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
-				hidden_input.setAttribute("id", "safetyEduId");
-				hidden_input.setAttribute("value", safetyEduId);
+				hidden_input.setAttribute("id", "safetyTestsId");
+				hidden_input.setAttribute("value", safetyTestsId);
 				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
@@ -205,15 +130,18 @@
 				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
-				hidden_input.id = "safetyEduHtml";
-				hidden_input.value = safetyEduHtml;
+				hidden_input.id = "safetyTestsHtml";
+				hidden_input.value = safetyTestsHtml;
 				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
 
 			document.getElementById("close").addEventListener("tap", function() {
-				plus.webview.currentWebview().close();
+				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+				var self = plus.webview.currentWebview();
+				self.parent().evalJS('mui.back();');
+				self.close();
 			});
 
 			function convUnixTimestamp(timeStamp) {

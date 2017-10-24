@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -33,7 +33,7 @@
 				</ul>
 			</div>
 		</div>
-		<script src="js/mui.min.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			baseUrl = "http://123.206.87.22";
 			mui.init();
@@ -44,6 +44,7 @@
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
+				var from = from;
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
@@ -52,8 +53,8 @@
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201" || userClass == "2"){
-					var request_url = baseUrl + "/company/notApprovalPreplan?companyId=" + companyId;
+				if(from == 1){
+					var request_url = baseUrl + "/subsidiary/perplan?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -69,31 +70,6 @@
 								var preplanPath = preplanList[i].preplanPath;
 								var category = preplanList[i].category;
 								var currentState = instituteList[i].currentState;
-								addpreplan(preplanId, preplanPath, category, currentState);
-							}
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(userClass == "401"){
-					var request_url = baseUrl + "/safetyDirector/notApprovalPreplan?companyId=" + companyId;
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "get",
-						success: function(result) {
-							var extend = eval(result.extend);
-							var preplanList = extend.list;
-							for(var i = 0; i < preplanList.length; i++) {
-								var preplanId = preplanList[i].preplanId;
-								var preplanPath = preplanList[i].preplanPath;
-								var category = preplanList[i].category;
-								var currentState = preplanList[i].currentState;
 								addpreplan(preplanId, preplanPath, category, currentState);
 							}
 						},

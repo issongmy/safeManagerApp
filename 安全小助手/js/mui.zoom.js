@@ -1,3 +1,4 @@
+(function(){document.write('<script src="mui.js"><\/script>')})();
 (function($, window) {
 	var CLASS_ZOOM = $.className('zoom');
 	var CLASS_ZOOM_SCROLLER = $.className('zoom-scroller');

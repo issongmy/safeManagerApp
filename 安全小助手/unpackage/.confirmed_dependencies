@@ -181,7 +181,10 @@
 			"safe_handle_table.html",
 			"tab-top-subpage-month.html",
 			"tab-top-subpage-history.html",
-			"danger-state.html"
+			"danger-state.html",
+			"SomeInfo/safe_edu_approve.html",
+			"SomeInfo/safe_basic_info.html",
+			"SomeInfo/three_edu_approve.html"
 		]
 	},
 	"safe_handle_table.html": {
@@ -385,14 +388,19 @@
 			"js/bmob-min.js",
 			"danger-state.html",
 			"month.html",
-			"image/share.png"
+			"image/share.png",
+			"danger-state_.html",
+			"SomeInfo/safe_edu_approve.html"
 		],
 		"refer": [
 			"safe_handle_table.html",
 			"danger-state.html",
 			"tab-top-subpage-month.html",
 			"month.html",
-			"danger-state_.html"
+			"danger-state_.html",
+			"SomeInfo/safe_edu_approve.html",
+			"SomeInfo/three_edu_approve.html",
+			"SomeInfo/safe_basic_info.html"
 		]
 	},
 	"month.html": {
@@ -443,7 +451,12 @@
 	"safe_basic_info.html": {
 		"refer": [
 			"safe_danger_approve.html",
-			"three_edu_approve.html"
+			"three_edu_approve.html",
+			"info_1.html",
+			"info_2.html",
+			"info_5.html",
+			"info_4.html",
+			"info_3.html"
 		],
 		"resources": [
 			"js/mui.picker.js",
@@ -457,7 +470,81 @@
 	"safe_edu_approve.html": {
 		"resources": [
 			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		]
+	},
+	"info_5.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"safe_handle_table_approve.html",
+			"info_5_.html"
+		]
+	},
+	"safe_handle_table_approve.html": {
+		"resources": [
+			"js/bmob.js",
+			"css/feedback.css",
+			"js/bmob-min.js",
+			"js/photo.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"info_5_.html": {
+		"resources": [
+			"js/bmob.js",
+			"css/feedback.css",
+			"js/photo.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/bmob-min.js"
+		]
+	},
+	"info_2.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"info_4.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"info_1.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"info_3.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/safe_basic_info.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/safe_edu_approve.html": {
+		"resources": [
+			"fonts/mui.ttf"
 		]
 	}
 }

@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -25,17 +25,18 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全生产应急预案</h1>
+			<h1 class="mui-title">特种人员持证</h1>
 		</header>
 		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<ul id="preplanList" class="mui-table-view mui-table-view-chevron">
+				<ul id="specialStaffList" class="mui-table-view mui-table-view-chevron">
 				</ul>
 			</div>
 		</div>
-		<script src="js/mui.min.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -45,15 +46,16 @@
 				};				
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
-				var companyId = self.companyId;
+				var from = self.from;
+				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201" || userClass == "2"){
-					var request_url = baseUrl + "/company/notApprovalPreplan?companyId=" + companyId;
+				if(from == 1){
+					var request_url = baseUrl + "/subsidiary/specialStaff?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -63,38 +65,17 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							var preplanList = extend.list;
-							for(var i = 0; i < preplanList.length; i++) {
-								var preplanId = preplanList[i].preplanId;
-								var preplanPath = preplanList[i].preplanPath;
-								var category = preplanList[i].category;
-								var currentState = instituteList[i].currentState;
-								addpreplan(preplanId, preplanPath, category, currentState);
-							}
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(userClass == "401"){
-					var request_url = baseUrl + "/safetyDirector/notApprovalPreplan?companyId=" + companyId;
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "get",
-						success: function(result) {
-							var extend = eval(result.extend);
-							var preplanList = extend.list;
-							for(var i = 0; i < preplanList.length; i++) {
-								var preplanId = preplanList[i].preplanId;
-								var preplanPath = preplanList[i].preplanPath;
-								var category = preplanList[i].category;
-								var currentState = preplanList[i].currentState;
-								addpreplan(preplanId, preplanPath, category, currentState);
+							var specialStaffList = extend.list;
+							for(var i = 0; i < specialStaffList.length; i++) {
+								var specialStaffId = specialStaffList[i].specialStaffId;
+								var specialStaffImgPath = specialStaffList[i].specialStaffImgPath;
+								var job = specialStaffList[i].job;
+								var name = specialStaffList[i].name;
+								var idNumber = specialStaffList[i].idNumber;
+								var specialStaffIdNumber = specialStaffList[i].specialStaffIdNumber;
+								var category = specialStaffList[i].category;
+								var currentState = specialStaffList[i].currentState;
+								addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState);
 							}
 						},
 						error: function() {
@@ -106,31 +87,39 @@
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
-				var preplanId = node[0].value;
-				var preplanPath = node[1].value;
-				var category = node[2].value;
-				var currentState = node[3].value;
+				var specialStaffId = node[0].value;
+				var specialStaffImgPath = node[1].value;
+				var job = node[2].value;
+				var name = node[3].value;
+				var idNumber = node[4].value;
+				var specialStaffIdNumber = node[5].value;
+				var category = node[6].value;
+				var currentState = node[7].value;
 				mui.openWindow({
-					url: "safe_handle_table_approve.html",
-					id: "safe_handle_table_approve",
+					url: "info_5_.html",
+					id: "info_5_",
 					extras: {
 						companyId: companyId,
-						preplanId: preplanId,
-						preplanPath: preplanPath, 
+						specialStaffId: specialStaffId,
+						specialStaffImgPath: specialStaffImgPath,
+						job: job,
+						name: name,
+						idNumber: idNumber,
+						specialStaffIdNumber: specialStaffIdNumber,
 						category: category,
 						currentState: currentState
 					}
 				});
 			});
 
-			function addpreplan(preplanId, preplanPath, category) {
+			function addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState) {
 				var main = document.getElementById("main");					
-				var ul = document.getElementById("preplanList");
+				var ul = document.getElementById("specialStaffList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = preplanId;
+				span_num.innerHTML = specialStaffId;
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				if(category == "1")
@@ -141,18 +130,38 @@
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", dangerNum);
+				a.setAttribute("id", specialStaffId);
 				a.appendChild(span_num);
 				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
-				hidden_input.setAttribute("id", "preplanId");
-				hidden_input.setAttribute("value", preplanId);
+				hidden_input.setAttribute("id", "specialStaffId");
+				hidden_input.setAttribute("value", specialStaffId);
 				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
-				hidden_input.id = "preplanPath";
-				hidden_input.value = preplanPath;
+				hidden_input.id = "specialStaffImgPath";
+				hidden_input.value = specialStaffImgPath;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "job";
+				hidden_input.value = job;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "name";
+				hidden_input.value = name;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "idNumber";
+				hidden_input.value = idNumber;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "specialStaffIdNumber";
+				hidden_input.value = specialStaffIdNumber;
 				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";

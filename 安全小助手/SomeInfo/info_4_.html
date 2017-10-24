@@ -4,8 +4,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/feedback.css" rel="stylesheet" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/feedback.css" rel="stylesheet" />
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -66,9 +66,6 @@
 			<p>隐患截图</p>
 			<div id='image-list' class="row image-list">
 			</div>
-			<div class="mui-content-padded">
-				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
-			</div>
 		</div>
 		<script src="js/bmob.js"></script>
 		<script src="js/bmob-min.js"></script>
@@ -128,59 +125,6 @@
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
-			});
-			
-			document.getElementById("approve").addEventListener("tap", function(){
-				if(companyId == "201") {
-					var request_url = baseUrl + "/company/majorStaff";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data: {
-							companyId: companyId,
-							majorStaffIdNumber: majorStaffIdNumber,
-							job: job,
-							name: name,
-							idNumber: idNumber,
-							majorStaffId: majorStaffId
-						},
-						success: function(result) {
-
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
-				if(companyId == "401"){
-					var request_url = baseUrl + "/safetyDirector/majorStaff";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data: {
-							companyId: companyId,
-							majorStaffIdNumber: majorStaffIdNumber,
-							job: job,
-							name: name,
-							idNumber: idNumber,
-							majorStaffId: majorStaffId
-						},
-						success: function(result) {
-							
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
 			});
 
 			function addImg(path) {

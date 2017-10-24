@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
 		<style type="text/css">
 			.mui-bar {
 				background: #fff;
@@ -32,16 +32,12 @@
 		<div id="main" class="mui-content">
 
 		</div>
-		<script src="js/mui.min.js"></script>
-		<script src="js/mui.picker.js"></script>
-		<script src="js/mui.poppicker.js"></script>
-		<script src="js/bmob-min.js">
-		</script>
-		<script src="js/bomb.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var userClass;
 			var companyId;
 			var userId;
+			var from;
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var companyName;
@@ -51,12 +47,15 @@
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					plus.webview.currentWebview().close();
-				};
+				mui.back = function() {
+					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					var self = plus.webview.currentWebview();
+					self.parent().evalJS('mui.back();');
+					self.close();
+					old_back();
+				};				
 				var self = plus.webview.currentWebview();
-				var self = plus.webview.currentWebview();
+				from = self.from;
 				userClass = self.userClass;
 				companyId = self.companyId;
 				userId = self.userId;
@@ -80,6 +79,7 @@
 						url: "info_1.html",
 						id: "info_1",
 						extras: {
+							from: from,
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -92,6 +92,7 @@
 						url: "info_2.html",
 						id: "info_2",
 						extras: {
+							from: from,
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -104,6 +105,7 @@
 						url: "info_3.html",
 						id: "info_3",
 						extras: {
+							from: from,
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -116,6 +118,7 @@
 						url: "info_4.html",
 						id: "info_4",
 						extras: {
+							from: from,
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -128,6 +131,7 @@
 						url: "info_5.html",
 						id: "info_5",
 						extras: {
+							from: from,
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,
@@ -152,7 +156,10 @@
 			}
 
 			document.getElementById("close").addEventListener("tap", function() {
-				plus.webview.currentWebview().close();
+				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+				var self = plus.webview.currentWebview();
+				self.parent().evalJS('mui.back();');
+				self.close();
 			});
 		</script>
 	</body>

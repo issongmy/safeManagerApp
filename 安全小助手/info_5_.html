@@ -9,7 +9,7 @@
 		<link href="css/feedback.css" rel="stylesheet" />
 		<style>
 			.mui-bar {
-				background: #4cd964;
+				background: #fff;
 			}
 			
 			.mui-content-padded {
@@ -82,7 +82,8 @@
 			var specialStaffId;
 			var specialStaffImgPath;
 			var job;
-			var name;
+			var name; 
+			var companyId;
 			var idNumber;
 			var specialStaffIdNumber;
 			var category;
@@ -101,6 +102,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				companyId = self.companyId;
 				specialStaffId = self.specialStaffId;
 				specialStaffImgPath = self.specialStaffImgPath;
 				job = self.job;
@@ -120,9 +122,9 @@
 				else
 					document.getElementById("category").value = "业主";
 				if(currentState)
-					document.getElementById("currentState").value = "已发布";
+					document.getElementById("state").value = "已发布";
 				else
-					document.getElementById("currentState").value = "未发布";
+					document.getElementById("state").value = "未发布";
 				addImg(specialStaffImgPath);
 			});
 			mui.init();
@@ -150,10 +152,10 @@
 							specialStaffIdNumber: specialStaffIdNumber
 						},
 						success: function(result) {
-
+							plus.nativeUI.toast("上传成功!");	
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
@@ -205,5 +207,4 @@
 			}
 		</script>
 	</body>
-
 </html>
