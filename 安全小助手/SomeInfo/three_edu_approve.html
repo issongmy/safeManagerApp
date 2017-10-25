@@ -52,33 +52,32 @@
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var subsidiaryId = self.subsidiaryId;
+				console.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
-				console.log(userId);
-					var request_url = baseUrl + "/subsidiary/safetyEdu?subsidiaryId=" + subsidiaryId;
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "get",
-						success: function(result) {
-							var extend = eval(result.extend);
-							var eduList = extend.pageInfo.list;
-							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
-								var uploadTime = eduList[i].uploadTime;
-								var currentState = eduList[i].currentState;
-								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
-							}
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
+				console.log(subsidiaryId);
+				var request_url = baseUrl + "/subsidiary/safetyEdu?subsidiaryId=" + subsidiaryId;
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var eduList = extend.pageInfo.list;
+						for(var i = 0; i < eduList.length; i++) {
+							var safetyEduId = eduList[i].safetyEduId;
+							var uploadTime = eduList[i].uploadTime;
+							var currentState = eduList[i].currentState;
+							var safetyEduHtml = eduList[i].safetyEduHtml;
+							addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
 						}
-					});
-				
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+
 			});
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {

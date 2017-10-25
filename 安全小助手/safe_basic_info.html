@@ -29,15 +29,14 @@
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全基本资料</h1>
 		</header>
-		<div id="main" class="mui-content">
+		<div class="mui-content">
+			<div class="mui-card">
+				<ul id="main" class="mui-table-view">
 
+				</ul>
+			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
-		<script src="js/mui.picker.js"></script>
-		<script src="js/mui.poppicker.js"></script>
-		<script src="js/bmob-min.js">
-		</script>
-		<script src="js/bomb.js"></script>
 		<script type="text/javascript">
 			var userClass;
 			var companyId;
@@ -48,6 +47,11 @@
 			var subsidiaryName;
 			var supervisionCompanyName;
 			var baseUrl = "http://123.206.87.22";
+			var instituteBadge;
+			var specialStaffBadge;
+			var preplanBadge;
+			var responsibilityBadge;
+			var majorStaffBadge;
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -65,15 +69,20 @@
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
 				supervisionCompanyName = self.supervisionCompanyName;
+				instituteBadge = self.instituteBadge;
+				specialStaffBadge = self.specialStaffBadge;
+				majorStaffBadge = self.majorStaffBadge;
+				preplanBadge = self.preplanBadge;
+				responsibilityBadge = self.responsibilityBadge;
 				console.log(userClass);
-				addItem("组织机构", "1");
-				addItem("岗位职责", "2");
-				addItem("应急预案", "3");
-				addItem("专职人员", "4");
-				addItem("特种人员", "5");
+				addItem("组织机构", "1", instituteBadge);
+				addItem("岗位职责", "2", responsibilityBadge);
+				addItem("应急预案", "3", preplanBadge);
+				addItem("专职人员", "4", majorStaffBadge);
+				addItem("特种人员", "5", specialStaffBadge);
 			});
 
-			mui("#main").on("tap", ".mui-card-content-inner", function() {
+			mui("#main").on("tap", ".mui-table-view-cell", function() {
 				var class_ = this.id;
 				if(class_ == "1") {
 					mui.openWindow({
@@ -138,16 +147,16 @@
 				}
 			});
 
-			function addItem(itemName, class_) {
+			function addItem(itemName, class_, badge) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
-				var con = document.createElement("div");
-				var con_inner = document.createElement("div");
-				li.setAttribute("class", "mui-card");
-				con.setAttribute("class", "mui-card-content-inner");
-				con.setAttribute("id", class_);
-				con.innerHTML = itemName;
-				li.appendChild(con);
+				var span = document.createElement("span");
+				span.setAttribute("class", "mui-badge mui-badge-primary");
+				span.innerHTML = badge;
+				li.setAttribute("class", "mui-table-view-cell");
+				li.setAttribute("id", class_);
+				li.innerHTML = itemName;
+				li.appendChild(span);
 				ul.appendChild(li);
 			}
 

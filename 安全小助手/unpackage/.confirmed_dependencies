@@ -162,7 +162,8 @@
 		],
 		"refer": [
 			"project_content.html",
-			"project_content_.html"
+			"project_content_.html",
+			"SomeInfo/safe_basic_info.html"
 		]
 	},
 	"project_content.html": {
@@ -533,6 +534,10 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"safe_handle_table_approve.html",
+			"info_3_.html"
 		]
 	},
 	"SomeInfo/safe_basic_info.html": {
@@ -540,11 +545,65 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"SomeInfo/info_4.html",
+			"SomeInfo/info_5.html",
+			"SomeInfo/info_1.html",
+			"SomeInfo/info_2.html",
+			"SomeInfo/info_3.html"
 		]
 	},
 	"SomeInfo/safe_edu_approve.html": {
 		"resources": [
 			"fonts/mui.ttf"
+		]
+	},
+	"SomeInfo/three_edu_approve.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/info_4.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/info_1.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/info_2.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/info_3.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"SomeInfo/info_5.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"info_3_.html": {
+		"resources": [
+			"css/feedback.css"
 		]
 	}
 }

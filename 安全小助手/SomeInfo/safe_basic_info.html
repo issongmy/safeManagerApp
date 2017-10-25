@@ -29,8 +29,12 @@
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全基本资料</h1>
 		</header>
-		<div id="main" class="mui-content">
+		<div class="mui-content">
+			<div class="mui-card">
+				<ul id="main" class="mui-table-view">
 
+				</ul>
+			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
@@ -53,7 +57,7 @@
 					self.parent().evalJS('mui.back();');
 					self.close();
 					old_back();
-				};				
+				};
 				var self = plus.webview.currentWebview();
 				from = self.from;
 				userClass = self.userClass;
@@ -64,7 +68,6 @@
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
 				supervisionCompanyName = self.supervisionCompanyName;
-				console.log(userClass);
 				addItem("组织机构", "1");
 				addItem("岗位职责", "2");
 				addItem("应急预案", "3");
@@ -72,7 +75,7 @@
 				addItem("特种人员", "5");
 			});
 
-			mui("#main").on("tap", ".mui-card-content-inner", function() {
+			mui("#main").on("tap", ".mui-table-view-cell", function() {
 				var class_ = this.id;
 				if(class_ == "1") {
 					mui.openWindow({
@@ -142,23 +145,26 @@
 				}
 			});
 
-			function addItem(itemName, class_) {
+			function addItem(itemName, class_, badge) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
-				var con = document.createElement("div");
-				var con_inner = document.createElement("div");
-				li.setAttribute("class", "mui-card");
-				con.setAttribute("class", "mui-card-content-inner");
-				con.setAttribute("id", class_);
-				con.innerHTML = itemName;
-				li.appendChild(con);
+//				var span = document.createElement("span");
+//				span.setAttribute("class", "mui-badge mui-badge-primary");
+				li.setAttribute("class", "mui-table-view-cell");
+				li.setAttribute("id", class_);
+				li.innerHTML = itemName;
+//				li.appendChild(span);
 				ul.appendChild(li);
 			}
 
 			document.getElementById("close").addEventListener("tap", function() {
 				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
 				var self = plus.webview.currentWebview();
-				self.parent().evalJS('mui.back();');
+				if(from == 1) {
+					self.parent().evalJS('mui.back();');
+				} else {
+
+				}
 				self.close();
 			});
 		</script>

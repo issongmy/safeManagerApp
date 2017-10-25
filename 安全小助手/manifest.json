@@ -360,7 +360,8 @@
 				],
 				"refer": [
 					"project_content.html",
-					"project_content_.html"
+					"project_content_.html",
+					"SomeInfo/safe_basic_info.html"
 				],
 				"priority": 0
 			},
@@ -760,7 +761,10 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"safe_handle_table_approve.html",
+					"info_3_.html"
+				],
 				"priority": 0
 			},
 			"SomeInfo/safe_basic_info.html": {
@@ -769,12 +773,79 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"SomeInfo/info_4.html",
+					"SomeInfo/info_5.html",
+					"SomeInfo/info_1.html",
+					"SomeInfo/info_2.html",
+					"SomeInfo/info_3.html"
+				],
 				"priority": 0
 			},
 			"SomeInfo/safe_edu_approve.html": {
 				"resources": [
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/three_edu_approve.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/info_4.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/info_1.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/info_2.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/info_3.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/info_5.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"info_3_.html": {
+				"resources": [
+					"css/feedback.css"
 				],
 				"refer": [],
 				"priority": 0

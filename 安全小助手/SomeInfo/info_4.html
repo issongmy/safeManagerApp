@@ -50,8 +50,6 @@
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
-				console.log(userId);
 				
 				if(from == 1){
 					var request_url = baseUrl + "/subsidiary/majorStaff?subsidiaryId=" + subsidiaryId;
@@ -95,8 +93,8 @@
 				var category = node[6].value;
 				var currentState = node[7].value;
 				mui.openWindow({
-					url: "safe_handle_table_approve.html",
-					id: "safe_handle_table_approve",
+					url: "info_4_.html",
+					id: "info_4_",
 					extras: {
 						companyId: companyId,
 						majorStaffId: majorStaffId,

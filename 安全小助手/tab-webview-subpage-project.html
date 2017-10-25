@@ -29,7 +29,7 @@
 
 	<body>
 		<div id="main">
-			
+
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/bomb.js"></script>
@@ -75,7 +75,6 @@
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
 				supervisionCompanyName = self.supervisionCompanyName;
-				console.log(userClass);
 				var mark = false;
 				if(userClass == "1") {
 					var request_url = baseUrl + "/subsidiary/dangerCount?subsidiaryId=" + subsidiaryId;
@@ -159,7 +158,6 @@
 							mark = true;
 
 							var request_url = baseUrl + "/company/units?companyId=" + companyId;
-							console.log(request_url);
 							var headers = {
 								'Accept': 'application/json',
 								'Content-Type': 'application/json;charset=utf-8',
@@ -182,7 +180,7 @@
 										mui.ajax(request_url, {
 											type: "get",
 											success: function(result) {
-												var pro_ = pro_info.shift(); 
+												var pro_ = pro_info.shift();
 												var extend = eval(result.extend);
 												dayDangerNum = extend.todayAdded;
 												dayBigDangerNum = extend.todayImportant;
@@ -203,7 +201,7 @@
 								}
 							});
 							setTimeout(function() {
-								
+
 								var request_url = baseUrl + "/company/units?companyId=" + companyId;
 								var headers = {
 									'Accept': 'application/json',
@@ -238,33 +236,33 @@
 				var tmp = name.split(",");
 				if(tmp[1] == "2") {
 					mui.openWindow({
-						url: "project_content_.html",
-						id: "project_content_",
+						url: "SomeInfo/safe_basic_info.html",
+						id: "SomeInfo/safe_basic_info.html",
 						extras: {
-							id_: tmp[0],
-							class_: tmp[1],
 							from: 2,
+							userClass: userClass,
+							userId: userId,
 							subsidiaryId: subsidiaryId,
 							supervisionCompanyId: supervisionCompanyId,
-							companyId: companyId,
-							userClass: userClass
+							companyName: companyName,
+							subsidiaryName: subsidiaryName
 						}
 					});
-				} else if(tmp[1] == "3"){
+				} else if(tmp[1] == "3") {
 					mui.openWindow({
-						url: "project_content_.html",
-						id: "project_content_",
+						url: "SomeInfo/safe_basic_info.html",
+						id: "SomeInfo/safe_basic_info.html",
 						extras: {
-							id_: tmp[0],
-							class_: tmp[1],
 							from: 3,
+							userClass: userClass,
+							userId: userId,
 							subsidiaryId: subsidiaryId,
 							supervisionCompanyId: supervisionCompanyId,
-							companyId: companyId,
-							userClass: userClass
+							companyName: companyName,
+							subsidiaryName: subsidiaryName
 						}
 					});
-				}else {
+				} else {
 					mui.openWindow({
 						url: "project_content.html",
 						id: "project_content",
@@ -287,8 +285,8 @@
 					return args[i];
 				});
 			}
-			
-			function assign(a, b, c, d){
+
+			function assign(a, b, c, d) {
 				dayDangerNum = a;
 				dayBigDangerNum = b;
 				monthDangerNum = c;

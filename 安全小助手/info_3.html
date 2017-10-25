@@ -35,7 +35,8 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -45,7 +46,7 @@
 				};				
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
-				var companyId = self.companyId;
+				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
@@ -68,7 +69,7 @@
 								var preplanId = preplanList[i].preplanId;
 								var preplanPath = preplanList[i].preplanPath;
 								var category = preplanList[i].category;
-								var currentState = instituteList[i].currentState;
+								var currentState = preplanList[i].currentState;
 								addpreplan(preplanId, preplanPath, category, currentState);
 							}
 						},
@@ -111,8 +112,8 @@
 				var category = node[2].value;
 				var currentState = node[3].value;
 				mui.openWindow({
-					url: "safe_handle_table_approve.html",
-					id: "safe_handle_table_approve",
+					url: "info_3_.html",
+					id: "info_3_",
 					extras: {
 						companyId: companyId,
 						preplanId: preplanId,
@@ -123,7 +124,7 @@
 				});
 			});
 
-			function addpreplan(preplanId, preplanPath, category) {
+			function addpreplan(preplanId, preplanPath, category, currentState) {
 				var main = document.getElementById("main");					
 				var ul = document.getElementById("preplanList");
 				var liObj = document.createElement("li");
@@ -141,7 +142,7 @@
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", dangerNum);
+				a.setAttribute("id", preplanId);
 				a.appendChild(span_num);
 				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
