@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -11,12 +12,16 @@
 			body {
 				background-color: #fff;
 			}
+			
+			.mui-bar-popover {
+				width: 30%;
+			}
 		</style>
 	</head>
 
-	<body>	
+	<body>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item" href="danger-state.html">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="danger-state.html">
 				<span class="mui-tab-label">隐患排查</span>
 			</a>
 			<a id="safe_test" class="mui-tab-item" href="SomeInfo/safe_edu_approve.html">
@@ -25,31 +30,61 @@
 			<a id="three_edu" class="mui-tab-item" href="SomeInfo/three_edu_approve.html">
 				<span class="mui-tab-label">三级教育</span>
 			</a>
-			<a id="basic_info" class="mui-tab-item" href="SomeInfo/safe_basic_info.html">
+			<a id="basic_info" class="mui-tab-item" href="#Popover">
 				<span class="mui-tab-label">基本资料</span>
 			</a>
 		</nav>
+		<div id="Popover" class="mui-popover mui-bar-popover">
+			<div class="mui-popover-arrow"></div>
+			<ul class="mui-table-view">
+				<li id="1" class="mui-table-view-cell">
+					<a href="#">组织机构</a>
+				</li>
+				<li id="2" class="mui-table-view-cell">
+					<a href="#">岗位职责</a>
+				</li>
+				<li id="3" class="mui-table-view-cell">
+					<a href="#">应急预案</a>
+				</li>
+				<li id="4" class="mui-table-view-cell">
+					<a href="#">专职人员</a>
+				</li>
+				<li id="5" class="mui-table-view-cell">
+					<a href="#">特种人员</a>
+				</li>
+			</ul>
+		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
-			var subpages = ['danger-state.html', 'SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html','SomeInfo/safe_basic_info.html'];
+			var subpages = ['danger-state.html', 'SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html',
+				'SomeInfo/info_1.html', 'SomeInfo/info_2.html', 'SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'
+			];
+			var id_;
+			var class_;
 			var aniShow = {};
-			
+			var subsidiaryId;
+			var supervisionCompanyId;
+			var companyId;
+			var userClass;
+			var from;
+
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
-				var id_ = self.id_;
-				var class_ = self.class_;
-				var subsidiaryId =  self.id_;
-				var supervisionCompanyId = supervisionCompanyId;
-				var companyId = companyId;
-				var userClass = userClass;
+				id_ = self.id_;
+				class_ = self.class_;
+				subsidiaryId = self.id_;
+				console.log(subsidiaryId);
+				supervisionCompanyId = self.supervisionCompanyId;
+				companyId = self.companyId;
+				userClass = self.userClass;
 				var subpage_style = {
 					top: '10x',
 					bottom: '51px'
 				};
-				for (var i = 0; i < 4; i++) {
+				for(var i = 0; i < 3; i++) {
 					var temp = {};
-					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style,{
+					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
 						id_: id_,
 						class_: class_,
 						subsidiaryId: subsidiaryId,
@@ -58,49 +93,130 @@
 						userClass: userClass,
 						from: 1
 					});
-					if (i > 0) {
+					if(i > 0) {
 						sub.hide();
-					}else{
+					} else {
 						temp[subpages[i]] = "true";
-						mui.extend(aniShow,temp);
+						mui.extend(aniShow, temp);
 					}
 					self.append(sub);
 				}
 			});
-			
+
 			var activeTab = subpages[0];
-			
+
+			document.getElementById("1").addEventListener("tap", function() {
+				mui.openWindow({
+					url: subpages[3],
+					id: subpages[3],
+					extras: {
+						id_: id_,
+						class_: class_,
+						subsidiaryId: subsidiaryId,
+						supervisionCompanyId: supervisionCompanyId,
+						companyId: companyId,
+						userClass: userClass,
+						from: 1
+					}
+				});
+			});
+
+			document.getElementById("2").addEventListener("tap", function() {
+				mui.openWindow({
+					url: subpages[4],
+					id: subpages[4],
+					extras: {
+						id_: id_,
+						class_: class_,
+						subsidiaryId: subsidiaryId,
+						supervisionCompanyId: supervisionCompanyId,
+						companyId: companyId,
+						userClass: userClass,
+						from: 1
+					}
+				});
+			});
+
+			document.getElementById("3").addEventListener("tap", function() {
+				mui.openWindow({
+					url: subpages[5],
+					id: subpages[5],
+					extras: {
+						id_: id_,
+						class_: class_,
+						subsidiaryId: subsidiaryId,
+						supervisionCompanyId: supervisionCompanyId,
+						companyId: companyId,
+						userClass: userClass,
+						from: 1
+					}
+				});
+			});
+
+			document.getElementById("4").addEventListener("tap", function() {
+				mui.openWindow({
+					url: subpages[6],
+					id: subpages[6],
+					extras: {
+						id_: id_,
+						class_: class_,
+						subsidiaryId: subsidiaryId,
+						supervisionCompanyId: supervisionCompanyId,
+						companyId: companyId,
+						userClass: userClass,
+						from: 1
+					}
+				});
+			});
+
+			document.getElementById("5").addEventListener("tap", function() {
+				mui.openWindow({
+					url: subpages[7],
+					id: subpages[7],
+					extras: {
+						id_: id_,
+						class_: class_,
+						subsidiaryId: subsidiaryId,
+						supervisionCompanyId: supervisionCompanyId,
+						companyId: companyId,
+						userClass: userClass,
+						from: 1
+					}
+				});
+			});
+
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
 				var targetTab = this.getAttribute('href');
-				if (targetTab == activeTab) {
+				if(targetTab == activeTab) {
 					return;
 				}
-				if(mui.os.ios||aniShow[targetTab]){
+				if(mui.os.ios || aniShow[targetTab]) {
 					plus.webview.show(targetTab);
-				}else{
+				} else {
 					//否则，使用fade-in动画，且保存变量
 					var temp = {};
 					temp[targetTab] = "true";
-					mui.extend(aniShow,temp);
-					plus.webview.show(targetTab,"fade-in",300);
+					mui.extend(aniShow, temp);
+					plus.webview.show(targetTab, "fade-in", 300);
 				}
 				//隐藏当前;
 				plus.webview.hide(activeTab);
 				//更改当前活跃的选项卡
 				activeTab = targetTab;
 			});
-			 //自定义事件，模拟点击“首页选项卡”
+			//自定义事件，模拟点击“首页选项卡”
 			document.addEventListener('gohome', function() {
 				var defaultTab = document.getElementById("defaultTab");
 				//模拟首页点击
 				mui.trigger(defaultTab, 'tap');
 				//切换选项卡高亮
 				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-				if (defaultTab !== current) {
+				if(defaultTab !== current) {
 					current.classList.remove('mui-active');
 					defaultTab.classList.add('mui-active');
 				}
-			});		
+			});
 		</script>
 	</body>
+
 </html>

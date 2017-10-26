@@ -175,7 +175,12 @@
 			"css/mui.min.css",
 			"js/webviewGroup.js",
 			"tab-top-subpage-month.html",
-			"danger-state.html"
+			"danger-state.html",
+			"SomeInfo/info_1.html",
+			"SomeInfo/info_3.html",
+			"SomeInfo/info_4.html",
+			"SomeInfo/info_2.html",
+			"SomeInfo/info_5.html"
 		],
 		"refer": [
 			"safe_info.html",
@@ -185,7 +190,12 @@
 			"danger-state.html",
 			"SomeInfo/safe_edu_approve.html",
 			"SomeInfo/safe_basic_info.html",
-			"SomeInfo/three_edu_approve.html"
+			"SomeInfo/three_edu_approve.html",
+			"SomeInfo/info_1.html",
+			"SomeInfo/info_4.html",
+			"SomeInfo/info_5.html",
+			"SomeInfo/info_3.html",
+			"SomeInfo/info_2.html"
 		]
 	},
 	"safe_handle_table.html": {
@@ -391,7 +401,8 @@
 			"month.html",
 			"image/share.png",
 			"danger-state_.html",
-			"SomeInfo/safe_edu_approve.html"
+			"SomeInfo/safe_edu_approve.html",
+			"SomeInfo/info_1.html"
 		],
 		"refer": [
 			"safe_handle_table.html",
@@ -401,7 +412,12 @@
 			"danger-state_.html",
 			"SomeInfo/safe_edu_approve.html",
 			"SomeInfo/three_edu_approve.html",
-			"SomeInfo/safe_basic_info.html"
+			"SomeInfo/safe_basic_info.html",
+			"SomeInfo/info_1.html",
+			"SomeInfo/info_4.html",
+			"SomeInfo/info_5.html",
+			"SomeInfo/info_3.html",
+			"SomeInfo/info_2.html"
 		]
 	},
 	"month.html": {
@@ -564,6 +580,9 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"SomeInfo/three_edu_approve_table.html"
 		]
 	},
 	"SomeInfo/info_4.html": {
@@ -604,6 +623,14 @@
 	"info_3_.html": {
 		"resources": [
 			"css/feedback.css"
+		]
+	},
+	"SomeInfo/three_edu_approve_table.html": {
+		"resources": [
+			"css/feedback.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	}
 }

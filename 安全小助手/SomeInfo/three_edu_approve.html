@@ -36,7 +36,8 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -50,12 +51,12 @@
 				var self = plus.webview.currentWebview();
 				var from = self.from;
 				var userClass = self.userClass;
-				var companyId = self.companyId;
+				companyId = self.companyId;
 				var subsidiaryId = self.subsidiaryId;
 				console.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(subsidiaryId);
 				var request_url = baseUrl + "/subsidiary/safetyEdu?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
 				var headers = {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json;charset=utf-8',
@@ -66,7 +67,7 @@
 						var extend = eval(result.extend);
 						var eduList = extend.pageInfo.list;
 						for(var i = 0; i < eduList.length; i++) {
-							var safetyEduId = eduList[i].safetyEduId;
+							var safetyEduId = eduList[i].safetyEdu;
 							var uploadTime = eduList[i].uploadTime;
 							var currentState = eduList[i].currentState;
 							var safetyEduHtml = eduList[i].safetyEduHtml;
@@ -99,7 +100,7 @@
 				});
 			});
 
-			function addEdu(safetyEduId, uploadTime, currentState, safetyEudHtml) {
+			function addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");

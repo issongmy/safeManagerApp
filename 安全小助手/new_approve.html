@@ -31,8 +31,8 @@
 		</header>
 		<div class="mui-content">
 			<div class="mui-card">
-				<ul id="main" class="mui-table-view">
-
+				<ul id="main" class="mui-table-view mui-table-view-chevron">
+					
 				</ul>
 			</div>
 		</div>
@@ -224,15 +224,46 @@
 			function addItem(itemName, class_, badge) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
-				var span = document.createElement("span");
-				span.setAttribute("class", "mui-badge mui-badge-primary");
-				span.innerHTML = badge;
 				li.setAttribute("class", "mui-table-view-cell");
 				li.setAttribute("id", class_);
 				li.innerHTML = itemName;
-				li.appendChild(span);
+				if(badge != 0){
+					var span = document.createElement("span");
+					span.setAttribute("class", "mui-badge mui-badge-primary");
+					span.innerHTML = badge;
+					li.appendChild(span);
+				}
 				ul.appendChild(li);
 			}
+			
+//			function addSpecialItem(itemName, class_, badge) {
+//				var item_name = ["组织结构", "岗位职责", "应急预案", "专职人员", "特种人员"];
+//				var ul = document.getElementById("main");
+//				var li = document.createElement("li");
+//				var a = document.createElement("a");
+//				var item_ul = document.createElement("ul");
+//				item_ul.setAttribute("class", "mui-table-view mui-table-view-chevron");
+//				for(var i=0;i<5;i++){
+//					var item_li = document.createElement("li");
+//					item_li.setAttribute("class", "mui-table-view-cell");
+//					var item_a = document.createElement("a");
+//					item_a.setAttribute("class", "mui-navigate-right");
+//					item_a.innerHTML = item_name[i];
+//					item_li.appendChild(item_a);
+//					item_ul.appendChild(item_li);
+//				}
+//				li.setAttribute("class", "mui-table-view-cell mui-collapse");
+//				li.setAttribute("id", class_);
+//				li.innerHTML = item_name;
+//				if(badge != 0){
+//					var span = document.createElement("span");
+//					span.setAttribute("class", "mui-badge mui-badge-primary");
+//					span.innerHTML = badge;
+//					li.appendChild(span);
+//				}
+//				li.appendChild(item_ul);
+//				ul.appendChild(li);
+//			}			
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();

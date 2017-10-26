@@ -35,23 +35,30 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var subsidiaryId;
 			mui.init();
 			mui.plusReady(function() {
-				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					plus.webview.currentWebview().close();
-				};				
 				var self = plus.webview.currentWebview();
 				var from = self.from;
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
-				var subsidiaryId = self.subsidiaryId;
+				subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
-				console.log(userId);
+				console.log(userId);				
+				var old_back = mui.back;
+				mui.back = function() {
+					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					var self = plus.webview.currentWebview();
+					if(from != 1){
+						self.parent().evalJS('mui.back();');
+					}
+					self.close();
+					old_back();
+				};			
+
 				
 				if(from == 1){
 					var request_url = baseUrl + "/subsidiary/responsibility?subsidiaryId=" + subsidiaryId;
@@ -144,9 +151,12 @@
 				ul.appendChild(liObj);
 			}
 				
-		document.getElementById("close").addEventListener("tap", function() {
-			plus.webview.currentWebview().close();
-		});	
+			document.getElementById("close").addEventListener("tap", function() {
+				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+				var self = plus.webview.currentWebview();
+				self.parent().evalJS('mui.back();');
+				self.close();
+			});
 		</script>
 	</body>
 </html>

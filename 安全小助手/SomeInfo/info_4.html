@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -35,23 +36,29 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var subsidiaryId;
 			mui.init();
 			mui.plusReady(function() {
-				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					plus.webview.currentWebview().close();
-				};				
 				var self = plus.webview.currentWebview();
 				var from = self.from;
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
-				var subsidiaryId = self.subsidiaryId;
-				var supervisionCompanyId = self.supervisionCompanyId;
-				
-				if(from == 1){
+				subsidiaryId = self.subsidiaryId;
+				var supervisionCompanyId = self.supervisionCompanyId;				
+				var old_back = mui.back;
+				mui.back = function() {
+					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					var self = plus.webview.currentWebview();
+					if(from != 1){
+						self.parent().evalJS('mui.back();');
+					}
+					self.close();
+					old_back();
+				};
+
+				if(from == 1) {
 					var request_url = baseUrl + "/subsidiary/majorStaff?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
@@ -110,7 +117,7 @@
 			});
 
 			function addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState) {
-				var main = document.getElementById("main");					
+				var main = document.getElementById("main");
 				var ul = document.getElementById("majorStaffList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -123,7 +130,7 @@
 					span_other.innerHTML = "项目";
 				else if(category == "2")
 					span_other.innerHTML = "监理";
-				else 
+				else
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
@@ -169,14 +176,18 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "currentState";
 				hidden_input.value = currentState;
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
-		document.getElementById("close").addEventListener("tap", function() {
-			plus.webview.currentWebview().close();
-		});	
+
+			document.getElementById("close").addEventListener("tap", function() {
+				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+				var self = plus.webview.currentWebview();
+				self.parent().evalJS('mui.back();');
+				self.close();
+			});
 		</script>
 	</body>
+
 </html>

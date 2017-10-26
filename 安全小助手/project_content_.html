@@ -16,41 +16,57 @@
 
 	<body>	
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item" href="SomeInfo/safe_edu_approve.html">
-				<span class="mui-tab-label">安全交底</span>
+			<a id="defaultTab" class="mui-tab-item mui-active" href="SomeInfo/info_1.html">
+				<span class="mui-tab-label">组织机构</span>
 			</a>
-			<a id="three_edu" class="mui-tab-item" href="SomeInfo/three_edu_approve.html">
-				<span class="mui-tab-label">三级教育</span>
+			<a id="2" class="mui-tab-item" href="SomeInfo/info_2.html">
+				<span class="mui-tab-label">岗位职责</span>
 			</a>
-			<a id="basic_info" class="mui-tab-item" href="SomeInfo/safe_basic_info.html">
-				<span class="mui-tab-label">基本资料</span>
+			<a id="3" class="mui-tab-item" href="SomeInfo/info_3.html">
+				<span class="mui-tab-label">应急预案</span>
 			</a>
+			<a id="4" class="mui-tab-item" href="SomeInfo/info_4.html">
+				<span class="mui-tab-label">专职人员</span>
+			</a>
+			<a id="5" class="mui-tab-item" href="SomeInfo/info_5.html">
+				<span class="mui-tab-label">特种人员</span>
+			</a>			
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
-			var subpages = ['SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html','SomeInfo/safe_basic_info.html'];
+			var subpages = ['SomeInfo/info_1.html', 'SomeInfo/info_2.html','SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'];
 			var aniShow = {};
+			var subsidiaryId;
+			var supervisionCompanyId;
+			var companyId;
+			var userClass;
+			var from;
 			
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
-				var from = self.from;
-				var supervisionCompanyId = supervisionCompanyId;
-				var companyId = companyId;
-				var userClass = userClass;
-				
+				from = self.from;
+				var id_ = self.id_;
+				var class_ = self.class_;
+				console.log(id_);
+				console.log(class_);
+				subsidiaryId =  self.id_;				
+				supervisionCompanyId = self.supervisionCompanyId;
+				companyId = self.companyId;
+				userClass = self.userClass;
+				console.log(userClass);
 				var subpage_style = {
 					top: '10x',
 					bottom: '51px'
 				};
-				for (var i = 0; i < 3; i++) {
+				for (var i = 0; i < 5; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style,{
 						subsidiaryId: subsidiaryId,
 						supervisionCompanyId: supervisionCompanyId,
 						companyId: companyId,
 						userClass: userClass,
-						from: 2
+						from: from
 					});
 					if (i > 0) {
 						sub.hide();

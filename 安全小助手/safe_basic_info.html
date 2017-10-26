@@ -150,13 +150,15 @@
 			function addItem(itemName, class_, badge) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
-				var span = document.createElement("span");
-				span.setAttribute("class", "mui-badge mui-badge-primary");
-				span.innerHTML = badge;
 				li.setAttribute("class", "mui-table-view-cell");
 				li.setAttribute("id", class_);
 				li.innerHTML = itemName;
-				li.appendChild(span);
+				if(badge != 0){
+					var span = document.createElement("span");
+					span.setAttribute("class", "mui-badge mui-badge-primary");
+					span.innerHTML = badge;
+					li.appendChild(span);
+				}
 				ul.appendChild(li);
 			}
 
