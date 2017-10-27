@@ -794,7 +794,9 @@
 			},
 			"SomeInfo/safe_edu_approve.html": {
 				"resources": [
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -857,7 +859,10 @@
 			},
 			"info_3_.html": {
 				"resources": [
-					"css/feedback.css"
+					"css/feedback.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

@@ -20,6 +20,7 @@
 	</head>
 
 	<body>
+		<div id="main">
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="danger-state.html">
 				<span class="mui-tab-label">隐患排查</span>
@@ -37,7 +38,7 @@
 		<div id="Popover" class="mui-popover mui-bar-popover">
 			<div class="mui-popover-arrow"></div>
 			<ul class="mui-table-view">
-				<li id="1" class="mui-table-view-cell">
+				<li id="1" class="mui-table-view-cell">	 
 					<a href="#">组织机构</a>
 				</li>
 				<li id="2" class="mui-table-view-cell">
@@ -53,6 +54,7 @@
 					<a href="#">特种人员</a>
 				</li>
 			</ul>
+		</div>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
@@ -184,6 +186,11 @@
 					}
 				});
 			});
+			
+			document.getElementById("main").addEventListener("swiperight", function() {
+					var self = plus.webview.currentWebview();
+					self.close();
+			});			
 
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
 				var targetTab = this.getAttribute('href');

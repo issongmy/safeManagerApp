@@ -5,8 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/feedback.css" rel="stylesheet" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -24,6 +24,10 @@
 			p {
 				color: black;
 				font-size: 18px;
+			}
+			
+			#image-list{
+				text-align: center;
 			}
 			
 			.row {
@@ -64,14 +68,21 @@
 					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 			</form>
-			<p>隐患截图</p>
-			<div id='image-list' class="row image-list">
+			<div class="mui-card">
+				<div class="mui-card-header">
+					<div class="mui-media-body">
+						特种人员照片
+					</div>
+				</div>
+			</div>
+			<div id='image-list'>
+				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
+			</div>
+			<div class="mui-content-padded">
+				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
 			</div>
 		</div>
-		<script src="js/bmob.js"></script>
-		<script src="js/bmob-min.js"></script>
-		<script src="js/mui.min.js"></script>
-		<script src="js/photo.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";;
 			var class_;
@@ -87,10 +98,6 @@
 			var currentState;
 			var imgContenter = document.getElementById("image-list");
 
-			mui('.image-list').on('tap', '.pic', function(e) {
-				mark = true;
-				imgContenter.removeChild(this);
-			});
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -122,7 +129,11 @@
 					document.getElementById("state").value = "已发布";
 				else
 					document.getElementById("state").value = "未发布";
-				addImg(specialStaffImgPath);
+				if(specialStaffImgPath == null || specialStaffImgPath == "")
+					addImg("image/zw.jpg");
+				else {
+					addImg(baseUrl + "/resource/specialStaff/" + majorStaffImgPath);
+				}
 			});
 			mui.init();
 
@@ -130,12 +141,65 @@
 				plus.webview.currentWebview().close();
 			});
 
+			document.getElementById("approve").addEventListener("tap", function() {
+				if(companyId == "201") {
+					var request_url = baseUrl + "/company/specialStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							specialSaffId: specialSaffId,
+							companyId: companyId,
+							job: job,
+							name: name,
+							idNumber: idNumber,
+							specialStaffIdNumber: specialStaffIdNumber
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");	
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(companyId == "401"){
+					var request_url = baseUrl + "/safetyDirector/specialStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "put",
+						data: {
+							specialSaffId: specialSaffId,
+							companyId: companyId,
+							job: job,
+							name: name,
+							idNumber: idNumber,
+							specialStaffIdNumber: specialStaffIdNumber
+						},
+						success: function(result) {
+							
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});
+				}
+			});
+
 			function addImg(path) {
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
 				mainimg.src = path;
-				mainimg.width = 80;
-				mainimg.height = 80;
+				mainimg.width = document.body.clientWidth - 10;
+				mainimg.height = document.body.clientWidth - 10;
 				imgContenter.appendChild(mainimg);
 			}
 

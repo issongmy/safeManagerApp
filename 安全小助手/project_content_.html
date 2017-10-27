@@ -15,6 +15,7 @@
 	</head>
 
 	<body>	
+		<div id="main">
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="SomeInfo/info_1.html">
 				<span class="mui-tab-label">组织机构</span>
@@ -32,6 +33,7 @@
 				<span class="mui-tab-label">特种人员</span>
 			</a>			
 		</nav>
+		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
@@ -77,6 +79,11 @@
 					self.append(sub);
 				}
 			});
+			
+			document.getElementById("main").addEventListener("swiperight", function() {
+					var self = plus.webview.currentWebview();
+					self.close();
+			});				
 			
 			var activeTab = subpages[0];
 			

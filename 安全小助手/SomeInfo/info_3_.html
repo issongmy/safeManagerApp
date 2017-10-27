@@ -26,6 +26,10 @@
 				font-size: 18px;
 			}
 			
+			.info{
+				text-align: center;
+			}
+			
 			.row {
 				height: 100px;
 			}
@@ -51,9 +55,11 @@
 					<label>资料分类</label>
 					<input id='category' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
-					<label>审批资料</label>
-					<input id='info' type="text" class="mui-input-clear mui-input" disabled="true">
+				<div class="mui-input">	
+					<input type="text" class="mui-input-clear mui-input" value="审批资料" disabled="true">
+				</div>
+				<div class="info">
+					<a id='info' class="mui-input"></a>
 				</div>
 			</form>
 		</div>
@@ -76,12 +82,19 @@
 				var preplanPath = self.preplanPath;
 				var currentState = self.currentState;
 				document.getElementById("num").value = preplanId;
-				document.getElementById("category").value = category;
+				if(category == "1")	
+					document.getElementById("category").value = "项目";
+				else if(category == "2")
+					document.getElementById("category").value = "监理";
+				else
+					document.getElementById("category").value = "业主";
 				if(currentState)
 					document.getElementById("state").value = "已发布";
 				else
 					document.getElementById("state").value = "未发布";
-				document.getElementById("info").value = preplanPath;
+				var info = document.getElementById("info");
+				info.innerHTML = preplanPath;
+				info.href = baseUrl + "/resource/preplan/" + preplanPath;
 			});
 			mui.init();
 

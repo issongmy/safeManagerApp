@@ -5,7 +5,6 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link href="../css/feedback.css" rel="stylesheet" />
 		<style>
 			.mui-bar {
 				background: #fff;
@@ -27,6 +26,10 @@
 			
 			.row {
 				height: 100px;
+			}
+			
+			#image-list{
+				text-align: center;
 			}
 		</style>
 	</head>
@@ -63,12 +66,18 @@
 					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 			</form>
-			<p>隐患截图</p>
-			<div id='image-list' class="row image-list">
+			<div class="mui-card">
+				<div class="mui-card-header">
+					<div class="mui-media-body">
+						专职人员照片
+					</div>
+				</div>
+			</div>
+			<div id='image-list'>
+				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
 			</div>
 		</div>
-		<script src="js/mui.min.js"></script>
-		<script src="js/photo.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var dangerId;
 			var class_;
@@ -81,12 +90,6 @@
 			var idNumber;
 			var majorStaffId;
 			
-
-			mui('.image-list').on('tap', '.pic', function(e) {
-				mark = true;
-				imgContenter.removeChild(this);
-			});
-
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -117,7 +120,11 @@
 					document.getElementById("currentState").value = "已发布";
 				else
 					document.getElementById("currentState").value = "未发布";
-				addImg(majorStaffImgPath);
+				if(majorStaffImgPath == null || majorStaffImgPath == "")
+					addImg("image/zw.jpg");
+				else {
+					addImg(baseUrl + "/resource/majorStaff/" + majorStaffImgPath);
+				}
 			});
 			mui.init();
 
@@ -129,8 +136,8 @@
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
 				mainimg.src = path;
-				mainimg.width = 80;
-				mainimg.height = 80;
+				mainimg.width = document.body.clientWidth - 10;
+				mainimg.height = document.body.clientWidth - 10;
 				imgContenter.appendChild(mainimg);
 			}
 

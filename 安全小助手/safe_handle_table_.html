@@ -21,6 +21,10 @@
 				margin: 0 auto;
 			}
 			
+			#image-list {
+				text-align: center;
+			}
+			
 			p {
 				color: black;
 				font-size: 18px;
@@ -82,30 +86,31 @@
 						隐患截图
 					</div>
 				</div>
-				<div id='image-list' class="mui-card-content">
-					<!--<img src="image/Smile.png" alt="" width="100%"/>-->
-				</div>
-				<!--<div class="mui-card-footer">
+			</div>
+			<div id='image-list'>
+				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
+			</div>
+			<!--<div class="mui-card-footer">
 					<a class="mui-card-link">Like</a>
 					<a class="mui-card-link">Comment</a>
 					<a class="mui-card-link">Read more</a>
 				</div>-->
-			</div>
 		</div>
-		<script src="js/mui.zoom.js"></script>
-		<script src="js/mui.previewimage.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.js"></script>
-		<script src="js/photo.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
-			
-//			mui.previewImage();
 
+			//			mui.previewImage();
+
+			function isNull(arg1) {
+				return !arg1 && arg1 !== 0 && typeof arg1 !== "boolean" ? true : false;
+			}
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -126,7 +131,7 @@
 				var responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
 				console.log(dangerImgPath);
-				if(dangerNumber == "")
+				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
 					document.getElementById("num").value = "暂无";
 				else
 					document.getElementById("num").value = dangerNumber;
@@ -174,14 +179,18 @@
 					type: "get",
 					success: function(result) {
 						document.getElementById("res_name").value = result.extend.userName;
+						if(result.extend.userName == "undefined" || result.extend.userName == undefined)
+							document.getElementById("res_name").value = "暂无";
 					},
 					error: function() {
-						
+
 					}
 				});
+				if(responsibilityUser == "undefined")
+					document.getElementById("res_name").value = "暂无";
 				if(dangerImgPath == null || dangerImgPath == "")
 					addImg("image/zw.jpg");
-				else{
+				else {
 					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
 				}
 			});
@@ -195,10 +204,8 @@
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
 				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");
-				mainimg.width = document.body.clientWidth;
-				mainimg.height = document.body.clientWidth;
+				mainimg.width = document.body.clientWidth - 10;
+				mainimg.height = document.body.clientWidth - 10;
 				imgContenter.appendChild(mainimg);
 			}
 

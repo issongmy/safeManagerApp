@@ -27,7 +27,7 @@
 				</div>
 				<div class="mui-card-footer">
 					<img src="image/attachment.gif" width="15px">
-					<span style="margin-left: 6px" id="attachment"></span>
+					<a style="margin-left: 6px" id="attachment"></a>
 				</div>
 			</div>
 		</div>
@@ -55,16 +55,14 @@
 				contentObj.innerHTML = content + "\n" + date;
 				activityAppendixPath = self.activityAppendixPath;
 				if(activityAppendixPath != null){
-					document.getElementById("attachment").innerHTML = activityAppendixPath;
+					var attachment = document.getElementById("attachment");
+					attachment.innerHTML = activityAppendixPath;
+					attachment.href = "http://smyz.me/resource/activity/" + activityAppendixPath;
 				}
 			});
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
-			});
-			
-			document.getElementById("attachment").addEventListener("tap", function(){
-				
 			});
 		</script>
 	</body>

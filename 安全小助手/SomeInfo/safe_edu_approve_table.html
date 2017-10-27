@@ -16,6 +16,10 @@
 				margin-top: 30px;
 			}
 			
+			.info{
+				text-align: center;
+			}			
+			
 			.pic {
 				margin-right: 10px;
 				margin: 0 auto;
@@ -51,9 +55,11 @@
 					<label>当前状态</label>
 					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
-					<label>审批资料</label>
-					<input id='info' type="text" class="mui-input-clear mui-input" disabled="true">
+				<div class="mui-input">	
+					<input type="text" class="mui-input-clear mui-input" value="审批资料" disabled="true">
+				</div>
+				<div class="info">
+					<a id='info' class="mui-input"></a>
 				</div>
 			</form>
 		</div>
@@ -88,7 +94,9 @@
 					document.getElementById("state").value = "审核完成";
 				else
 					document.getElementById("state").value = "待审核";
-				document.getElementById("info").value = safetyTestsHtml;
+				var info = document.getElementById("info");
+				info.innerHTML = safetyTestsHtml;
+				info.href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;
 			});
 			mui.init();
 

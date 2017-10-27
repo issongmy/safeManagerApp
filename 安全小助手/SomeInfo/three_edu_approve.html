@@ -81,6 +81,12 @@
 
 			});
 
+			document.getElementById("main").addEventListener("swiperight", function() {
+					var self = plus.webview.currentWebview();
+					self.parent().evalJS('mui.back();');
+					self.close();
+			});
+
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
 				var safetyEduId = node[0].value;
