@@ -81,20 +81,20 @@
 
 			//创建子页面，首个选项卡页面显示，其它均隐藏；
 			mui.plusReady(function() {
-				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					backButtonPress++;
-					if(backButtonPress > 1) {
-						plus.runtime.quit();
-					} else {
-						plus.nativeUI.toast('再按一次退出应用');
-					}
-					setTimeout(function() {
-						backButtonPress = 0;
-					}, 1000);
-					return false;
-				};
+//				mui.oldBack = mui.back;
+//				var backButtonPress = 0;
+//				mui.back = function(event) {
+//					backButtonPress++;
+//					if(backButtonPress > 1) {
+//						plus.runtime.quit();
+//					} else {
+//						plus.nativeUI.toast('再按一次退出应用');
+//					}
+//					setTimeout(function() {
+//						backButtonPress = 0;
+//					}, 1000);
+//					return false;
+//				};
 				var self = plus.webview.currentWebview();
 				userClass = self.userClass;
 				userName = self.userName;
