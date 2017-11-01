@@ -7,9 +7,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<style>
-			#bt1{
+			#bt1 {
 				margin-top: 300px
-			}	
+			}
 		</style>
 	</head>
 
@@ -37,7 +37,9 @@
 			var content;
 			var activityAppendixPath;
 			var date;
-			
+			var file_url;
+			var mark = "A";
+
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -54,15 +56,31 @@
 				date = self.date;
 				contentObj.innerHTML = content + "\n" + date;
 				activityAppendixPath = self.activityAppendixPath;
-				if(activityAppendixPath != null){
+				if(activityAppendixPath != null) {
 					var attachment = document.getElementById("attachment");
 					attachment.innerHTML = activityAppendixPath;
-					attachment.href = "http://smyz.me/resource/activity/" + activityAppendixPath;
+					file_url = "http://smyz.me/resource/activity/" + activityAppendixPath;
+					attachment.href = "http://smyz.me/resource/activity/" + activityAppendixPath;;
+					attachment.download = activityAppendixPath;
 				}
 			});
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("attachment").addEventListener("tap", function() {
+				if(mui.os.ios) {
+					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
+						console.log("haha");
+						if(status == 200) {
+							plus.nativeUI.toast("Download success: " + d.filename + "," + d.localStorage);
+						} else {
+							plus.nativeUI.toast("Download failed: " + status);
+						}
+					});
+					dtask.start();
+				}
 			});
 		</script>
 	</body>

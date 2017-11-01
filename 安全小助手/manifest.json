@@ -589,9 +589,12 @@
 					"image/pin.png",
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
-					"js/mui.js"
+					"js/mui.js",
+					"image/share.png"
 				],
-				"refer": [],
+				"refer": [
+					"safe_handle_table__.html"
+				],
 				"priority": 0
 			},
 			"project_content_.html": {
@@ -869,6 +872,18 @@
 			},
 			"SomeInfo/three_edu_approve_table.html": {
 				"resources": [
+					"css/feedback.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"safe_handle_table__.html": {
+				"resources": [
+					"js/photo.js",
+					"js/jquery.js",
 					"css/feedback.css",
 					"js/mui.min.js",
 					"fonts/mui.ttf",

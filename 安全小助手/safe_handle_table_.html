@@ -39,6 +39,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a id="submit" style="float:right;margin-top: 10px;" >
+				<img id="submit" src="image/share.png" width="18px"/>
+			</a>
 			<h1 class="mui-title">安全隐患排查处置表</h1>
 		</header>
 		<div id="main" class="mui-content">
@@ -74,6 +77,10 @@
 				<div class="mui-input-row">
 					<label>处置期限</label>
 					<input id='deadline' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>整改措施</label>
+					<input id='rectify' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
 					<label>责任人</label>
@@ -118,6 +125,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				dangerId = self.dangerId;
 				var userName = self.userName;
 				var mark = self.mark;
 				var dangerNumber = self.dangerNumber;
@@ -126,6 +134,7 @@
 				var state = self.state;
 				var level = self.level;
 				var description = self.description;
+				var suggestion = self.suggestion;
 				var rectificationMeasures = self.rectificationMeasures;
 				var rectificationPeriod = self.rectificationPeriod;
 				var responsibilityUser = self.responsibilityUser;
@@ -163,10 +172,15 @@
 				} else {
 					document.getElementById("description").value = description;
 				}
-				if(rectificationMeasures == "") {
+				if(suggestion == null || suggestion == "") {
 					document.getElementById("view").value = "暂无";
 				} else {
-					document.getElementById("view").value = rectificationMeasures;
+					document.getElementById("view").value = suggestion;
+				}
+				if(rectificationMeasures == "") {
+					document.getElementById("rectify").value = "暂无";
+				} else {
+					document.getElementById("rectify").value = rectificationMeasures;
 				}
 				if(rectificationPeriod == "")
 					document.getElementById("deadline").value = "暂无";
@@ -219,6 +233,16 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
+			
+			document.getElementById("submit").addEventListener("tap", function() {
+					mui.openWindow({
+						url: "safe_handle_table__.html",
+						id: "safe_handle_table__",
+						extras: {
+							dangerId: dangerId
+						}
+					});
+			});
 		</script>
 	</body>
 

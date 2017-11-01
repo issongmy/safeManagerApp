@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/feedback.css" rel="stylesheet" />
+		<style>
+			.mui-bar {
+				background: #fff;
+			}
+			
+			.mui-content-padded {
+				margin-top: 30px;
+			}
+			
+			.pic {
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">重大安全隐患排查处置表</h1>
+		</header>
+		<div id="main"  class="mui-content mui-scroll-wrapper">
+			<form id="upload" action="http://123.206.87.22/user/danger/rectificationImg" method="post" class="mui-input-group" enctype="multipart/form-data">
+				<div class="mui-input-row">
+					<label>隐患编号</label>
+					<input id='dangerId' name="dangerId" type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-row">
+					<label>隐患截图</label>
+					<input id='pic' name="dangerImg" type="file" class="mui-input-clear mui-input" placeholder="点击添加整改后的隐患截图">
+				</div>
+				<button style="visibility: hidden;" type="submit" class="mui-btn-green mui-btn-block mui-btn-primary" >提交</button>
+			</form>
+			<!--<p>点击空白区域添加图片(提供隐患截图)</p>
+			<div id='image-list' class="row image-list">
+			</div>-->
+			<div class="mui-content-padded">
+				<button id='submit' class="mui-btn-block mui-btn-primary" >提交</button>
+			</div>
+		</div>
+		<script src="js/jquery.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/photo.js"></script>
+		<script type="text/javascript">
+			var dangerId;
+			var baseurl = "http://123.206.87.22/";
+			
+			mui.plusReady(function() {
+				mui.oldBack = mui.back;
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					plus.webview.currentWebview().close();
+				};
+				var self = plus.webview.currentWebview();
+				dangerId = self.dangerId;
+				console.log(dangerId);
+				document.getElementById("dangerId").value = dangerId.trim();
+			});
+			mui.init();
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			document.getElementById("submit").addEventListener("tap", function() {
+				console.log(baseurl + "user/danger/rectificationImg");
+				$.ajax({
+				    url: baseurl + "user/danger/rectificationImg",
+				    type: 'POST',
+				    cache: false,
+				    data: new FormData($('#upload')[0]),
+				    processData: false,
+				    contentType: false
+				}).done(function(res) {
+					plus.nativeUI.toast("上传成功");
+				}).fail(function(res) {
+					console.log(JSON.stringify(res));
+					plus.nativeUI.toast("上传失败");
+				});
+			})
+		</script>
+	</body>
+
+</html>

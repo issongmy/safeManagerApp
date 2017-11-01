@@ -9,7 +9,6 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
-
 		</style>
 	</head>
 
@@ -82,6 +81,7 @@
 								var state = danger.currentState;
 								var description = danger.dangerDescription;
 								var rectificationMeasures = danger.rectificationMeasures;
+								var suggestion = danger.suggestion;
 								var rectificationPeriod = danger.rectificationPeriod;
 								var dangerNumber = danger.dangerNumber;
 								var checkTime = danger.checkTime;
@@ -91,33 +91,33 @@
 								if(reason == "1") {
 									if(state == "1") {
 										addDanger(dangerId, projectName, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else if(state == "2") {
 										addDanger(dangerId, projectName, "重大隐患", "整改中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 
 									} else if(state == "3") {
 										addDanger(dangerId, projectName, "重大隐患", "整改审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else {
 										addDanger(dangerId, projectName, "重大隐患", "整改完毕", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									}
 
 								} else {
 									if(state == "1") {
 										addDanger(dangerId, projectName, "逾期未整改", "提交审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else if(state == "2") {
 										addDanger(dangerId, projectName, "逾期未整改", "整改中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 
 									} else if(state == "3") {
 										addDanger(dangerId, projectName, "逾期未整改", "整改审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else {
 										addDanger(dangerId, projectName, "逾期未整改", "整改完毕", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									}
 								}
 							}
@@ -129,6 +129,7 @@
 				}
 				if(userClass == "2") {
 					var request_url = baseUrl + "/company/focus?companyId=" + companyId;
+					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
@@ -146,6 +147,7 @@
 								var level = danger.severity;
 								var state = danger.currentState;
 								var description = danger.dangerDescription;
+								var suggestion = danger.suggestion;
 								var rectificationMeasures = danger.rectificationMeasures;
 								var rectificationPeriod = danger.rectificationPeriod;
 								var dangerNumber = danger.dangerNumber;
@@ -156,33 +158,33 @@
 								if(reason == "1") {
 									if(state == "1") {
 										addDanger(dangerId, projectName, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else if(state == "2") {
 										addDanger(dangerId, projectName, "重大隐患", "整改中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 
 									} else if(state == "3") {
 										addDanger(dangerId, projectName, "重大隐患", "整改审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else {
 										addDanger(dangerId, projectName, "重大隐患", "整改完毕", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									}
 
 								} else {
 									if(state == "1") {
 										addDanger(dangerId, projectName, "逾期未整改", "提交审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else if(state == "2") {
 										addDanger(dangerId, projectName, "逾期未整改", "整改中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 
 									} else if(state == "3") {
 										addDanger(dangerId, projectName, "逾期未整改", "整改审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else {
 										addDanger(dangerId, projectName, "逾期未整改", "整改完毕", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									}
 								}
 							}
@@ -212,6 +214,7 @@
 								var level = danger.severity;
 								var state = danger.currentState;
 								var description = danger.dangerDescription;
+								var suggestion = danger.suggestion;
 								var rectificationMeasures = danger.rectificationMeasures;
 								var rectificationPeriod = danger.rectificationPeriod;
 								var dangerNumber = danger.dangerNumber;
@@ -222,33 +225,33 @@
 								if(reason == "1") {
 									if(state == "1") {
 										addDanger(dangerId, projectName, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else if(state == "2") {
 										addDanger(dangerId, projectName, "重大隐患", "整改中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 
 									} else if(state == "3") {
 										addDanger(dangerId, projectName, "重大隐患", "整改审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else {
 										addDanger(dangerId, projectName, "重大隐患", "整改完毕", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									}
 
 								} else {
 									if(state == "1") {
 										addDanger(dangerId, projectName, "逾期未整改", "提交审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else if(state == "2") {
 										addDanger(dangerId, projectName, "逾期未整改", "整改中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 
 									} else if(state == "3") {
 										addDanger(dangerId, projectName, "逾期未整改", "整改审核中", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									} else {
 										addDanger(dangerId, projectName, "逾期未整改", "整改完毕", dangerNumber,
-											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion);
 									}
 								}
 							}
@@ -279,10 +282,12 @@
 				var state = node[3].value;
 				var level = node[4].value;
 				var description = node[5].value;
-				var rectificationMeasures = node[6].value;
-				var rectificationPeriod = node[7].value;
-				var responsibilityUser = node[8].value;
-				var dangerImgPath = node[9].value;
+				var suggestion = node[6].value;
+				var rectificationMeasures = node[7].value;
+				var rectificationPeriod = node[8].value;
+				var responsibilityUser = node[9].value;
+				var dangerImgPath = node[10].value;
+				var dangerId = node[11].value;
 				mui.openWindow({
 					url: "safe_handle_table_.html",
 					id: "safe_handle_table_",
@@ -294,16 +299,18 @@
 						state: state,
 						level: level,
 						description: description,
+						suggestion: suggestion,
 						rectificationMeasures: rectificationMeasures,
 						rectificationPeriod: rectificationPeriod,
 						responsibilityUser: responsibilityUser,
-						dangerImgPath: dangerImgPath
+						dangerImgPath: dangerImgPath,
+						dangerId: dangerId
 					}
 				});
 			});
 
 			function addDanger(dangerId, proName, reason, state, dangerNumber,
-				checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath) {
+				checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
@@ -367,8 +374,13 @@
 				li.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
-				hidden_input.id = "rectificationMeasures";
-				hidden_input.value = rectificationMeasures;
+				hidden_input.id = "description";
+				hidden_input.value = description;
+				li.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "suggestion";
+				hidden_input.value = suggestion;
 				li.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
@@ -385,9 +397,14 @@
 				hidden_input.id = "dangerImgPath";
 				hidden_input.value = dangerImgPath;
 				li.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "dangerId";
+				hidden_input.value = dangerId;
+				li.appendChild(hidden_input);
 				li.appendChild(con);
 				ul.appendChild(li);
-			}
+			}	
 		</script>
 	</body>
 
