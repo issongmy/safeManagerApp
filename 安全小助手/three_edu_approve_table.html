@@ -87,7 +87,11 @@
 					document.getElementById("state").value = "审核完成";
 				else
 					document.getElementById("state").value = "待审核";
-				document.getElementById("info").value = safetyEduHtml;
+				var info = document.getElementById("info");
+				info.value = safetyTestsHtml;
+				file_url = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;					
+				if(!mui.os.ios)
+					info.href = document.getElementById("info").href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;	
 			});
 			mui.init();
 
@@ -172,6 +176,19 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
+			
+			document.getElementById("info").addEventListener("tap", function() {
+				if(mui.os.ios) {
+					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
+						if(status == 200) {
+							plus.nativeUI.toast(d.filename + "下载成功");
+						} else {
+							plus.nativeUI.toast("下载失败, 错误码:" + status);
+						}
+					});
+					dtask.start();
+				}
+			});				
 		</script>
 	</body>
 </html>

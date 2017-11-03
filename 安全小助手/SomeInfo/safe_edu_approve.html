@@ -19,11 +19,12 @@
 			#span_right {
 				float: right
 			}
+			
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全教育审批</h1>
 		</header>
@@ -38,6 +39,8 @@
 			baseUrl = "http://123.206.87.22";
 			mui.init();
 			mui.plusReady(function() {
+				if(mui.os.ios)
+					document.getElementById("title").style.marginTop = "40px";					
 				mui.oldBack = mui.back;
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");

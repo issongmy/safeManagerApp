@@ -102,8 +102,6 @@
 				font-size: 20px;
 				margin-left: 30px;
 			}
-			
-			,
 			#submit {
 				float: right;
 			}
@@ -111,7 +109,7 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<!--<a id="submit" class="mui-btn mui-btn-link mui-pull-right">隐患上传</a>-->
 			<a id="submit" style="float:right;margin-top: 10px;" >
@@ -119,7 +117,7 @@
 			</a>
 			<h1 class="mui-title">隐患信息</h1>
 		</header>	
-		<div id="main" class="mui-content mui-scroll-wrapper">
+		<div id="main">
 			<div class="mui-scroll mui-segmented-control">
 				<a class="mui-control-item mui-active" href="#" data-wid="tab-top-subpage-month.html">本月隐患</a>
 				<a class="mui-control-item" href="#" data-wid="tab-top-subpage-history.html">历史记录</a>
@@ -133,19 +131,9 @@
 			var userId;
 			var companyId;
 
-			mui.init({
-				gestureConfig: {
-					tap: true, //默认为true
-					doubletap: true, //默认为false
-					longtap: true, //默认为false
-					swipe: true, //默认为true
-					drag: true, //默认为true
-					hold: false, //默认为false，不监听
-					release: false, //默认为false，不监听
-				}
-			});
-
 			mui.plusReady(function() {
+				if(mui.os.ios)
+					document.getElementById("title").style.marginTop = "40px";					
 				var self = plus.webview.currentWebview();
 				id_ = self.id_;
 				class_ = self.class_;
@@ -188,10 +176,9 @@
 					var wid = this.getAttribute("data-wid");
 					group.switchTab(wid);
 				});
-
 			});
 			
-			document.getElementById("main").addEventListener("swiperight", function() {
+			document.getElementById("close").addEventListener("tap", function() {
 					var self = plus.webview.currentWebview();
 					self.parent().evalJS('mui.back();');
 					self.close();

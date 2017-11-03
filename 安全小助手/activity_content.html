@@ -60,7 +60,8 @@
 					var attachment = document.getElementById("attachment");
 					attachment.innerHTML = activityAppendixPath;
 					file_url = "http://smyz.me/resource/activity/" + activityAppendixPath;
-					attachment.href = "http://smyz.me/resource/activity/" + activityAppendixPath;;
+					if(!mui.os.ios)
+						attachment.href = "http://smyz.me/resource/activity/" + activityAppendixPath;;
 					attachment.download = activityAppendixPath;
 				}
 			});
@@ -72,11 +73,10 @@
 			document.getElementById("attachment").addEventListener("tap", function() {
 				if(mui.os.ios) {
 					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
-						console.log("haha");
 						if(status == 200) {
-							plus.nativeUI.toast("Download success: " + d.filename + "," + d.localStorage);
+							plus.nativeUI.toast(d.filename + "下载成功");
 						} else {
-							plus.nativeUI.toast("Download failed: " + status);
+							plus.nativeUI.toast("下载失败, 错误码:" + status);
 						}
 					});
 					dtask.start();

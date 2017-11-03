@@ -37,7 +37,7 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全教育审批</h1>
 		</header>
@@ -70,9 +70,12 @@
 			var safetyTestsId;
 			var uploadTime;
 			var currentState;
-			var safetyTestsHtml;			
+			var safetyTestsHtml;	
+			var file_url;
 			
 			mui.plusReady(function() {
+				if(mui.os.ios)
+					document.getElementById("title").style.marginTop = "40px";					
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
@@ -96,7 +99,9 @@
 					document.getElementById("state").value = "待审核";
 				var info = document.getElementById("info");
 				info.innerHTML = safetyTestsHtml;
-				info.href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;
+				file_url = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;
+				if(!mui.os.ios)
+					info.href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;
 			});
 			mui.init();
 
@@ -114,6 +119,19 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
+			
+			document.getElementById("info").addEventListener("tap", function() {
+				if(mui.os.ios) {
+					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
+						if(status == 200) {
+							plus.nativeUI.toast(d.filename + "下载成功");
+						} else {
+							plus.nativeUI.toast("下载失败, 错误码:" + status);
+						}
+					});
+					dtask.start();
+				}
+			});				
 		</script>
 	</body>
 

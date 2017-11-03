@@ -23,7 +23,7 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">特种人员持证</h1>
 		</header>
@@ -39,10 +39,12 @@
 			var subsidiaryId;
 			var companyId;
 			mui.init();
-			mui.plusReady(function() {
+			mui.plusReady(function() {			
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
 				var from = self.from;
+				if(mui.os.ios && from!=1)
+					document.getElementById("title").style.marginTop = "40px";				
 				companyId = self.companyId;
 				var userId = self.userId;
 				subsidiaryId = self.subsidiaryId;

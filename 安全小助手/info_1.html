@@ -23,7 +23,7 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全生产组织机构</h1>
 		</header>
@@ -42,7 +42,10 @@
 				var backButtonPress = 0;
 				mui.back = function(event) {
 					plus.webview.currentWebview().close();
-				};				
+				};	
+				if(mui.os.ios){
+					document.getElementById("title").style.marginTop = 40px;
+				}
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
 				var companyId = self.companyId;
