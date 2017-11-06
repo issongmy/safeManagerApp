@@ -19,6 +19,11 @@
 			#span_right {
 				float: right
 			}
+			
+			#main{
+				width: 100%;
+				height: 100%
+			}
 		</style>
 	</head>
 
@@ -27,12 +32,12 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全生产组织机构</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<ul id="instituteList" class="mui-table-view mui-table-view-chevron">
-				</ul>
+		<div class="mui-scroll-wrapper">
+			<div id="main">
+				<iframe id="institute" width="100%" height="100%"  scrolling="auto" frameborder="0" src="http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx">
+	            </iframe>
 			</div>
-		</div>
+       </div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
@@ -41,8 +46,8 @@
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
 				var from = self.from;
-				if(mui.os.ios && from!=1)
-					document.getElementById("title").style.marginTop = "40px";				
+//				if(mui.os.ios && from!=1)
+//					document.getElementById("title").style.marginTop = "40px";				
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
@@ -74,11 +79,13 @@
 							var extend = eval(result.extend);
 							var instituteList = extend.list;
 							for(var i = 0; i < instituteList.length; i++) {
-								var instituteId = instituteList[i].instituteId;
+//								var instituteId = instituteList[i].instituteId;
 								var institutePath = instituteList[i].institutePath;
-								var category = instituteList[i].category;
-								var currentState = instituteList[i].currentState;
-								addInstitute(instituteId, institutePath, category, currentState);
+//								var category = instituteList[i].category;
+//								var currentState = instituteList[i].currentState;
+//								addInstitute(instituteId, institutePath, category, currentState);
+								var realPath = baseUrl + "/resource/institute/" + institutePath;
+								document.getElementById("institute").src = realPath;
 							}
 						},
 						error: function() {
@@ -87,7 +94,15 @@
 					});
 				}
 			});
-
+			mui('.mui-scroll-wrapper').scroll({
+				 scrollY: true, //是否竖向滚动
+				 scrollX: false, //是否横向滚动
+				 startX: 0, //初始化时滚动至x
+				 startY: 0, //初始化时滚动至y
+				 indicators: true, //是否显示滚动条
+				 deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
+				 bounce: true //是否启用回弹
+			});
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
 				var instituteId = node[0].value;

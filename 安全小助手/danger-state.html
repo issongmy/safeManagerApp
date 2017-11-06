@@ -105,6 +105,9 @@
 			#submit {
 				float: right;
 			}
+			#main {
+				margin-top: 45px;
+			}
 		</style>
 	</head>
 
@@ -132,21 +135,21 @@
 			var companyId;
 
 			mui.plusReady(function() {
-				if(mui.os.ios)
-					document.getElementById("title").style.marginTop = "40px";					
+//				if(mui.os.ios)
+//					document.getElementById("title").style.marginTop = "0px";					
 				var self = plus.webview.currentWebview();
 				id_ = self.id_;
 				class_ = self.class_;
 				userId = self.userId;
 				companyId = self.companyId;
-				mui.back = function() {
-					var old_back = mui.back;
-					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
-					var self = plus.webview.currentWebview();
-					self.parent().evalJS('mui.back();');
-					self.close();
-					old_back();
-				};
+//				mui.back = function() {
+//					var old_back = mui.back;
+////					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+//					var self = plus.webview.currentWebview();
+////					self.parent().evalJS('mui.back();');
+//					self.close();
+//					old_back();
+//				};
 				var currentId = plus.webview.currentWebview().id;
 				var group = new webviewGroup(currentId, {
 					items: [{
@@ -178,11 +181,11 @@
 				});
 			});
 			
-			document.getElementById("close").addEventListener("tap", function() {
-					var self = plus.webview.currentWebview();
-					self.parent().evalJS('mui.back();');
-					self.close();
-			});
+//			document.getElementById("close").addEventListener("tap", function() {
+//					var self = plus.webview.currentWebview();
+////					self.parent().evalJS('mui.back();');
+//					self.close();
+//			});
 			
 			document.getElementById("submit").addEventListener("tap", function() {
 					mui.openWindow({

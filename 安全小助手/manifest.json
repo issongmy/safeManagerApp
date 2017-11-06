@@ -801,7 +801,9 @@
 					"js/mui.min.js",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"SomeInfo/safe_edu_approve_table.html"
+				],
 				"priority": 0
 			},
 			"SomeInfo/three_edu_approve.html": {

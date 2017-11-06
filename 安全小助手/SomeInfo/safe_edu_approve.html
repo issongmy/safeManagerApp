@@ -36,11 +36,13 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var compandId;
+			
 			mui.init();
 			mui.plusReady(function() {
-				if(mui.os.ios)
-					document.getElementById("title").style.marginTop = "40px";					
+//				if(mui.os.ios)
+//					document.getElementById("title").style.marginTop = "40px";					
 				mui.oldBack = mui.back;
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
@@ -52,7 +54,7 @@
 				var self = plus.webview.currentWebview();
 				var from = self.from;
 				var userClass = self.userClass;
-				var companyId = self.companyId;
+				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
@@ -66,7 +68,7 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							var eduList = extend.list;
+							var eduList = extend.pageInfo.list;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyTestsId = eduList[i].safetyTestsId;
 								var uploadTime = eduList[i].uploadTime;
@@ -106,7 +108,7 @@
 				});
 			});
 
-			function addEdu(safetyTestsId, uploadTime, currentState, safetyEudHtml) {
+			function addEdu(safetyTestsId, uploadTime, currentState, safetyTestsHtml) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");

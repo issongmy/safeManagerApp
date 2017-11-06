@@ -16,11 +16,33 @@
 			.mui-bar-popover {
 				width: 30%;
 			}
+			
+			#main {
+				width: 100%;
+				height: 100%
+			}
+			
+			.mui-scroll-wrapper {
+				-webkit-overflow-scrolling: touch;
+				overflow-y: scroll;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div id="main">
+		<header id="title" class="mui-bar mui-bar-nav">
+			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">基本资料</h1>
+		</header>
+		<div align="center" id="load">
+			<img src="image/load.jpg" />
+		</div>
+		<div class="mui-scroll-wrapper">
+			<div id="main">
+				<iframe id="institute" width="100%" height="100%"  scrolling="auto" frameborder="0" >
+	            </iframe>
+			</div>
+       </div>
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="danger-state.html">
 				<span class="mui-tab-label">隐患排查</span>
@@ -38,7 +60,7 @@
 		<div id="Popover" class="mui-popover mui-bar-popover">
 			<div class="mui-popover-arrow"></div>
 			<ul class="mui-table-view">
-				<li id="1" class="mui-table-view-cell">	 
+				<li id="1" class="mui-table-view-cell">
 					<a href="#">组织机构</a>
 				</li>
 				<li id="2" class="mui-table-view-cell">
@@ -55,12 +77,11 @@
 				</li>
 			</ul>
 		</div>
-		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
 			var subpages = ['danger-state.html', 'SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html',
-				'SomeInfo/info_1.html', 'SomeInfo/info_2.html', 'SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html' 
+				'SomeInfo/info_1.html', 'SomeInfo/info_2.html', 'SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'
 			];
 			var id_;
 			var class_;
@@ -81,8 +102,8 @@
 				companyId = self.companyId;
 				userClass = self.userClass;
 				var subpage_style = {
-					top: '10x',
-					bottom: '51px'
+					top: '0px',
+					bottom: '50px'
 				};
 				for(var i = 0; i < 3; i++) {
 					var temp = {};
@@ -107,52 +128,20 @@
 
 			var activeTab = subpages[0];
 
+			document.getElementById("basic_info").addEventListener("tap", function() {
+				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+			});
+
 			document.getElementById("1").addEventListener("tap", function() {
-				mui.openWindow({
-					url: subpages[3],
-					id: subpages[3],
-					extras: {
-						id_: id_,
-						class_: class_,
-						subsidiaryId: subsidiaryId,
-						supervisionCompanyId: supervisionCompanyId,
-						companyId: companyId,
-						userClass: userClass,
-						from: 1
-					}
-				});
+				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
 			});
 
 			document.getElementById("2").addEventListener("tap", function() {
-				mui.openWindow({
-					url: subpages[4],
-					id: subpages[4],
-					extras: {
-						id_: id_,
-						class_: class_,
-						subsidiaryId: subsidiaryId,
-						supervisionCompanyId: supervisionCompanyId,
-						companyId: companyId,
-						userClass: userClass,
-						from: 1
-					}
-				});
+				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
 			});
 
 			document.getElementById("3").addEventListener("tap", function() {
-				mui.openWindow({
-					url: subpages[5],
-					id: subpages[5],
-					extras: {
-						id_: id_,
-						class_: class_,
-						subsidiaryId: subsidiaryId,
-						supervisionCompanyId: supervisionCompanyId,
-						companyId: companyId,
-						userClass: userClass,
-						from: 1
-					}
-				});
+				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
 			});
 
 			document.getElementById("4").addEventListener("tap", function() {
@@ -186,11 +175,11 @@
 					}
 				});
 			});
-			
+
 			document.getElementById("main").addEventListener("swiperight", function() {
-					var self = plus.webview.currentWebview();
-					self.close();
-			});			
+				var self = plus.webview.currentWebview();
+				self.close();
+			});
 
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
 				var targetTab = this.getAttribute('href');
@@ -223,6 +212,7 @@
 					defaultTab.classList.add('mui-active');
 				}
 			});
+
 		</script>
 	</body>
 
