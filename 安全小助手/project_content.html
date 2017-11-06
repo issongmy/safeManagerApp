@@ -26,6 +26,10 @@
 				-webkit-overflow-scrolling: touch;
 				overflow-y: scroll;
 			}
+			
+			#load{
+				color: black;
+			}
 		</style>
 	</head>
 
@@ -39,10 +43,10 @@
 		</div>
 		<div class="mui-scroll-wrapper">
 			<div id="main">
-				<iframe id="institute" width="100%" height="100%"  scrolling="auto" frameborder="0" >
+				<iframe id="institute" width="100%" height="100%" scrolling="auto" frameborder="0">
 	            </iframe>
 			</div>
-       </div>
+		</div>
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="danger-state.html">
 				<span class="mui-tab-label">隐患排查</span>
@@ -79,6 +83,8 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
+			var baseUrl = "http://smyz.me";
+
 			mui.init();
 			var subpages = ['danger-state.html', 'SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html',
 				'SomeInfo/info_1.html', 'SomeInfo/info_2.html', 'SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'
@@ -129,19 +135,110 @@
 			var activeTab = subpages[0];
 
 			document.getElementById("basic_info").addEventListener("tap", function() {
-				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+				//				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+				var request_url = baseUrl + "/subsidiary/institute?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var institutePath = extend.institutePath;
+						console.log(institutePath);
+						if(institutePath == "null" || institutePath == null) {
+							var image_div = document.getElementById("load");
+							image_div.innerHTML = "暂无内容";
+							document.getElementById("institute").innerHTML = "hahahahha";
+						}
+						var realPath = "http://dcsapi.com/?k=187082898&url=" + baseUrl + "/resource/institute/" + institutePath;
+						console.log(realPath);
+						document.getElementById("institute").src = realPath;
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
 			});
 
 			document.getElementById("1").addEventListener("tap", function() {
-				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+				var request_url = baseUrl + "/subsidiary/institute?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var institutePath = extend.institutePath;
+						if(institutePath == "null" || institutePath == null) {
+							var image_div = document.getElementById("load");
+							image_div.childNodes[0].visibility = "hidden";
+							image_div.innerHTML = "暂无内容";
+						}
+						var realPath = "http://dcsapi.com/?k=187082898&url=" + baseUrl + "/resource/institute/" + institutePath;
+						document.getElementById("institute").src = realPath;
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
 			});
 
 			document.getElementById("2").addEventListener("tap", function() {
-				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+				var request_url = baseUrl + "/subsidiary/responsibility?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var responsibilityPath = extend.responsibilityPath;
+						if(responsibilityPath == "null" || responsibilityPath == null) {
+							var image_div = document.getElementById("load");
+							image_div.childNodes[0].visibility = "hidden";
+							image_div.innerHTML = "暂无内容";
+						}
+						var realPath = "http://dcsapi.com/?k=187082898&url=" + baseUrl + "/resource/responsibility/" + responsibilityPath;
+						document.getElementById("institute").src = realPath;
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
 			});
 
 			document.getElementById("3").addEventListener("tap", function() {
-				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+				var request_url = baseUrl + "/subsidiary/preplan?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						var preplanPath = extend.preplanPath;
+						if(preplanPath == "null" || preplanPath == null) {
+							var image_div = document.getElementById("load");
+							image_div.childNodes[0].visibility = "hidden";
+							image_div.innerHTML = "暂无内容";
+						}
+						var realPath = "http://dcsapi.com/?k=187082898&url=" + baseUrl + "/resource/preplan/" + preplanPath;
+						document.getElementById("institute").src = realPath;
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
 			});
 
 			document.getElementById("4").addEventListener("tap", function() {
@@ -212,7 +309,6 @@
 					defaultTab.classList.add('mui-active');
 				}
 			});
-
 		</script>
 	</body>
 

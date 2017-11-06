@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -19,7 +20,12 @@
 			#span_right {
 				float: right
 			}
-		</style> 
+			
+			#main {
+				width: 100%;
+				height: 100%
+			}
+		</style>
 	</head>
 
 	<body>
@@ -27,42 +33,44 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全生产岗位职责</h1>
 		</header>
+		<div align="center" id="load">
+			<img src="image/load.jpg" />
+		</div>		
 		<div class="mui-scroll-wrapper">
 			<div id="main">
 				<iframe id="responsibilityList" width="100%" scrolling="auto" frameborder="0">
 	            </iframe>
 			</div>
-      </div>		
+		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var subsidiaryId;
 			mui.init();
-			mui.plusReady(function() {				
+			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
 				var from = self.from;
-//				if(mui.os.ios && from!=1)
-//					document.getElementById("title").style.marginTop = "40px";				
+				//				if(mui.os.ios && from!=1)
+				//					document.getElementById("title").style.marginTop = "40px";				
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
-				console.log(userId);				
+				console.log(userId);
 				var old_back = mui.back;
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
 					var self = plus.webview.currentWebview();
-					if(from != 1){
+					if(from != 1) {
 						self.parent().evalJS('mui.back();');
 					}
 					self.close();
 					old_back();
-				};			
+				};
 
-				
-				if(from == 1){
+				if(from == 1) {
 					var request_url = baseUrl + "/subsidiary/responsibility?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
@@ -73,14 +81,14 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							var responsibilityList = extend.list;
-							for(var i = 0; i < responsibilityList.length; i++) {
-								var responsibilityId = responsibilityList[i].responsibilityId;
-								var responsibilityPath = responsibilityList[i].responsibilityPath;
-								var category = responsibilityList[i].category;
-								var currentState = instituteList[i].currentState;
-								addresponsibility(responsibilityId, responsibilityPath, category, currentState);
+							var responsibilityPath = extend.responsibilityPath;
+							if(responsibilityPath == null) {
+								var image_div = document.getElementById("load");
+								image_div.childNodes[0].visibility = "hidden";
+								image_div.innerHTML = "暂无内容";
 							}
+							var realPath = "http://dcsapi.com/?k=187082898&url=" + baseUrl + "/resource/responsibility/" + responsibilityPath;
+							document.getElementById("institute").src = realPath;
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -101,7 +109,7 @@
 					extras: {
 						companyId: companyId,
 						responsibilityId: responsibilityId,
-						responsibilityPath: responsibilityPath, 
+						responsibilityPath: responsibilityPath,
 						category: category,
 						currentState: currentState
 					}
@@ -109,7 +117,7 @@
 			});
 
 			function addresponsibility(responsibilityId, responsibilityPath, category) {
-				var main = document.getElementById("main");					
+				var main = document.getElementById("main");
 				var ul = document.getElementById("responsibilityList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -122,7 +130,7 @@
 					span_other.innerHTML = "项目";
 				else if(category == "2")
 					span_other.innerHTML = "监理";
-				else 
+				else
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
@@ -148,11 +156,11 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "currentState";
 				hidden_input.value = currentState;
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
+
 			document.getElementById("close").addEventListener("tap", function() {
 				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
 				var self = plus.webview.currentWebview();
@@ -161,4 +169,5 @@
 			});
 		</script>
 	</body>
+
 </html>

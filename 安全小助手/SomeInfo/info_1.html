@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -20,7 +21,7 @@
 				float: right
 			}
 			
-			#main{
+			#main {
 				width: 100%;
 				height: 100%
 			}
@@ -32,42 +33,46 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全生产组织机构</h1>
 		</header>
+		<div align="center" id="load">
+			<img src="image/load.jpg" />
+		</div>		
 		<div class="mui-scroll-wrapper">
 			<div id="main">
-				<iframe id="institute" width="100%" height="100%"  scrolling="auto" frameborder="0" src="http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx">
+				<iframe id="institute" width="100%" height="100%" scrolling="auto" frameborder="0">
 	            </iframe>
 			</div>
-       </div>
+		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			var subsidiaryId;
 			mui.init();
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
 				var from = self.from;
-//				if(mui.os.ios && from!=1)
-//					document.getElementById("title").style.marginTop = "40px";				
+				console.log(from);
+				//				if(mui.os.ios && from!=1)
+				//					document.getElementById("title").style.marginTop = "40px";				
 				var userClass = self.userClass;
 				var companyId = self.companyId;
 				var userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
 				console.log(subsidiaryId);
-				var supervisionCompanyId = self.supervisionCompanyId;				
+				var supervisionCompanyId = self.supervisionCompanyId;
 				var old_back = mui.back;
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
 					var self = plus.webview.currentWebview();
-					if(from != 1){
+					if(from != 1) {
 						self.parent().evalJS('mui.back();');
 					}
 					self.close();
 					old_back();
-				};			
+				};
 				console.log(userClass);
 				console.log(userId);
-				if(from == 1){
-					var request_url = baseUrl + "/subsidiary/institute?subsidiaryId=" + subsidiaryId;
+				if(from == 1) {
+					var request_url = baseUrl + "/subsidiary/responsibility?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -77,16 +82,14 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							var instituteList = extend.list;
-							for(var i = 0; i < instituteList.length; i++) {
-//								var instituteId = instituteList[i].instituteId;
-								var institutePath = instituteList[i].institutePath;
-//								var category = instituteList[i].category;
-//								var currentState = instituteList[i].currentState;
-//								addInstitute(instituteId, institutePath, category, currentState);
-								var realPath = baseUrl + "/resource/institute/" + institutePath;
-								document.getElementById("institute").src = realPath;
+							var responsibilityPath = extend.responsibilityPath;
+							if(responsibilityPath == null) {
+								var image_div = document.getElementById("load");
+								image_div.childNodes[0].visibility = "hidden";
+								image_div.innerHTML = "暂无内容";
 							}
+							var realPath = "http://dcsapi.com/?k=187082898&url=" + baseUrl + "/resource/responsibility/" + responsibilityPath;
+							document.getElementById("institute").src = realPath;
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -95,13 +98,13 @@
 				}
 			});
 			mui('.mui-scroll-wrapper').scroll({
-				 scrollY: true, //是否竖向滚动
-				 scrollX: false, //是否横向滚动
-				 startX: 0, //初始化时滚动至x
-				 startY: 0, //初始化时滚动至y
-				 indicators: true, //是否显示滚动条
-				 deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
-				 bounce: true //是否启用回弹
+				scrollY: true, //是否竖向滚动
+				scrollX: false, //是否横向滚动
+				startX: 0, //初始化时滚动至x
+				startY: 0, //初始化时滚动至y
+				indicators: true, //是否显示滚动条
+				deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+				bounce: true //是否启用回弹
 			});
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
@@ -115,7 +118,7 @@
 					extras: {
 						companyId: companyId,
 						instituteId: instituteId,
-						institutePath: institutePath, 
+						institutePath: institutePath,
 						category: category,
 						currentState: currentState
 					}
@@ -123,7 +126,7 @@
 			});
 
 			function addInstitute(instituteId, institutePath, category, currentState) {
-				var main = document.getElementById("main");					
+				var main = document.getElementById("main");
 				var ul = document.getElementById("instituteList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -136,7 +139,7 @@
 					span_other.innerHTML = "项目";
 				else if(category == "2")
 					span_other.innerHTML = "监理";
-				else 
+				else
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
@@ -162,11 +165,11 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "currentState";
 				hidden_input.value = currentState;
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
+
 			document.getElementById("close").addEventListener("tap", function() {
 				var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
 				var self = plus.webview.currentWebview();
@@ -175,4 +178,5 @@
 			});
 		</script>
 	</body>
+
 </html>
