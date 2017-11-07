@@ -38,7 +38,7 @@
 	<body>
 		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">教育审批</h1>
+			<h1 class="mui-title">三级教育</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
@@ -64,7 +64,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			var companyId;
 			var safetyEduId;	
 			var file_url;
@@ -94,8 +94,8 @@
 				var info = document.getElementById("info");
 				info.innerHTML = safetyEduHtml;
 				file_url = baseUrl + "/resource/safetyEdu/" + safetyEduHtml;
-				if(!mui.os.ios)
-					info.href = baseUrl + "/resource/safetyEdu/" + safetyEduHtml;				
+//				if(!mui.os.ios)
+//					info.href = baseUrl + "/resource/safetyEdu/" + safetyEduHtml;				
 			});
 			mui.init();
 
@@ -115,16 +115,23 @@
 			}
 			
 			document.getElementById("info").addEventListener("tap", function() {
-				if(mui.os.ios) {
-					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
-						if(status == 200) {
-							plus.nativeUI.toast(d.filename + "下载成功");
-						} else {
-							plus.nativeUI.toast("下载失败, 错误码:" + status);
-						}
-					});
-					dtask.start();
-				}
+//				if(mui.os.ios) {
+//					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
+//						if(status == 200) {
+//							plus.nativeUI.toast(d.filename + "下载成功");
+//						} else {
+//							plus.nativeUI.toast("下载失败, 错误码:" + status);
+//						}
+//					});
+//					dtask.start();
+//				}
+				mui.openWindow({
+					url: "file_show.html",
+					id: "file_show",
+					extras: {
+						path: file_url						
+					}
+				});
 			});				
 		</script>
 	</body>

@@ -99,8 +99,8 @@
 				var info = document.getElementById("info");
 				info.innerHTML = preplanPath;
 				file_url = baseUrl + "/resource/preplan/" + preplanPath;
-				if(!mui.os.ios)
-					info.href = baseUrl + "/resource/preplan/" + preplanPath;
+//				if(!mui.os.ios)
+//					info.href = baseUrl + "/resource/preplan/" + preplanPath;
 			});
 			mui.init();
 
@@ -165,16 +165,23 @@
 			}
 			
 			document.getElementById("info").addEventListener("tap", function() {
-				if(mui.os.ios) {
-					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
-						if(status == 200) {
-							plus.nativeUI.toast(d.filename + "下载成功");
-						} else {
-							plus.nativeUI.toast("下载失败, 错误码:" + status);
-						}
-					});
-					dtask.start();
-				}
+//				if(mui.os.ios) {
+//					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
+//						if(status == 200) {
+//							plus.nativeUI.toast(d.filename + "下载成功");
+//						} else {
+//							plus.nativeUI.toast("下载失败, 错误码:" + status);
+//						}
+//					});
+//					dtask.start();
+//				}
+				mui.openWindow({
+					url: "file_show.html",
+					id: "file_show",
+					extras: {
+						path: file_url
+					}
+				});
 			});				
 		</script>
 	</body>

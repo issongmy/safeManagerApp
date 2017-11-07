@@ -181,13 +181,14 @@
 				});
 			});
 			
-//			document.getElementById("close").addEventListener("tap", function() {
-//					var self = plus.webview.currentWebview();
-////					self.parent().evalJS('mui.back();');
-//					self.close();
-//			});
+			document.getElementById("close").addEventListener("tap", function() {
+					var self = plus.webview.currentWebview();
+					self.parent().evalJS('mui.back();');
+					self.close();
+			});
 			
 			document.getElementById("submit").addEventListener("tap", function() {
+					console.log("1");
 					mui.openWindow({
 						url: "safe_handle_table.html",
 						id: "safe_handle_table",

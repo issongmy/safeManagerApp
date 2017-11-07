@@ -74,21 +74,21 @@
 					<a href="#">应急预案</a>
 				</li>
 				<li id="4" class="mui-table-view-cell">
-					<a href="#">专职人员</a>
+					<a>专职人员</a>
 				</li>
 				<li id="5" class="mui-table-view-cell">
-					<a href="#">特种人员</a>
+					<a>特种人员</a>
 				</li>
 			</ul>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
+			var counter = 0;
 			var baseUrl = "http://smyz.me";
-
+			
 			mui.init();
 			var subpages = ['danger-state.html', 'SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html',
-				'SomeInfo/info_1.html', 'SomeInfo/info_2.html', 'SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'
-			];
+				'SomeInfo/info_4.html', 'SomeInfo/info_5.html'];
 			var id_;
 			var class_;
 			var aniShow = {};
@@ -100,6 +100,14 @@
 
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
+				console.log(self.id);
+				mui.back = function() {
+					var self = plus.webview.currentWebview();
+					var parent = plus.webview.getWebviewById("project_content");
+					mui.fire(parent, "close");
+					parent.close();
+					self.close();
+				};				
 				id_ = self.id_;
 				class_ = self.class_;
 				subsidiaryId = self.id_;
@@ -111,7 +119,7 @@
 					top: '0px',
 					bottom: '50px'
 				};
-				for(var i = 0; i < 3; i++) {
+				for(var i = 0; i < 5; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
 						id_: id_,
@@ -135,7 +143,10 @@
 			var activeTab = subpages[0];
 
 			document.getElementById("basic_info").addEventListener("tap", function() {
-				//				document.getElementById("institute").src = "http://dcsapi.com/?k=187082898&url=http://smyz.me/resource/institute/282e6326141.docx";
+				plus.webview.hide("SomeInfo/info_4.html");
+				plus.webview.hide("SomeInfo/info_5.html");
+				counter += 1;
+				if(counter > 1) return;				
 				var request_url = baseUrl + "/subsidiary/institute?subsidiaryId=" + subsidiaryId;
 				console.log(request_url);
 				var headers = {
@@ -242,35 +253,11 @@
 			});
 
 			document.getElementById("4").addEventListener("tap", function() {
-				mui.openWindow({
-					url: subpages[6],
-					id: subpages[6],
-					extras: {
-						id_: id_,
-						class_: class_,
-						subsidiaryId: subsidiaryId,
-						supervisionCompanyId: supervisionCompanyId,
-						companyId: companyId,
-						userClass: userClass,
-						from: 1
-					}
-				});
+				plus.webview.show("SomeInfo/info_4.html");
 			});
 
 			document.getElementById("5").addEventListener("tap", function() {
-				mui.openWindow({
-					url: subpages[7],
-					id: subpages[7],
-					extras: {
-						id_: id_,
-						class_: class_,
-						subsidiaryId: subsidiaryId,
-						supervisionCompanyId: supervisionCompanyId,
-						companyId: companyId,
-						userClass: userClass,
-						from: 1
-					}
-				});
+				plus.webview.show("SomeInfo/info_5.html");
 			});
 
 			document.getElementById("main").addEventListener("swiperight", function() {
@@ -309,6 +296,15 @@
 					defaultTab.classList.add('mui-active');
 				}
 			});
+			
+		document.getElementById("close").addEventListener("tap", function(){
+			var self = plus.webview.currentWebview();
+			self.close();
+		});
+		
+		window.addEventListener("close", function(event){
+			plus.webview.currentWebview().close();
+		});
 		</script>
 	</body>
 

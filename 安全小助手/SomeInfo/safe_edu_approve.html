@@ -13,7 +13,8 @@
 			}
 			
 			#span_left {
-				float: left
+				float: left;
+				color: #000
 			}
 			
 			#span_right {
@@ -26,7 +27,7 @@
 	<body>
 		<header id="title" class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全教育审批</h1>
+			<h1 class="mui-title">安全教育</h1>
 		</header>
 		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -36,7 +37,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			var compandId;
 			
 			mui.init();
@@ -47,7 +48,9 @@
 				mui.back = function() {
 					var w = plus.webview.getWebviewById("tab-webview-subpage-project.html");
 					var self = plus.webview.currentWebview();
-					self.parent().evalJS('mui.back();');
+					var parent = plus.webview.getWebviewById("project_content");
+					parent.close();
+					mui.fire(parent, "close");
 					self.close();
 					old_back();
 				};
@@ -95,17 +98,25 @@
 				var uploadTime = node[1].value;
 				var currentState = node[2].value;
 				var safetyTestsHtml = node[3].value;
+				var file_url = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;
 				mui.openWindow({
-					url: "safe_edu_approve_table.html",
-					id: "safe_edu_approve_table",
+					url: "file_show.html",
+					id: "file_show",
 					extras: {
-						companyId: companyId,
-						safetyTestsId: safetyTestsId,
-						uploadTime: uploadTime,
-						currentState: currentState,
-						safetyTestsHtml: safetyTestsHtml												
+						path: file_url						
 					}
-				});
+				});				
+//				mui.openWindow({
+//					url: "safe_edu_approve_table.html",
+//					id: "safe_edu_approve_table",
+//					extras: {
+//						companyId: companyId,
+//						safetyTestsId: safetyTestsId,
+//						uploadTime: uploadTime,
+//						currentState: currentState,
+//						safetyTestsHtml: safetyTestsHtml												
+//					}
+//				});
 			});
 
 			function addEdu(safetyTestsId, uploadTime, currentState, safetyTestsHtml) {
@@ -115,7 +126,7 @@
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = safetyTestsId;
+				span_num.innerHTML = safetyTestsHtml.slice(10);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = convUnixTimestamp(uploadTime);
@@ -123,6 +134,7 @@
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", safetyTestsId);
 				a.appendChild(span_num);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
@@ -165,6 +177,13 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
+			
+			document.getElementById("close").addEventListener("tap", function(){
+					var self = plus.webview.currentWebview();
+					mui.fire(plus.webview.getWebviewById("project_content"), "close");
+					plus.webview.getWebviewById("project_content").close();
+					self.close();
+			})			
 		</script>
 	</body>
 

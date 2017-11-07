@@ -13,7 +13,8 @@
 			}
 			
 			#span_left {
-				float: left
+				float: left;
+				font: #000
 			}
 			
 			#span_right {
@@ -35,7 +36,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -133,7 +134,7 @@
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = instituteId;
+				span_num.innerHTML = institutePath.slice(10);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				if(category == "1")
@@ -146,6 +147,7 @@
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", dangerNum);
 				a.appendChild(span_num);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");

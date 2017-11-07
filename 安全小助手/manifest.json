@@ -802,7 +802,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"SomeInfo/safe_edu_approve_table.html"
+					"SomeInfo/safe_edu_approve_table.html",
+					"SomeInfo/file_show.html"
 				],
 				"priority": 0
 			},
@@ -813,7 +814,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"SomeInfo/three_edu_approve_table.html"
+					"SomeInfo/three_edu_approve_table.html",
+					"SomeInfo/file_show.html"
 				],
 				"priority": 0
 			},
@@ -859,7 +861,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"project_content.html"
+				],
 				"priority": 0
 			},
 			"info_3_.html": {
@@ -879,7 +883,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"SomeInfo/file_show.html"
+				],
 				"priority": 0
 			},
 			"safe_handle_table__.html": {
@@ -892,6 +898,14 @@
 					"css/mui.min.css"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"SomeInfo/safe_edu_approve_table.html": {
+				"resources": [],
+				"refer": [
+					"file_show.html",
+					"SomeInfo/file_show.html"
+				],
 				"priority": 0
 			}
 		},
