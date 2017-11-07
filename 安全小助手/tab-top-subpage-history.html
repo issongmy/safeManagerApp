@@ -12,7 +12,8 @@
 			}
 			
 			#span_left {
-				float: left
+				float: left;
+				color: #000 
 			}
 			
 			#span_right {
@@ -141,7 +142,7 @@
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = dangerNum;
+				span_num.innerHTML = dangerPos;
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = level + " " + state;
@@ -149,6 +150,7 @@
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", dangerNum);
 				a.appendChild(span_num);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");

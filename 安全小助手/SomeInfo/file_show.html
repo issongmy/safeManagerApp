@@ -9,10 +9,16 @@
 			body{
 				background-color: #FFFFFF;
 			}
+			
 			#main{
 				width: 100%;
 				height: 100%
 			}
+			
+			.mui-scroll-wrapper {
+				-webkit-overflow-scrolling: touch;
+				overflow-y: scroll;
+			}			
 		</style>
 	</head>
 
@@ -33,6 +39,16 @@
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			
+			mui('.mui-scroll-wrapper').scroll({
+				scrollY: true, //是否竖向滚动
+				scrollX: false, //是否横向滚动
+				startX: 0, //初始化时滚动至x
+				startY: 0, //初始化时滚动至y
+				indicators: true, //是否显示滚动条
+				deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+				bounce: true //是否启用回弹
+			});
 			
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
