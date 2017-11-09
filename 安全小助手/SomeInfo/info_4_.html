@@ -79,6 +79,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
 			var mark = false;
@@ -117,7 +118,7 @@
 				else 
 					document.getElementById("category").value = "业主";
 				if(currentState)
-					document.getElementById("currentState").value = "已发布";
+					document.getElementById("state").value = "已发布";
 				else
 					document.getElementById("currentState").value = "未发布";
 				if(majorStaffImgPath == null || majorStaffImgPath == "")

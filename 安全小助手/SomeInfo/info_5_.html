@@ -81,7 +81,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";;
+			var baseUrl = "http://123.206.87.22";
 			var class_;
 			var mark = false;
 			var specialStaffId;
@@ -129,66 +129,13 @@
 				if(specialStaffImgPath == null || specialStaffImgPath == "")
 					addImg("image/zw.jpg");
 				else {
-					addImg(baseUrl + "/resource/specialStaff/" + majorStaffImgPath);
+					addImg(baseUrl + "/resource/specialStaff/" + specialStaffImgPath);
 				}
 			});
 			mui.init();
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
-			});
-
-			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
-					var request_url = baseUrl + "/company/specialStaff";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data: {
-							specialSaffId: specialSaffId,
-							companyId: companyId,
-							job: job,
-							name: name,
-							idNumber: idNumber,
-							specialStaffIdNumber: specialStaffIdNumber
-						},
-						success: function(result) {
-							plus.nativeUI.toast("上传成功!");	
-						},
-						error: function() {
-							plus.nativeUI.toast("上传失败!");
-						}
-					});
-				}
-				if(companyId == "401"){
-					var request_url = baseUrl + "/safetyDirector/specialStaff";
-					console.log(request_url);
-					var headers = {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8',
-					};
-					mui.ajax(request_url, {
-						type: "put",
-						data: {
-							specialSaffId: specialSaffId,
-							companyId: companyId,
-							job: job,
-							name: name,
-							idNumber: idNumber,
-							specialStaffIdNumber: specialStaffIdNumber
-						},
-						success: function(result) {
-							
-						},
-						error: function() {
-							plus.nativeUI.toast("请求失败!");
-						}
-					});
-				}
 			});
 
 			function addImg(path) {

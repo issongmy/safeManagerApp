@@ -825,7 +825,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"SomeInfo/info_4_.html"
+				],
 				"priority": 0
 			},
 			"SomeInfo/info_1.html": {
@@ -862,7 +864,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"project_content.html"
+					"project_content.html",
+					"SomeInfo/info_5_.html"
 				],
 				"priority": 0
 			},

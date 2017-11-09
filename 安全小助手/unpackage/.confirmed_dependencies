@@ -601,6 +601,9 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"SomeInfo/info_4_.html"
 		]
 	},
 	"SomeInfo/info_1.html": {
@@ -631,7 +634,8 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"project_content.html"
+			"project_content.html",
+			"SomeInfo/info_5_.html"
 		]
 	},
 	"info_3_.html": {
