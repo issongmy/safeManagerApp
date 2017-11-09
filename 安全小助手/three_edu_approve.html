@@ -68,7 +68,8 @@
 							var extend = eval(result.extend);
 							var eduList = extend.list;
 							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
+								var safetyEduId = eduList[i].safetyEdu;
+								console.log(safetyEduId);
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
@@ -94,7 +95,7 @@
 							var extend = eval(result.extend);
 							var eduList = extend.list;
 							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
+								var safetyEduId = eduList[i].safetyEdu;
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
@@ -119,7 +120,7 @@
 							var extend = eval(result.extend);
 							var eduList = extend.list;
 							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
+								var safetyEduId = eduList[i].safetyEdu;
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
@@ -145,7 +146,8 @@
 							var extend = eval(result.extend);
 							var eduList = extend.list;
 							for(var i = 0; i < eduList.length; i++) {
-								var safetyEduId = eduList[i].safetyEduId;
+								var safetyEduId = eduList[i].safetyEdu;
+								console.log(safetyEduId);
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
@@ -166,6 +168,7 @@
 				var uploadTime = node[1].value;
 				var currentState = node[2].value;
 				var safetyEduHtml = node[3].value;
+				safetyEduId = node[4].id;
 				mui.openWindow({
 					url: "three_edu_approve_table.html",
 					id: "three_edu_approve_table",
@@ -180,6 +183,7 @@
 			});
 
 			function addEdu(proname, safetyEduId, uploadTime, currentState, safetyEudHtml) {
+				console.log(safetyEduId);
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");
