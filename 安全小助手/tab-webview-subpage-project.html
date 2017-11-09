@@ -214,6 +214,7 @@
 										var supervisionList = extend.supervisionCompanyList;
 										for(var i = 0; i < supervisionList.length; i++) {
 											var super_company = supervisionList[i].supervisionCompanyName;
+											console.log(supervisionList[i].supervisionCompanyId);
 											addSupervision(super_company, supervisionList[i].supervisionCompanyId);
 										}
 									},
@@ -221,7 +222,7 @@
 										plus.nativeUI.toast("请求失败!");
 									}
 								});
-							}, 500);
+							}, 1000);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -234,6 +235,7 @@
 				var node = this.childNodes[0].childNodes[0];
 				var name = node.id;
 				var tmp = name.split(",");
+				console.log(tmp[0]);
 				if(tmp[1] == "2") {
 					mui.openWindow({
 						url: "project_content_.html",
@@ -257,7 +259,7 @@
 							id_: tmp[0],
 							class_: tmp[1],
 							subsidiaryId: subsidiaryId,
-							supervisionCompanyId: supervisionCompanyId,
+							supervisionCompanyId: tmp[0],
 							companyId: companyId,
 							userClass: userClass
 						}

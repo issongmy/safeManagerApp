@@ -29,15 +29,16 @@
 			<a id="4" class="mui-tab-item" href="SomeInfo/info_4.html">
 				<span class="mui-tab-label">专职人员</span>
 			</a>
-			<a id="5" class="mui-tab-item" href="SomeInfo/info_5.html">
+			<!--<a id="5" class="mui-tab-item" href="SomeInfo/info_5.html">
 				<span class="mui-tab-label">特种人员</span>
-			</a>			
+			</a>			-->
 		</nav>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
-			var subpages = ['SomeInfo/info_1.html', 'SomeInfo/info_2.html','SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'];
+//			var subpages = ['SomeInfo/info_1.html', 'SomeInfo/info_2.html','SomeInfo/info_3.html', 'SomeInfo/info_4.html', 'SomeInfo/info_5.html'];
+			var subpages = ['SomeInfo/info_1.html', 'SomeInfo/info_2.html','SomeInfo/info_3.html', 'SomeInfo/info_4.html'];
 			var aniShow = {};
 			var subsidiaryId;
 			var supervisionCompanyId;
@@ -52,6 +53,7 @@
 				var class_ = self.class_;
 				subsidiaryId =  self.id_;				
 				supervisionCompanyId = self.supervisionCompanyId;
+				console.log(supervisionCompanyId);
 				companyId = self.companyId;
 				userClass = self.userClass;
 				console.log(userClass);
@@ -59,7 +61,8 @@
 					top: '0px',
 					bottom: '50px'
 				};
-				for (var i = 0; i < 5; i++) {
+				for (var i = 0; i < 4; i++) {
+//				for (var i = 0; i < 5; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style,{
 						subsidiaryId: subsidiaryId,
