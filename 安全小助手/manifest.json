@@ -418,7 +418,9 @@
 					"fonts/mui.ttf",
 					"image/attachment.gif"
 				],
-				"refer": [],
+				"refer": [
+					"file_show.html"
+				],
 				"priority": 0
 			},
 			"safe_teach_table.html": {
@@ -671,7 +673,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"three_edu_approve_table.html"
+				],
 				"priority": 0
 			},
 			"safe_basic_info.html": {
@@ -908,6 +912,13 @@
 				"refer": [
 					"file_show.html",
 					"SomeInfo/file_show.html"
+				],
+				"priority": 0
+			},
+			"three_edu_approve_table.html": {
+				"resources": [],
+				"refer": [
+					"file_show.html"
 				],
 				"priority": 0
 			}

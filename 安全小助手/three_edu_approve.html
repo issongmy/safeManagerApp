@@ -37,7 +37,9 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
+			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -47,7 +49,7 @@
 				};
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
-				var companyId = self.companyId;
+				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
@@ -70,7 +72,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyEduId, uploadTime, currentState, safetyEduHtml);
 							}
 						},
 						error: function() {
@@ -79,7 +82,7 @@
 					});
 				}
 				if(userClass == "201" || userClass == "2") {
-					var request_url = baseUrl + "/company/notApprovalEdu?companyId=1" + companyId;
+					var request_url = baseUrl + "/company/notApprovalEdu?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -95,7 +98,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyEduId, uploadTime, currentState, safetyEduHtml);
 							}
 						},
 						error: function() {
@@ -119,7 +123,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyEduId, uploadTime, currentState, safetyEduHtml);
 							}
 						},
 						error: function() {
@@ -144,7 +149,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyEduHtml = eduList[i].safetyEduHtml;
-								addEdu(safetyEduId, uploadTime, currentState, safetyEduHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyEduId, uploadTime, currentState, safetyEduHtml);
 							}
 						},
 						error: function() {
@@ -173,11 +179,14 @@
 				});
 			});
 
-			function addEdu(safetyEduId, uploadTime, currentState, safetyEudHtml) {
+			function addEdu(proname, safetyEduId, uploadTime, currentState, safetyEudHtml) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_pro = document.createElement("span");
+				span_pro.setAttribute("id", "span_left");
+				span_pro.innerHTML = proname;				
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = safetyEudHtml.slice(10);
@@ -187,6 +196,8 @@
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", safetyEduId);
+				a.appendChild(span_pro);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
@@ -208,7 +219,7 @@
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
 				hidden_input.id = "safetyEduHtml";
-				hidden_input.value = safetyEduHtml;
+				hidden_input.value = safetyEudHtml;
 				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);

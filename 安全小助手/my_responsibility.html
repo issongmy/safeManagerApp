@@ -20,6 +20,7 @@
 			
 			#span_left {
 				float: left;
+				color: #000
 			}
 			
 			#span_right {
@@ -165,19 +166,16 @@
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = dangerNum;
-				var span_left =  document.createElement("span");
-				span_left.setAttribute("id", "span_mid");
-				span_left.innerHTML = level;
-				var span_right = document.createElement("span");
-				span_right.setAttribute("id", "span_right");
-				span_right.innerHTML = state;				
+				span_num.innerHTML = dangerPos;
+				var span_other = document.createElement("span");
+				span_other.setAttribute("id", "span_right");
+				span_other.innerHTML = level + " " + state;
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", dangerNum);
 				a.appendChild(span_num);
-				a.appendChild(span_left);
-				a.appendChild(span_right);
+				a.appendChild(document.createElement("br"));
+				a.appendChild(span_other);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
 				hidden_input.setAttribute("id", "dangerNumber");

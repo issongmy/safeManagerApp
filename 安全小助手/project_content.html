@@ -95,6 +95,7 @@
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var companyId;
+			var userId;
 			var userClass;
 			var from;
 
@@ -111,7 +112,7 @@
 				id_ = self.id_;
 				class_ = self.class_;
 				subsidiaryId = self.id_;
-				console.log(subsidiaryId);
+				userId = self.userId;
 				supervisionCompanyId = self.supervisionCompanyId;
 				companyId = self.companyId;
 				userClass = self.userClass;
@@ -128,6 +129,7 @@
 						supervisionCompanyId: supervisionCompanyId,
 						companyId: companyId,
 						userClass: userClass,
+						userId: userId,
 						from: 1
 					});
 					if(i > 0) {

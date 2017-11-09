@@ -225,7 +225,9 @@
 			"fonts/mui.ttf",
 			"image/attachment.gif"
 		],
-		"refer": []
+		"refer": [
+			"file_show.html"
+		]
 	},
 	"safe_teach_table.html": {
 		"resources": [
@@ -467,6 +469,9 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"three_edu_approve_table.html"
 		]
 	},
 	"safe_basic_info.html": {
@@ -671,6 +676,11 @@
 		"refer": [
 			"file_show.html",
 			"SomeInfo/file_show.html"
+		]
+	},
+	"three_edu_approve_table.html": {
+		"refer": [
+			"file_show.html"
 		]
 	}
 }

@@ -36,7 +36,11 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://123.206.87.22";
+			var companyId;
+			var subsidiaryId;
+			var supervisionCompanyId;
+			
 			mui.init({
 				gestureConfig: {
 					tap: true, //默认为true
@@ -49,7 +53,6 @@
 				}
 			});
 			mui.plusReady(function() {
-				document.getElementById("title").appendChild("");
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
@@ -57,10 +60,10 @@
 				};
 				var self = plus.webview.currentWebview();
 				var userClass = self.userClass;
-				var companyId = self.companyId;
+				companyId = self.companyId;
 				var userId = self.userId;
-				var subsidiaryId = self.subsidiaryId;
-				var supervisionCompanyId = self.supervisionCompanyId;
+				subsidiaryId = self.subsidiaryId;
+				supervisionCompanyId = self.supervisionCompanyId;
 				if(userClass == "201" || userClass == "2") {
 					var request_url = baseUrl + "/company/notApprovalTest?companyId=" + companyId;
 					console.log(request_url);
@@ -78,7 +81,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyTestsHtml = eduList[i].safetyTestsHtml;
-								addEdu(safetyTestsId, uploadTime, currentState, safetyTestsHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyTestsId, uploadTime, currentState, safetyTestsHtml);
 							}
 						},
 						error: function() {
@@ -102,7 +106,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyTestsHtml = eduList[i].safetyTestsHtml;
-								addEdu(safetyTestsId, uploadTime, currentState, safetyTestsHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyTestsId, uploadTime, currentState, safetyTestsHtml);
 							}
 						},
 						error: function() {
@@ -127,7 +132,8 @@
 								var uploadTime = eduList[i].uploadTime;
 								var currentState = eduList[i].currentState;
 								var safetyTestsHtml = eduList[i].safetyTestsHtml;
-								addEdu(safetyTestsId, uploadTime, currentState, safetyTestsHtml);
+								var proname = eduList[i].subsidiary.subsidiaryName;
+								addEdu(proname, safetyTestsId, uploadTime, currentState, safetyTestsHtml);
 							}
 						},
 						error: function() {
@@ -156,11 +162,14 @@
 				});
 			});
 
-			function addEdu(safetyTestsId, uploadTime, currentState, safetyEudHtml) {
+			function addEdu(proname, safetyTestsId, uploadTime, currentState, safetyEudHtml) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_pro = document.createElement("span");
+				span_pro.setAttribute("id", "span_left");
+				span_pro.innerHTML = proname;				
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = safetyEudHtml.slice(10);
@@ -168,6 +177,8 @@
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = convUnixTimestamp(uploadTime);
 				liObj.setAttribute("class", "mui-table-view-cell");
+				a.appendChild(span_pro);
+				a.appendChild(document.createElement("br"));
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", safetyTestsId);
 				a.appendChild(span_num);

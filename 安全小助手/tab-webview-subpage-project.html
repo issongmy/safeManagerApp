@@ -70,6 +70,7 @@
 				userClass = self.userClass;
 				companyId = self.companyId;
 				userId = self.userId;
+				console.log(userId);
 				subsidiaryId = self.subsidiaryId;
 				supervisionCompanyId = self.supervisionCompanyId;
 				companyName = self.companyName;
@@ -245,6 +246,7 @@
 							id_: tmp[0],
 							class_: tmp[1],
 							subsidiaryId: subsidiaryId,
+							userId: userId,
 							supervisionCompanyId: supervisionCompanyId,
 							companyId: companyId,
 							userClass: userClass
@@ -258,6 +260,7 @@
 							from: 3,
 							id_: tmp[0],
 							class_: tmp[1],
+							userId: userId,
 							subsidiaryId: subsidiaryId,
 							supervisionCompanyId: tmp[0],
 							companyId: companyId,
@@ -272,6 +275,7 @@
 							from: 1,
 							id_: tmp[0],
 							class_: tmp[1],
+							userId: userId,
 							subsidiaryId: subsidiaryId,
 							supervisionCompanyId: supervisionCompanyId,
 							companyId: companyId,

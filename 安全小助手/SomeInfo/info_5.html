@@ -128,16 +128,27 @@
 				var a = document.createElement("p");
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = "岗位: " + job;
+				span_num.innerHTML = job;
 				var span_other = document.createElement("span");
-				span_other.setAttribute("id", "span_right");
+				span_other.setAttribute("id", "span_left");
 //				if(category == "1")
 //					span_other.innerHTML = "项目";
 //				else if(category == "2")
 //					span_other.innerHTML = "监理";
 //				else 
 //					span_other.innerHTML = "业主";
-				span_other.innerHTML = "姓名: " + name;
+				span_other.innerHTML = name;
+				liObj.setAttribute("class", "mui-table-view-cell");
+				a.setAttribute("class", "mui-navigate-right");
+				a.setAttribute("id", specialStaffId);
+				a.appendChild(span_num);
+				a.appendChild(document.createElement("br"));
+				a.appendChild(span_other);
+				a.appendChild(document.createElement("br"));
+				var span_id = document.createElement("span");
+				span_id.setAttribute("id", "span_right");
+				span_id.innerHTML = specialStaffIdNumber;
+				a.appendChild(span_id);
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", specialStaffId);

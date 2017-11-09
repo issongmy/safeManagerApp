@@ -28,6 +28,10 @@
 			.row {
 				height: 100px;
 			}
+			
+			.info{
+				text-align: center;
+			}
 		</style>
 	</head>
 
@@ -50,9 +54,11 @@
 					<label>当前状态</label>
 					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
-					<label>审批资料</label>
-					<input id='info' type="text" class="mui-input-clear mui-input" disabled="true">
+				<div class="mui-input">	
+					<input type="text" class="mui-input-clear mui-input" value="审批资料" disabled="true">
+				</div>
+				<div class="info">
+					<a id='info' class="mui-input"></a>
 				</div>
 			</form>
 			<div class="mui-content-padded">
@@ -78,7 +84,7 @@
 				var currentState = self.currentState;
 				var safetyEduHtml = self.safetyEduHtml;
 				document.getElementById("num").value = safetyEduId;
-				if(checkTime == "")
+				if(uploadTime == "")
 					document.getElementById("time").value = "";
 				else{
 					document.getElementById("time").value = convUnixTimestamp(uploadTime);
@@ -87,9 +93,10 @@
 					document.getElementById("state").value = "审核完成";
 				else
 					document.getElementById("state").value = "待审核";
+				console.log(safetyEduHtml);
 				var info = document.getElementById("info");
-				info.value = safetyTestsHtml;
-				file_url = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;					
+				info.innerHTML = safetyEduHtml;
+				file_url = baseUrl + "/resource/safetyEdu/" + safetyEduHtml;					
 //				if(!mui.os.ios)
 //					info.href = document.getElementById("info").href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;	
 			});

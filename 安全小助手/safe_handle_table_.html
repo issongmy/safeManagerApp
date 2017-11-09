@@ -126,6 +126,7 @@
 				};
 				var self = plus.webview.currentWebview();
 				dangerId = self.dangerId;
+				console.log(dangerId);
 				var userName = self.userName;
 				var mark = self.mark;
 				var dangerNumber = self.dangerNumber;
@@ -139,7 +140,6 @@
 				var rectificationPeriod = self.rectificationPeriod;
 				var responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
-				console.log(dangerImgPath);
 				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
 					document.getElementById("num").value = "暂无";
 				else
@@ -187,12 +187,14 @@
 				else {
 					document.getElementById("deadline").value = convUnixTimestamp(rectificationPeriod);
 				}
+				console.log(responsibilityUser);
 				var request_url = baseUrl + "/userName?userId=" + responsibilityUser;
 				console.log(request_url);
 				mui.ajax(request_url, {
 					type: "get",
 					success: function(result) {
 						document.getElementById("res_name").value = result.extend.userName;
+						console.log(result.extend.userName);
 						if(result.extend.userName == "undefined" || result.extend.userName == undefined)
 							document.getElementById("res_name").value = "暂无";
 					},
