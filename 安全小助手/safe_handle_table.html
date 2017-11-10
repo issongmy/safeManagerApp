@@ -101,6 +101,7 @@
 			document.getElementById("submit").addEventListener("tap", function() {
 				console.log(baseurl + "user/danger");
 				document.getElementById("1").value = userId;
+				console.log(userId);
 				document.getElementById("2").value = companyId;
 				document.getElementById("3").value = id_;
 				$.ajax({
@@ -112,6 +113,7 @@
 				    contentType: false
 				}).done(function(res) {
 					plus.nativeUI.toast("上传成功");
+					location.reload();
 				}).fail(function(res) {
 					console.log(JSON.stringify(res));
 					plus.nativeUI.toast("上传失败");

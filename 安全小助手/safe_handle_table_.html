@@ -30,6 +30,10 @@
 				font-size: 18px;
 			}
 			
+			textarea{
+				text-indent: 2em;
+			}
+			
 			.row {
 				height: 100px;
 			}
@@ -80,7 +84,12 @@
 				</div>
 				<div class="mui-input-row">
 					<label>整改措施</label>
-					<input id='rectify' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>
+				<div class="mui-input-speech">
+					<textarea id="rectify" rows="3" disabled="true"></textarea>
+				</div>
+				<div class="mui-input-row">
+					<label></label>
 				</div>
 				<div class="mui-input-row">
 					<label>责任人</label>
@@ -94,9 +103,19 @@
 					</div>
 				</div>
 			</div>
-			<div id='image-list'>
+			<div id='image-list-1'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
 			</div>
+			<div class="mui-card" id="other">
+				<div class="mui-card-header">
+					<div class="mui-media-body">
+						整改后隐患截图
+					</div>
+				</div>
+			</div>			
+			<div id='image-list-2'>
+				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
+			</div>			
 			<!--<div class="mui-card-footer">
 					<a class="mui-card-link">Like</a>
 					<a class="mui-card-link">Comment</a>
@@ -110,13 +129,8 @@
 			var dangerId;
 			var class_;
 			var mark = false;
-			var imgContenter = document.getElementById("image-list");
-
-			//			mui.previewImage();
-
-			function isNull(arg1) {
-				return !arg1 && arg1 !== 0 && typeof arg1 !== "boolean" ? true : false;
-			}
+			var imgContenter = document.getElementById("image-list-1");
+			var imgContenter_ = document.getElementById("image-list-2");
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -131,7 +145,11 @@
 				var mark = self.mark;
 				var dangerNumber = self.dangerNumber;
 				var checkTime = self.checkTime;
-				var checkUser = self.checkUserId;
+				var checkUser = self.checkUser;
+				if(self.from == "1"){
+					var parent = document.getElementById("submit").parentNode;
+					parent.removeChild(document.getElementById("submit"));
+				}
 				var state = self.state;
 				var level = self.level;
 				var description = self.description;
@@ -140,6 +158,7 @@
 				var rectificationPeriod = self.rectificationPeriod;
 				var responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
+				var rectificationImgPath = self.rectificationImgPath;
 				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
 					document.getElementById("num").value = "暂无";
 				else
@@ -209,6 +228,18 @@
 				else {
 					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
 				}
+				console.log(rectificationImgPath);
+				if(rectificationImgPath == null || rectificationImgPath == ""){
+					if(state == "整改审核中" || state == "整改完毕"){
+						addImg_("image/zw.jpg")
+					}else{
+						var parent = document.getElementById("other").parentNode;
+						parent.removeChild(document.getElementById("other"));
+					}
+				}
+				else {
+					addImg_(baseUrl + "/resource/dangerImg/" + rectificationImgPath);
+				}				
 			});
 			mui.init();
 
@@ -224,6 +255,15 @@
 				mainimg.height = document.body.clientWidth - 10;
 				imgContenter.appendChild(mainimg);
 			}
+			
+			function addImg_(path) {
+				var mainimg = document.createElement("img");
+				mainimg.setAttribute("class", "pic");
+				mainimg.src = path;
+				mainimg.width = document.body.clientWidth - 10;
+				mainimg.height = document.body.clientWidth - 10;
+				imgContenter_.appendChild(mainimg);
+			}			
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));

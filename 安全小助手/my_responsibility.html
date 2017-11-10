@@ -84,40 +84,41 @@
 							var rectificationPeriod = dangerList[i].rectificationPeriod;
 							var dangerNumber = dangerList[i].dangerNumber;
 							var checkTime = dangerList[i].checkTime;
-							var checkUser = dangerList[i].checkUser;
+							var checkUser = dangerList[i].checkUserId;
 							var responsibilityUser = dangerList[i].responsibleUserId;
 							var dangerImgPath = dangerList[i].dangerImgPath;
+							var rectificationImgPath = dangerList[i].rectificationImgPath;
 							if(state == "1") {
 								if(level) {
 									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else if(state == "2") {
 								if(level) {
 									addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else if(state == "3") {
 								if(level) {
 									addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else {
 								if(level) {
 									addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
-										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath);
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							}
 						}
@@ -130,20 +131,24 @@
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
-				var dangerNumber = node[0].value;
-				var checkTime = node[1].value;
-				var checkUser = node[2].value;
-				var state = node[3].value;
-				var level = node[4].value;
-				var description = node[5].value;
-				var rectificationMeasures = node[6].value;
-				var rectificationPeriod = node[7].value;
-				var responsibilityUser = node[8].value;
-				var dangerImgPath = node[9].value;
+				var dangerId = node[0].value
+				var dangerNumber = node[1].value;
+				var checkTime = node[2].value;
+				var checkUser = node[3].value;
+				console.log(checkUser);
+				var state = node[4].value;
+				var level = node[5].value;
+				var description = node[6].value;
+				var rectificationMeasures = node[7].value;
+				var rectificationPeriod = node[8].value;
+				var responsibilityUser = node[9].value;
+				var dangerImgPath = node[10].value;
+				var rectificationImgPath = node[11].value;
 				mui.openWindow({
 					url: "safe_handle_table_.html",
 					id: "safe_handle_table_",
 					extras: {
+						dangerId: dangerId,
 						dangerNumber: dangerNumber,
 						checkTime: checkTime, 
 						checkUser: checkUser,
@@ -153,13 +158,14 @@
 						rectificationMeasures: rectificationMeasures,
 						rectificationPeriod: rectificationPeriod, 
 						responsibilityUser: responsibilityUser,
-						dangerImgPath: dangerImgPath
+						dangerImgPath: dangerImgPath,
+						rectificationImgPath: rectificationImgPath
 					}
 				});
 			});
 
 			function addDanger(dangerNum, dangerPos, level, state, dangerNumber,
-				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath) {
+				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath) {
 				var main = document.getElementById("main");					
 				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
@@ -176,6 +182,11 @@
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
+				var hidden_input = document.createElement("input");
+				hidden_input.setAttribute("type", "hidden");
+				hidden_input.setAttribute("id", "dangerNum");
+				hidden_input.setAttribute("value", dangerNum);
+				liObj.appendChild(hidden_input);				
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
 				hidden_input.setAttribute("id", "dangerNumber");
@@ -225,6 +236,11 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "dangerImgPath";
 				hidden_input.value = dangerImgPath;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "rectificationImgPath";
+				hidden_input.value = rectificationImgPath;
 				liObj.appendChild(hidden_input);				
 				liObj.appendChild(a);
 				ul.appendChild(liObj);

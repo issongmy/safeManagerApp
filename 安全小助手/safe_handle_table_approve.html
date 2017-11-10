@@ -71,6 +71,15 @@
 					<input id='deadline' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
 				<div class="mui-input-row">
+					<label>整改措施</label>
+				</div>
+				<div class="mui-input-speech">
+					<textarea id="rectify" rows="3" disabled="true"></textarea>
+				</div>
+				<div class="mui-input-row">
+					<label></label>
+				</div>
+				<div class="mui-input-row">
 					<label>责任人</label>
 					<input id='res_name' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
@@ -81,16 +90,32 @@
 						隐患截图
 					</div>
 				</div>
-				<div id='image-list' class="mui-card-content" >
-				</div>
 			</div>
-		</div>
+			<div id='image-list-1'>
+				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
+			</div>
+			<div class="mui-card" id="other">
+				<div class="mui-card-header">
+					<div class="mui-media-body">
+						整改后隐患截图
+					</div>
+				</div>
+			</div>			
+			<div id='image-list-2'>
+				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
+			</div>			
+			<!--<div class="mui-card-footer">
+					<a class="mui-card-link">Like</a>
+					<a class="mui-card-link">Comment</a>
+					<a class="mui-card-link">Read more</a>
+				</div>-->
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
 			var dangerId;
-			var company;
+			var companyId;
 			var class_;
 			var dangerNumber;
 			var checkTime;
@@ -102,9 +127,9 @@
 			var rectificationPeriod;
 			var responsibilityUser;
 			var dangerImgPath;
-			var mark = false;
-			var imgContenter = document.getElementById("image-list");
-
+			var imgContenter = document.getElementById("image-list-1");
+			var imgContenter_ = document.getElementById("image-list-2");
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -112,42 +137,143 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				dangerNumber = self.dangerNumber;
-				companyId = self.companyId;
 				dangerId = self.dangerId;
-				checkTime = self.checkTime;
-				checkUser = self.checkUser;
-				state = self.state;
+				console.log(dangerId);
+				companyId = self.companyId;
+				var userName = self.userName;
+				var mark = self.mark;
+				var dangerNumber = self.dangerNumber;
+				var checkTime = self.checkTime;
+				var checkUser = self.checkUser;
+				if(self.from == "1"){
+					var parent = document.getElementById("submit").parentNode;
+					parent.removeChild(document.getElementById("submit"));
+				}
+				var state = self.state;
 				level = self.level;
-				description = self.description;
+				var description = self.description;
+				var suggestion = self.suggestion;
 				rectificationMeasures = self.rectificationMeasures;
 				rectificationPeriod = self.rectificationPeriod;
 				responsibilityUser = self.responsibilityUser;
-				dangerImgPath = self.dangerImgPath;
-				document.getElementById("num").value = dangerNumber;
+				var dangerImgPath = self.dangerImgPath;
+				var rectificationImgPath = self.rectificationImgPath;
+				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
+					document.getElementById("num").value = "暂无";
+				else
+					document.getElementById("num").value = dangerNumber;
 				if(checkTime == "")
-					document.getElementById("time").value = "";
-				else{
+					document.getElementById("time").value = "暂无";
+				else {
 					document.getElementById("time").value = convUnixTimestamp(checkTime);
 				}
-				document.getElementById("people_name").value = checkUser;
+				if(mark == "sub")
+					document.getElementById("people_name").value = userName;
+				else {
+					var request_url = baseUrl + "/userName?userId=" + checkUser;
+					console.log(request_url);
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							console.log(result.extend.userName);
+							document.getElementById("people_name").value = result.extend.userName;
+						},
+						error: function() {
+
+						}
+					});
+				}
 				document.getElementById("state").value = state;
 				document.getElementById("class").value = level;
-				document.getElementById("description").value = description;
-				document.getElementById("view").value = rectificationMeasures;
-				if(rectificationPeriod == "") 
-					document.getElementById("deadline").value = "";
-				else{
+				if(description == "") {
+					document.getElementById("description").value = "暂无";
+				} else {
+					document.getElementById("description").value = description;
+				}
+				if(suggestion == null || suggestion == "") {
+					document.getElementById("view").value = "暂无";
+				} else {
+					document.getElementById("view").value = suggestion;
+				}
+				if(rectificationMeasures == "") {
+					document.getElementById("rectify").value = "暂无";
+				} else {
+					document.getElementById("rectify").value = rectificationMeasures;
+				}
+				if(rectificationPeriod == "")
+					document.getElementById("deadline").value = "暂无";
+				else {
 					document.getElementById("deadline").value = convUnixTimestamp(rectificationPeriod);
 				}
-				document.getElementById("res_name").value = responsibilityUser;
-				addImg(dangerImgPath);
+				console.log(responsibilityUser);
+				var request_url = baseUrl + "/userName?userId=" + responsibilityUser;
+				console.log(request_url);
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						document.getElementById("res_name").value = result.extend.userName;
+						console.log(result.extend.userName);
+						if(result.extend.userName == "undefined" || result.extend.userName == undefined)
+							document.getElementById("res_name").value = "暂无";
+					},
+					error: function() {
+
+					}
+				});
+				if(responsibilityUser == "undefined")
+					document.getElementById("res_name").value = "暂无";
+				if(dangerImgPath == null || dangerImgPath == "")
+					addImg("image/zw.jpg");
+				else {
+					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
+				}
+				console.log(rectificationImgPath);
+				if(rectificationImgPath == null || rectificationImgPath == ""){
+					if(state == "整改审核中" || state == "整改完毕"){
+						addImg_("image/zw.jpg")
+					}else{
+						var parent = document.getElementById("other").parentNode;
+						parent.removeChild(document.getElementById("other"));
+					}
+				}
+				else {
+					addImg_(baseUrl + "/resource/dangerImg/" + rectificationImgPath);
+				}				
 			});
 			mui.init();
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
+
+			function addImg(path) {
+				var mainimg = document.createElement("img");
+				mainimg.setAttribute("class", "pic");
+				mainimg.src = path;
+				mainimg.width = document.body.clientWidth - 10;
+				mainimg.height = document.body.clientWidth - 10;
+				imgContenter.appendChild(mainimg);
+			}
+			
+			function addImg_(path) {
+				var mainimg = document.createElement("img");
+				mainimg.setAttribute("class", "pic");
+				mainimg.src = path;
+				mainimg.width = document.body.clientWidth - 10;
+				mainimg.height = document.body.clientWidth - 10;
+				imgContenter_.appendChild(mainimg);
+			}			
+
+			function convUnixTimestamp(timeStamp) {
+				var date = new Date(parseInt(timeStamp));
+				var Y = date.getFullYear() + '-';
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+				var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+				var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+				return Y + M + D + h + m + s;
+			}
 
 			document.getElementById("approve").addEventListener("tap", function() {
 				if(companyId == "101") {
@@ -259,25 +385,6 @@
 					});
 				}
 			});
-
-			function addImg(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.width = "100%";
-				imgContenter.appendChild(mainimg);
-			}
-
-			function convUnixTimestamp(timeStamp) {
-				var date = new Date(parseInt(timeStamp));
-				var Y = date.getFullYear() + '-';
-				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-				var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
-				var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-				var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-				return Y + M + D + h + m + s;
-			}
 		</script>
 	</body>
 </html>

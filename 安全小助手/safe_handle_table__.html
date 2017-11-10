@@ -16,6 +16,10 @@
 				margin-top: 30px;
 			}
 			
+			.mui-input-row {
+				margin-top: 15px;
+			}
+			
 			.pic {
 				margin-right: 10px;
 			}
@@ -27,23 +31,32 @@
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">整改完成图片上传</h1>
 		</header>
-		<div id="main"  class="mui-content mui-scroll-wrapper">
+		<div id="main" class="mui-content mui-scroll-wrapper">
 			<form id="upload" action="http://123.206.87.22/user/danger/rectificationImg" method="post" class="mui-input-group" enctype="multipart/form-data">
-				<div class="mui-input-row">
+				<!--<div class="mui-input-row">
 					<label>隐患编号</label>
-					<input id='dangerId' name="dangerId" type="text" class="mui-input-clear mui-input" disabled="true">
-				</div>
+					<input id='dangerId' name="dangerId" type="text" class="mui-input-clear mui-input">
+				</div>-->
 				<div class="mui-input-row">
 					<label>隐患截图</label>
-					<input id='pic' name="dangerImg" type="file" class="mui-input-clear mui-input" placeholder="点击添加整改后的隐患截图">
+					<input id='file' @change="addImg" type="file" class="mui-input-clear mui-input" placeholder="点击添加整改后的隐患截图">
 				</div>
-				<button style="visibility: hidden;" type="submit" class="mui-btn-green mui-btn-block mui-btn-primary" >提交</button>
+				<!--<button style="visibility: hidden;" type="submit" class="mui-btn-green mui-btn-block mui-btn-primary" >提交</button>-->
 			</form>
 			<!--<p>点击空白区域添加图片(提供隐患截图)</p>
 			<div id='image-list' class="row image-list">
 			</div>-->
+			<div class="mui-card">
+				<!--<div class="mui-card-header">
+					<div class="mui-media-body">
+						隐患截图
+					</div>
+				</div>-->
+				<div id='image-list' class="mui-card-content" >
+				</div>
+			</div>	
 			<div class="mui-content-padded">
-				<button id='submit' class="mui-btn-block mui-btn-primary" >提交</button>
+				<button id='submit' class="mui-btn-block mui-btn-primary">提交</button>
 			</div>
 		</div>
 		<script src="js/jquery.js"></script>
@@ -52,6 +65,7 @@
 		<script type="text/javascript">
 			var dangerId;
 			var baseurl = "http://123.206.87.22/";
+			var imgContenter = document.getElementById("image-list");
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -62,7 +76,6 @@
 				var self = plus.webview.currentWebview();
 				dangerId = self.dangerId;
 				console.log(dangerId);
-				document.getElementById("dangerId").value = dangerId.trim();
 			});
 			mui.init();
 
@@ -70,22 +83,73 @@
 				plus.webview.currentWebview().close();
 			});
 
+//			document.getElementById("file").addEventListener('change', function(e){
+//			    file = jQuery('#file')[0].files[0];
+//			    //添加图片路径到img src中进行预览
+//			    
+//			    //不同浏览器下的路径不同
+//			     function getObjectURL(file) {
+//			          var url = null;
+//			          if (window.createObjectURL != undefined) { // basic
+//			            url = window.createObjectURL(file);
+//			          } else if (window.URL != undefined) { // mozilla(firefox)
+//			            url = window.URL.createObjectURL(file);
+//			          } else if (window.webkitURL != undefined) { // webkit or chrome
+//			            url = window.webkitURL.createObjectURL(file);
+//			          }
+//			          return url;
+//			        }		
+//			       console.log(getObjectURL(file));
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = getObjectURL(file);
+//				mainimg.width = "100%";
+//				imgContenter.appendChild(mainimg);
+//			});
+
 			document.getElementById("submit").addEventListener("tap", function() {
-				console.log(baseurl + "user/danger/rectificationImg");
+				var formData = new FormData();
+				formData.append('dangerImg', $('#file')[0].files[0]);
+				formData.append('dangerId', dangerId);
 				$.ajax({
-				    url: baseurl + "user/danger/rectificationImg",
-				    type: 'POST',
-				    cache: false,
-				    data: new FormData($('#upload')[0]),
-				    processData: false,
-				    contentType: false
+					url: baseurl + "user/danger/rectificationImg",
+					type: 'POST',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false
 				}).done(function(res) {
 					plus.nativeUI.toast("上传成功");
+					location.reload();
 				}).fail(function(res) {
 					console.log(JSON.stringify(res));
 					plus.nativeUI.toast("上传失败");
 				});
 			})
+			
+			function addImg() {
+			    file = jQuery('#file')[0].files[0];
+			    //添加图片路径到img src中进行预览
+			    
+			    //不同浏览器下的路径不同
+			     function getObjectURL(file) {
+			          var url = null;
+			          if (window.createObjectURL != undefined) { // basic
+			            url = window.createObjectURL(file);
+			          } else if (window.URL != undefined) { // mozilla(firefox)
+			            url = window.URL.createObjectURL(file);
+			          } else if (window.webkitURL != undefined) { // webkit or chrome
+			            url = window.webkitURL.createObjectURL(file);
+			          }
+			          return url;
+			        }				
+				console.log(path);
+				var mainimg = document.createElement("img");
+				mainimg.setAttribute("class", "pic");
+				mainimg.src = getObjectURL(file);
+				mainimg.width = "100%";
+				imgContenter.appendChild(mainimg);
+			}			
 		</script>
 	</body>
 

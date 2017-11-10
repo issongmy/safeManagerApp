@@ -75,9 +75,10 @@
 				supervisionCompanyId = self.supervisionCompanyId;
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
+				console.log(subsidiaryName);
 				supervisionCompanyName = self.supervisionCompanyName;
 				var mark = false;
-				if(userClass == "1") {
+				if(userClass == "1" || userClass=="101") {
 					var request_url = baseUrl + "/subsidiary/dangerCount?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
@@ -100,8 +101,9 @@
 						}
 					});
 				}
-				if(userClass == "3") {
+				if(userClass == "2" || userClass == "201") {
 					var request_url = baseUrl + "/supervision/subs?supervisionCompanyId=" + supervisionCompanyId;
+					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
@@ -109,14 +111,13 @@
 					mui.ajax(request_url, {
 						type: "get",
 						success: function(result) {
-							addSupervision(supervisionCompanyName);
+							addSupervision(supervisionCompanyName, supervisionCompanyId);
 							var extend = eval(result.extend);
 							var projectList = extend.subsidiaryList;
 							console.log(projectList.length);
 							for(var i = 0; i < projectList.length; i++) {
 								var pro_company = projectList[i].subsidiaryName;
 								var projectId = projectList[i].subsidiaryId;
-								addProject(pro_company);
 								var request_url = baseUrl + "/subsidiary/dangerCount?subsidiaryId=" + projectId;
 								console.log(request_url);
 								var headers = {
@@ -127,8 +128,14 @@
 									type: "get",
 									success: function(result) {
 										var extend = eval(result.extend);
-										getDangerNum(extend.todayAdded, extend.todayImportant, extend.monthAdded, extend.monthImportant);
-										addProject(pro_company);
+										dayDangerNum = extend.todayAdded;
+										dayBigDangerNum = extend.todayImportant;
+										monthDangerNum = extend.monthAdded;
+										monthBigDangerNum = extend.monthImportant;
+										var projectId = extend.subsidiary.subsidiaryId;
+										var projectName = extend.subsidiary.subsidiaryName;
+										console.log(projectId);
+										addProject(projectName, projectId);
 									},
 									error: function() {
 										plus.nativeUI.toast("请求失败!");
@@ -141,7 +148,7 @@
 						}
 					});
 				}
-				if(userClass == "2") {
+				if(userClass == "3" || userClass == "301") {
 					var request_url = baseUrl + "/company/todayDangers?companyId=" + companyId;
 					var headers = {
 						'Accept': 'application/json',
