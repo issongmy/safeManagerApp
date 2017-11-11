@@ -101,7 +101,7 @@
 						}
 					});
 				}
-				if(userClass == "2" || userClass == "201") {
+				if(userClass=="2"|| userClass == "201") {
 					var request_url = baseUrl + "/supervision/subs?supervisionCompanyId=" + supervisionCompanyId;
 					console.log(request_url);
 					var headers = {
@@ -148,7 +148,7 @@
 						}
 					});
 				}
-				if(userClass == "3" || userClass == "301") {
+				if(userClass == "3" || userClass == "301" || userClass == "401") {
 					var request_url = baseUrl + "/company/todayDangers?companyId=" + companyId;
 					var headers = {
 						'Accept': 'application/json',

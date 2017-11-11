@@ -168,7 +168,7 @@
 				});
 			});
 
-			function addEdu(proname, safetyTestsId, uploadTime, currentState, safetyEudHtml) {
+			function addEdu(proname, safetyTestsId, uploadTime, currentState, safetyTestsHtml) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("eduList");
 				var liObj = document.createElement("li");
@@ -178,7 +178,7 @@
 				span_pro.innerHTML = proname;				
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = safetyEudHtml.slice(10);
+				span_num.innerHTML = safetyTestsHtml.slice(10);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = convUnixTimestamp(uploadTime);

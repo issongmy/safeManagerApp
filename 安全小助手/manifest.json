@@ -706,7 +706,9 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"safe_edu_approve_table.html"
+				],
 				"priority": 0
 			},
 			"info_5.html": {

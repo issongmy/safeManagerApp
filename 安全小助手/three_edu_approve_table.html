@@ -97,7 +97,7 @@
 					document.getElementById("state").value = "待审核";
 				console.log(safetyEduHtml);
 				var info = document.getElementById("info");
-				info.innerHTML = safetyEduHtml;
+				info.innerHTML = safetyEduHtml.slice(10);
 				file_url = baseUrl + "/resource/safetyEdu/" + safetyEduHtml;					
 //				if(!mui.os.ios)
 //					info.href = document.getElementById("info").href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;	
@@ -109,7 +109,7 @@
 			});
 			
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(userClass == "201") {
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/safetyEdu";
 					console.log(request_url);
 					var headers = {
@@ -117,7 +117,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
 							"safetyEduId": safetyEduId,
 							"companyId": companyId
@@ -125,12 +125,13 @@
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
 						},
-						error: function() {
+						error: function(result) {
+							console.log(JSON.stringify(result));
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(userClass == "301"){
+				if(userClass == "201"){
 					var request_url = baseUrl + "/supervision/safetyEdu";
 					console.log(request_url);
 					var headers = {
@@ -138,7 +139,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
 							"safetyEduId": safetyEduId,
 							"companyId": companyId
@@ -146,7 +147,8 @@
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
 						},
-						error: function() {
+						error: function(result) {
+							console.log(JSON.stringify(result));
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
@@ -159,7 +161,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
 							"safetyEduId": safetyEduId,
 							"companyId": companyId

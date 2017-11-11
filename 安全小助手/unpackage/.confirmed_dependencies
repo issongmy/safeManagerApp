@@ -501,6 +501,9 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"fonts/mui.ttf"
+		],
+		"refer": [
+			"safe_edu_approve_table.html"
 		]
 	},
 	"info_5.html": {

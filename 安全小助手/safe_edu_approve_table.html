@@ -29,6 +29,10 @@
 			.row {
 				height: 100px;
 			}
+			
+			.info{
+				text-align: center;
+			}
 		</style>
 	</head>
 
@@ -63,8 +67,9 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/jquery.js	"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			var companyId;
 			var safetyTestsId;
 			var uploadTime;
@@ -87,7 +92,7 @@
 				currentState = self.currentState;
 				safetyTestsHtml = self.safetyTestsHtml;
 				document.getElementById("num").value = safetyTestsId;
-				if(checkTime == "")
+				if(uploadTime == "")
 					document.getElementById("time").value = "";
 				else {
 					document.getElementById("time").value = convUnixTimestamp(uploadTime);
@@ -97,7 +102,7 @@
 				else
 					document.getElementById("state").value = "待审核";
 				var info = document.getElementById("info");
-				info.innerHTML = safetyTestsHtml;
+				info.innerHTML = safetyTestsHtml.slice(10);
 				file_url = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;
 //				if(!mui.os.ios)
 //					info.href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;				
@@ -120,7 +125,7 @@
 						type: "put",
 						data:{
 							"testId": safetyTestsId,
-							"companyId ": companyId 
+							"companyId": companyId 
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
@@ -130,7 +135,9 @@
 						}
 					});
 				}
-				if(userClass == "201") {
+				if(userClass == "301") {
+					console.log(safetyTestsId);
+					console.log(companyId);
 					var request_url = baseUrl + "/company/safetyTest";
 					console.log(request_url);
 					var headers = {
@@ -141,17 +148,19 @@
 						type: "put",
 						data:{
 							"testId": safetyTestsId,
-							"companyId ": companyId 
+							"companyId": companyId 
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
 						},
-						error: function() {
+						error: function(result) {
+							console.log(JSON.stringify(result));
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(userClass == "301"){
+				if(userClass == "201"){
+					console.log(safetyTestsId + " " + companyId);
 					var request_url = baseUrl + "/supervision/safetyTest";
 					console.log(request_url);
 					var headers = {
@@ -161,13 +170,14 @@
 					mui.ajax(request_url, {
 						type: "put",
 						data:{
-							"testId": safetyTestsId,
-							"companyId ": companyId 
+							"testId": $.trim(safetyTestsId),
+							"companyId": $.trim(companyId) 
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
 						},
-						error: function() {
+						error: function(result) {
+							console.log(JSON.stringify(result));
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
@@ -183,7 +193,7 @@
 						type: "put",
 						data:{
 							"testId": safetyTestsId,
-							"companyId ": companyId 
+							"companyId": companyId 
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
@@ -225,6 +235,10 @@
 					}
 				});
 			});	
+			
+　　 String.prototype.trim=function(){
+　　    return this.replace(/(^\s*)|(\s*$)/g, "");
+　　 }			
 		</script>
 	</body>
 
