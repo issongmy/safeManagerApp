@@ -37,6 +37,9 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://smyz.me";
+			var userClass;
+			var companyId;
+			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -45,15 +48,15 @@
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
-				var userClass = self.userClass;
-				var companyId = self.companyId;
+				userClass = self.userClass;
+				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201" || userClass == "2"){
+				if(userClass == "201"){
 					var request_url = baseUrl + "/company/notApprovalMajorStaff?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -127,6 +130,7 @@
 					url: "info_4_.html",
 					id: "info_4_",
 					extras: {
+						userClass: userClass,
 						companyId: companyId,
 						majorStaffId: majorStaffId,
 						majorStaffImgPath: majorStaffImgPath,

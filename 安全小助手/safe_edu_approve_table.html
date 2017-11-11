@@ -71,6 +71,7 @@
 			var currentState;
 			var safetyTestsHtml;			
 			var file_url;
+			var userClass;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -79,6 +80,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
 				companyId = self.companyId;
 				safetyTestsId = self.safetyTestsId;
 				uploadTime = self.uploadTime;
@@ -107,7 +109,7 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "101") {
+				if(userClass == "101") {
 					var request_url = baseUrl + "/company/safetyTest";
 					console.log(request_url);
 					var headers = {
@@ -128,7 +130,7 @@
 						}
 					});
 				}
-				if(companyId == "201") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/company/safetyTest";
 					console.log(request_url);
 					var headers = {
@@ -149,7 +151,7 @@
 						}
 					});
 				}
-				if(companyId == "301"){
+				if(userClass == "301"){
 					var request_url = baseUrl + "/supervision/safetyTest";
 					console.log(request_url);
 					var headers = {
@@ -170,7 +172,7 @@
 						}
 					});
 				}
-				if(companyId == "401"){
+				if(userClass == "401"){
 					var request_url = baseUrl + "/safetyDirector/safetyTest";
 					console.log(request_url);
 					var headers = {

@@ -38,6 +38,9 @@
 		<script type="text/javascript">
 			var baseUrl = "http://smyz.me";
 			mui.init();
+			var userClass;
+			var companyId;
+			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -45,15 +48,15 @@
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
-				var userClass = self.userClass;
-				var companyId = self.companyId;
+				userClass = self.userClass;
+				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201" || userClass == "2"){
+				if(userClass == "201"){
 					var request_url = baseUrl + "/company/notApprovalResponsibility?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {

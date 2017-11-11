@@ -71,6 +71,7 @@
 			var companyId;
 			var instituteId;
 			var file_url;
+			var userClass;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -79,6 +80,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
 				companyId = self.companyId;
 				var category = self.category;
 				instituteId = self.instituteId;
@@ -108,7 +110,7 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/company/institute";
 					console.log(request_url);
 					var headers = {
@@ -129,7 +131,7 @@
 						}
 					});
 				}
-				if(companyId == "401") {
+				if(userClass == "401") {
 					var request_url = baseUrl + "/safetyDirector/institute";
 					console.log(request_url);
 					var headers = {

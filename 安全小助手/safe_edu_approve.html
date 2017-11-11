@@ -44,6 +44,7 @@
 			var companyId;
 			var subsidiaryId;
 			var supervisionCompanyId;
+			var userClass;
 			
 			mui.init({
 				gestureConfig: {
@@ -63,12 +64,12 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var userClass = self.userClass;
+				userClass = self.userClass;
 				companyId = self.companyId;
 				var userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
 				supervisionCompanyId = self.supervisionCompanyId;
-				if(userClass == "201" || userClass == "2") {
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/notApprovalTest?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -94,7 +95,7 @@
 						}
 					});
 				}
-				if(userClass == "301") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/supervision/notApprovalTest?supervisionCompanyId="+ supervisionCompanyId +"&companyId=" + companyId ;
 					var headers = {
 						'Accept': 'application/json',
@@ -157,6 +158,7 @@
 					url: "safe_edu_approve_table.html",
 					id: "safe_edu_approve_table",
 					extras: {
+						userClass: userClass,
 						companyId: companyId,
 						safetyTestsId: safetyTestsId,
 						uploadTime: uploadTime,

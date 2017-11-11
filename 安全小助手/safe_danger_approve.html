@@ -37,6 +37,7 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			var companyId;
+			var userClass;
 			var baseUrl = "http://123.206.87.22";
 			mui.init();
 			mui.plusReady(function() {
@@ -46,7 +47,7 @@
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
-				var userClass = self.userClass;
+				userClass = self.userClass;
 				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
@@ -75,7 +76,7 @@
 								var rectificationPeriod = dangerList[i].rectificationPeriod;
 								var dangerNumber = dangerList[i].dangerNumber;
 								var checkTime = dangerList[i].checkTime;
-								var checkUser = dangerList[i].checkUser;
+								var checkUser = dangerList[i].checkUserId;
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
@@ -141,7 +142,8 @@
 								var rectificationPeriod = dangerList[i].rectificationPeriod;
 								var dangerNumber = dangerList[i].dangerNumber;
 								var checkTime = dangerList[i].checkTime;
-								var checkUser = dangerList[i].checkUser;
+								var checkUser = dangerList[i].checkUserId;
+								console.log(checkUser);
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
@@ -206,7 +208,7 @@
 								var rectificationPeriod = dangerList[i].rectificationPeriod;
 								var dangerNumber = dangerList[i].dangerNumber;
 								var checkTime = dangerList[i].checkTime;
-								var checkUser = dangerList[i].checkUser;
+								var checkUser = dangerList[i].checkUserId;
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
@@ -272,7 +274,7 @@
 								var rectificationPeriod = dangerList[i].rectificationPeriod;
 								var dangerNumber = dangerList[i].dangerNumber;
 								var checkTime = dangerList[i].checkTime;
-								var checkUser = dangerList[i].checkUser;
+								var checkUser = dangerList[i].checkUserId;
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
@@ -336,11 +338,12 @@
 					url: "safe_handle_table_approve.html",
 					id: "safe_handle_table_approve",
 					extras: {
+						userClass: userClass,
 						dangerId: dangerId,
 						companyId: companyId,
 						dangerNumber: dangerNumber,
 						checkTime: checkTime, 
-						checkUser: checkUser,
+						checkUserId: checkUser,
 						state: state, 
 						level: level,
 						description: description,

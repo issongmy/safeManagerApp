@@ -38,6 +38,8 @@
 		<script type="text/javascript">
 			var baseUrl = "http://smyz.me";
 			var companyId;
+			var userClass;
+			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -46,7 +48,7 @@
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
-				var userClass = self.userClass;
+				userClass = self.userClass;
 				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;

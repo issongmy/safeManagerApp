@@ -68,6 +68,7 @@
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var companyId;
+			var userClass;
 			var responsibilityId;
 			
 			mui.plusReady(function() {
@@ -106,7 +107,7 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/company/responsibility";
 					console.log(request_url);
 					var headers = {
@@ -127,7 +128,7 @@
 						}
 					});
 				}
-				if(companyId == "401") {
+				if(userClass == "401") {
 					var request_url = baseUrl + "/safetyDirector/responsibility";
 					console.log(request_url);
 					var headers = {

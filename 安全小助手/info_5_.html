@@ -91,6 +91,7 @@
 			var specialStaffImgPath;
 			var job;
 			var name; 
+			var userClass;
 			var companyId;
 			var idNumber;
 			var specialStaffIdNumber;
@@ -106,6 +107,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
 				companyId = self.companyId;
 				specialStaffId = self.specialStaffId;
 				specialStaffImgPath = self.specialStaffImgPath;
@@ -142,7 +144,7 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/company/specialStaff";
 					console.log(request_url);
 					var headers = {
@@ -167,7 +169,7 @@
 						}
 					});
 				}
-				if(companyId == "401"){
+				if(userClass == "401"){
 					var request_url = baseUrl + "/safetyDirector/specialStaff";
 					console.log(request_url);
 					var headers = {

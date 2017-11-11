@@ -39,6 +39,7 @@
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var companyId;
+			var userClass;
 			
 			mui.init();
 			mui.plusReady(function() {
@@ -48,12 +49,11 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				var userClass = self.userClass;
+				userClass = self.userClass;
 				companyId = self.companyId;
 				var userId = self.userId;
 				var subsidiaryId = self.subsidiaryId;
 				var supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
 				console.log(userId);
 				if(userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/notApprovalDangers?subsidiaryId=" + subsidiaryId + "&companyId=" + companyId;
@@ -82,7 +82,7 @@
 						}
 					});
 				}
-				if(userClass == "201" || userClass == "2") {
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/notApprovalEdu?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -108,7 +108,7 @@
 						}
 					});
 				}
-				if(userClass == "301") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/supervision/notApprovalEdu?supervisionCompanyId=1" + supervisionCompanyId + "&companyId=" + companyId;
 					var headers = {
 						'Accept': 'application/json',
@@ -173,6 +173,7 @@
 					url: "three_edu_approve_table.html",
 					id: "three_edu_approve_table",
 					extras: {
+						userClass: userClass,
 						companyId: companyId,
 						safetyEduId: safetyEduId,
 						uploadTime: uploadTime,

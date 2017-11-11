@@ -70,6 +70,7 @@
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var companyId;
+			var userClass;
 			var preplanId;
 			var file_url;
 			
@@ -80,6 +81,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
 				companyId = self.companyId;
 				var category = self.category;
 				preplanId = self.preplanId;

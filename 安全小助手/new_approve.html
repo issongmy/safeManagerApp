@@ -73,7 +73,7 @@
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
 				supervisionCompanyName = self.supervisionCompanyName;
-				if(userClass == "2" || userClass == "201") {
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/badge?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -127,7 +127,7 @@
 						}
 					});
 				}
-				if(userClass == "201"){
+				if(userClass == "401"){
 					var request_url = baseUrl + "/director/badge?companyId=1" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -160,6 +160,20 @@
 							plus.nativeUI.toast("请求失败!");
 						}
 					});					
+				}
+				if(userClass == "201"){
+					if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
+						addItem("安全隐患", "1", 0);
+					}
+					if(userClass == "201" || userClass == "301" || userClass == "401") {
+//						addItem("三级教育", "2", eduBadge);
+//						addItem("安全教育", "3", testBadge);
+						addItem("三级教育", "2", 0);
+						addItem("安全教育", "3", 0);						
+					}
+					if(userClass == "201" || userClass == "401")
+//						addItem("安全基本资料", "4", instituteBadge+majorStaffBadge+preplanBadge+responsibilityBadge+specialStaffBadge);								
+						addItem("安全基本资料", "4", 0);	
 				}
 			});
 

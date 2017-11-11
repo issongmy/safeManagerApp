@@ -93,6 +93,7 @@
 			var name;
 			var idNumber;
 			var majorStaffId;
+			var userClass;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -101,6 +102,7 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
+				userClass = self.userClass;
 				companyId = self.companyId;
 				majorStaffId = self.majorStaffId;
 				var majorStaffImgPath = self.majorStaffImgPath;

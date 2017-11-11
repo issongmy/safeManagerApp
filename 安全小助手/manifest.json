@@ -664,7 +664,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"safe_handle_table_approve.html"
+				],
 				"priority": 0
 			},
 			"three_edu_approve.html": {

@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -100,15 +101,18 @@
 						整改后隐患截图
 					</div>
 				</div>
-			</div>			
+			</div>
 			<div id='image-list-2'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
-			</div>			
+			</div>
 			<!--<div class="mui-card-footer">
 					<a class="mui-card-link">Like</a>
 					<a class="mui-card-link">Comment</a>
 					<a class="mui-card-link">Read more</a>
 				</div>-->
+		</div>
+		<div class="mui-content-padded">
+			<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
@@ -116,7 +120,7 @@
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var companyId;
-			var class_;
+			var userClass;
 			var dangerNumber;
 			var checkTime;
 			var checkUser;
@@ -129,7 +133,7 @@
 			var dangerImgPath;
 			var imgContenter = document.getElementById("image-list-1");
 			var imgContenter_ = document.getElementById("image-list-2");
-			
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -138,21 +142,23 @@
 				};
 				var self = plus.webview.currentWebview();
 				dangerId = self.dangerId;
+				userClass = self.userClass;
 				console.log(dangerId);
 				companyId = self.companyId;
 				var userName = self.userName;
 				var mark = self.mark;
 				var dangerNumber = self.dangerNumber;
 				var checkTime = self.checkTime;
-				var checkUser = self.checkUser;
-				if(self.from == "1"){
+				var checkUser = self.checkUserId;
+				if(self.from == "1") {
 					var parent = document.getElementById("submit").parentNode;
 					parent.removeChild(document.getElementById("submit"));
 				}
 				var state = self.state;
 				level = self.level;
-				var description = self.description;
+				description = self.description;
 				var suggestion = self.suggestion;
+				console.log(description);
 				rectificationMeasures = self.rectificationMeasures;
 				rectificationPeriod = self.rectificationPeriod;
 				responsibilityUser = self.responsibilityUser;
@@ -228,17 +234,16 @@
 					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
 				}
 				console.log(rectificationImgPath);
-				if(rectificationImgPath == null || rectificationImgPath == ""){
-					if(state == "整改审核中" || state == "整改完毕"){
+				if(rectificationImgPath == null || rectificationImgPath == "") {
+					if(state == "整改审核中" || state == "整改完毕") {
 						addImg_("image/zw.jpg")
-					}else{
+					} else {
 						var parent = document.getElementById("other").parentNode;
 						parent.removeChild(document.getElementById("other"));
 					}
-				}
-				else {
+				} else {
 					addImg_(baseUrl + "/resource/dangerImg/" + rectificationImgPath);
-				}				
+				}
 			});
 			mui.init();
 
@@ -254,7 +259,7 @@
 				mainimg.height = document.body.clientWidth - 10;
 				imgContenter.appendChild(mainimg);
 			}
-			
+
 			function addImg_(path) {
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
@@ -262,7 +267,7 @@
 				mainimg.width = document.body.clientWidth - 10;
 				mainimg.height = document.body.clientWidth - 10;
 				imgContenter_.appendChild(mainimg);
-			}			
+			}
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));
@@ -276,7 +281,12 @@
 			}
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "101") {
+				if(level == "重大隐患"){
+					level = 1;
+				}else{
+					level = 0;
+				}
+				if(userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/danger";
 					console.log(request_url);
 					var headers = {
@@ -285,25 +295,29 @@
 					};
 					mui.ajax(request_url, {
 						type: "put",
-						data:{
+						data: {
 							"dangerId": dangerId,
 							"companyId": companyId,
 							"dangerNumber": dangerNumber,
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod, 
+							"rectificationPeriod": rectificationPeriod,
 							"responsibilityUserId": responsibilityUser
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
 						},
-						error: function() {
+						error: function(res) {
+							console.log(JSON.stringify(res));
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(companyId == "201") {
+				if(userClass == "201") {
+					console.log(description);
+					console.log(level + " " + typeof(level));
+					console.log();
 					var request_url = baseUrl + "/company/danger";
 					console.log(request_url);
 					var headers = {
@@ -319,18 +333,19 @@
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod, 
-							"responsibilityUserId": responsibilityUser							
+							"rectificationPeriod": rectificationPeriod,
+							"responsibilityUserId": responsibilityUser
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
 						},
-						error: function() {
+						error: function(res) {
+							console.log(JSON.stringify(res));
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(companyId == "301"){
+				if(userClass == "301") {
 					var request_url = baseUrl + "/supervision/danger";
 					console.log(request_url);
 					var headers = {
@@ -346,18 +361,18 @@
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod, 
-							"responsibilityUserId": responsibilityUser							
-						},						
+							"rectificationPeriod": rectificationPeriod,
+							"responsibilityUserId": responsibilityUser
+						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审核成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审核失败!");
 						}
 					});
 				}
-				if(companyId == "401"){
+				if(userClass == "401") {
 					var request_url = baseUrl + "/safetyDirector/danger";
 					console.log(request_url);
 					var headers = {
@@ -373,8 +388,8 @@
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod, 
-							"responsibilityUserId": responsibilityUser							
+							"rectificationPeriod": rectificationPeriod,
+							"responsibilityUserId": responsibilityUser
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
@@ -387,4 +402,5 @@
 			});
 		</script>
 	</body>
+
 </html>

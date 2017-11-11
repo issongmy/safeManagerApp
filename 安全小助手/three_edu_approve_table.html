@@ -69,7 +69,8 @@
 		<script type="text/javascript">
 			var baseUrl = "http://smyz.me";
 			var companyId;
-			var safetyEduId;			
+			var safetyEduId;
+			var userClass;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -80,6 +81,7 @@
 				var self = plus.webview.currentWebview();
 				companyId = self.companyId;
 				safetyEduId = self.safetyEduId;
+				userClass = self.userClass;
 				var uploadTime = self.uploadTime;
 				var currentState = self.currentState;
 				var safetyEduHtml = self.safetyEduHtml;
@@ -107,7 +109,7 @@
 			});
 			
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/company/safetyEdu";
 					console.log(request_url);
 					var headers = {
@@ -128,7 +130,7 @@
 						}
 					});
 				}
-				if(companyId == "301"){
+				if(userClass == "301"){
 					var request_url = baseUrl + "/supervision/safetyEdu";
 					console.log(request_url);
 					var headers = {
@@ -149,7 +151,7 @@
 						}
 					});
 				}
-				if(companyId == "401"){
+				if(userClass == "401"){
 					var request_url = baseUrl + "/safetyDirector/safetyEdu";
 					console.log(request_url);
 					var headers = {
