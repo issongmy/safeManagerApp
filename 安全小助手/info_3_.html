@@ -111,7 +111,10 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(companyId == "201") {
+				console.log(companyId);
+				console.log(preplanId);
+				console.log(userClass);
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/preplan";
 					console.log(request_url);
 					var headers = {
@@ -119,20 +122,20 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
-							companyId: company,
-							preplanId: preplanId
+							"companyId": companyId,
+							"preplanId": preplanId
 						},
 						success: function(result) {
-
+							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(companyId == "401") {
+				if(userClass == "401") {
 					var request_url = baseUrl + "/safetyDirector/preplan";
 					console.log(request_url);
 					var headers = {
@@ -140,16 +143,16 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
-							companyId: company,
-							preplanId: preplanId
+							"companyId": companyId,
+							"preplanId": preplanId
 						},
 						success: function(result) {
-
+							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}

@@ -46,9 +46,9 @@
 				mui.back = function(event) {
 					plus.webview.currentWebview().close();
 				};	
-				if(mui.os.ios){
-					document.getElementById("title").style.marginTop = "40px";
-				}
+//				if(mui.os.ios){
+//					document.getElementById("title").style.marginTop = "40px";
+//				}
 				var self = plus.webview.currentWebview();
 				userClass = self.userClass;
 				companyId = self.companyId;
@@ -58,7 +58,7 @@
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201"){
+				if(userClass == "301"){
 					var request_url = baseUrl + "/company/notApprovalInstitute?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -75,7 +75,12 @@
 								var institutePath = instituteList[i].institutePath;
 								var category = instituteList[i].category;
 								var currentState = instituteList[i].currentState;
-								addInstitute(instituteId, institutePath, category, currentState);
+								var name;
+								if(category == "1")
+									name = instituteList[i].subsidiary.subsidiaryName;
+								else 
+									name = instituteList[i].supervisionCompany.supervisionCompanyName;
+								addInstitute(instituteId, institutePath, category, currentState, name);
 							}
 						},
 						error: function() {
@@ -100,7 +105,12 @@
 								var institutePath = instituteList[i].institutePath;
 								var category = instituteList[i].category;
 								var currentState = instituteList[i].currentState;
-								addInstitute(instituteId, institutePath, category, currentState);
+								var name;
+								if(category == "1")
+									name = instituteList[i].subsidiary.subsidiaryName;
+								else 
+									name = instituteList[i].supervisionCompany.supervisionCompanyName;
+								addInstitute(instituteId, institutePath, category, currentState, name);								
 							}
 						},
 						error: function() {
@@ -130,11 +140,14 @@
 				});
 			});
 
-			function addInstitute(instituteId, institutePath, category, currentState) {
+			function addInstitute(instituteId, institutePath, category, currentState, name) {
 				var main = document.getElementById("main");					
 				var ul = document.getElementById("instituteList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_com = document.createElement("sapn");
+				span_com.setAttribute("id", "span_left");
+				span_com.innerHTML = name;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = institutePath.slice(10);
@@ -148,7 +161,9 @@
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", dangerNum);
+				a.setAttribute("id", instituteId);
+				a.appendChild(span_com);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);

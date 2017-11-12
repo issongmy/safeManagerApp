@@ -110,6 +110,7 @@
 				userClass = self.userClass;
 				companyId = self.companyId;
 				specialStaffId = self.specialStaffId;
+				console.log(specialStaffId);
 				specialStaffImgPath = self.specialStaffImgPath;
 				job = self.job;
 				name = self.name;
@@ -144,7 +145,8 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(userClass == "201") {
+				console.log(userClass);
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/specialStaff";
 					console.log(request_url);
 					var headers = {
@@ -152,17 +154,17 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							specialSaffId: specialSaffId,
-							companyId: companyId,
-							job: job,
-							name: name,
-							idNumber: idNumber,
-							specialStaffIdNumber: specialStaffIdNumber
+							"specialStaffId": specialStaffId,
+							"companyId": companyId,
+							"job": job,
+							"name": name,
+							"idNumber": idNumber,
+							"specialStaffIdNumber": specialStaffIdNumber
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");	
+							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");
@@ -177,20 +179,20 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							specialSaffId: specialSaffId,
-							companyId: companyId,
-							job: job,
-							name: name,
-							idNumber: idNumber,
-							specialStaffIdNumber: specialStaffIdNumber
+							"specialStaffId": specialStaffId,
+							"companyId": companyId,
+							"job": job,
+							"name": name,
+							"idNumber": idNumber,
+							"specialStaffIdNumber": specialStaffIdNumber
 						},
 						success: function(result) {
-							
+							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}

@@ -110,7 +110,9 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(userClass == "201") {
+				console.log(instituteId);
+				console.log(companyId);
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/institute";
 					console.log(request_url);
 					var headers = {
@@ -118,16 +120,16 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
-							instituteId: instituteId,
-							companyId: companyId
+							"instituteId": instituteId,
+							"companyId": companyId
 						},
 						success: function(result) {
-								
+							plus.nativeUI.toast("上传成功!");								
 						},	
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
@@ -139,16 +141,16 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
-							instituteId: instituteId,
-							companyId: companyId
+							"instituteId": instituteId,
+							"companyId": companyId
 						},
 						success: function(result) {
-							
+							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}

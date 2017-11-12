@@ -39,7 +39,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全教育审批</h1>
+			<h1 class="mui-title">安全交底审批</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
@@ -122,7 +122,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
 							"testId": safetyTestsId,
 							"companyId": companyId 
@@ -145,7 +145,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
 							"testId": safetyTestsId,
 							"companyId": companyId 
@@ -168,7 +168,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
 							"testId": $.trim(safetyTestsId),
 							"companyId": $.trim(companyId) 
@@ -190,7 +190,7 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data:{
 							"testId": safetyTestsId,
 							"companyId": companyId 

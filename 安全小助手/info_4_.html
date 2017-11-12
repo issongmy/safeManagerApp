@@ -77,12 +77,16 @@
 			<div id='image-list'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
 			</div>
+			<div class="mui-content-padded">
+				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
+			</div>			
 		</div>
 		<script src="js/bmob.js"></script>
 		<script src="js/bmob-min.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
+			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
 			var mark = false;
@@ -123,9 +127,9 @@
 				else 
 					document.getElementById("category").value = "业主";
 				if(currentState)
-					document.getElementById("currentState").value = "已发布";
+					document.getElementById("state").value = "已发布";
 				else
-					document.getElementById("currentState").value = "未发布";
+					document.getElementById("state").value = "未发布";
 				if(majorStaffImgPath == null || majorStaffImgPath == "")
 					addImg("image/zw.jpg");
 				else {
@@ -157,6 +161,66 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
+			
+			document.getElementById("approve").addEventListener("tap", function() {
+				console.log("majorStaffId" + majorStaffId +
+							"companyId" + companyId +
+							"job"+ job +
+							"name" +  name +
+							"idNumber"+ idNumber +
+							"majorStaffIdNumber"+ majorStaffIdNumber);
+				if(userClass == "301") {
+					var request_url = baseUrl + "/company/majorStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "post",
+						data: {
+							"majorStaffId": majorStaffId,
+							"companyId": companyId,
+							"job": job,
+							"name": name,
+							"idNumber": idNumber,
+							"majorStaffIdNumber": majorStaffIdNumber
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function(result) {
+						
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+				if(userClass == "401"){
+					var request_url = baseUrl + "/safetyDirector/majorStaff";
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "post",
+						data: {
+							"majorStaffId": majorStaffId,
+							"companyId": companyId,
+							"job": job,
+							"name": name,
+							"idNumber": idNumber,
+							"majorStaffIdNumber": majorStaffIdNumber
+						},
+						success: function(result) {
+							plus.nativeUI.toast("上传成功!");
+						},
+						error: function() {
+							plus.nativeUI.toast("上传失败!");
+						}
+					});
+				}
+			});			
 		</script>
 	</body>
 </html>

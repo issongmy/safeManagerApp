@@ -755,7 +755,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"info_2_.html"
+				],
 				"priority": 0
 			},
 			"info_4.html": {
@@ -764,7 +766,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"info_4_.html"
+				],
 				"priority": 0
 			},
 			"info_1.html": {
@@ -773,7 +777,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"info_1_.html"
+				],
 				"priority": 0
 			},
 			"info_3.html": {

@@ -56,7 +56,7 @@
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201" || userClass == "2"){
+				if(userClass == "301"){
 					var request_url = baseUrl + "/company/notApprovalSpecialStaff?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -130,6 +130,7 @@
 					url: "info_5_.html",
 					id: "info_5_",
 					extras: {
+						userClass: userClass,
 						companyId: companyId,
 						specialStaffId: specialStaffId,
 						specialStaffImgPath: specialStaffImgPath,
@@ -152,18 +153,25 @@
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = job;
 				var span_other = document.createElement("span");
-				span_other.setAttribute("id", "span_right");
-				if(category == "1")
-					span_other.innerHTML = "项目";
-				else if(category == "2")
-					span_other.innerHTML = "监理";
-				else 
-					span_other.innerHTML = "业主";
+				span_other.setAttribute("id", "span_left");
+//				if(category == "1")
+//					span_other.innerHTML = "项目";
+//				else if(category == "2")
+//					span_other.innerHTML = "监理";
+//				else 
+//					span_other.innerHTML = "业主";
+				span_other.innerHTML = name;
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", specialStaffId);
 				a.appendChild(span_num);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
+				a.appendChild(document.createElement("br"));
+				var span_id = document.createElement("span");
+				span_id.setAttribute("id", "span_right");
+				span_id.innerHTML = specialStaffIdNumber;
+				a.appendChild(span_id);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
 				hidden_input.setAttribute("id", "specialStaffId");

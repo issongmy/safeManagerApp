@@ -79,6 +79,7 @@
 				};
 				var self = plus.webview.currentWebview();
 				companyId = self.companyId;
+				userClass = self.userClass;
 				var category = self.category;
 				responsibilityId = self.responsibilityId;
 				var responsibilityPath = self.responsibilityPath;
@@ -107,7 +108,9 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(userClass == "201") {
+				console.log("haha");
+				console.log(userClass);
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/responsibility";
 					console.log(request_url);
 					var headers = {
@@ -115,16 +118,16 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							responsibilityId: responsibilityId,
-							companyId: companyId
+							"responsibilityId": responsibilityId,
+							"companyId": companyId
 						},
 						success: function(result) {
-								
+							plus.nativeUI.toast("上传成功!");	
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
@@ -136,16 +139,16 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							responsibilityId: responsibilityId,
-							companyId: companyId
+							"responsibilityId": responsibilityId,
+							"companyId": companyId
 						},
 						success: function(result) {
-							
+							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("请求失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}

@@ -60,7 +60,7 @@
 				userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
 				supervisionCompanyId = self.supervisionCompanyId;
-				if(userClass == "1") {
+				if(userClass == "1" || userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/focus?subsidiaryId=" + subsidiaryId;
 					var headers = {
 						'Accept': 'application/json',
@@ -127,7 +127,7 @@
 						}
 					});
 				}
-				if(userClass == "2") {
+				if(userClass == "3" || userClass == "301" || userClass == "401") {
 					var request_url = baseUrl + "/company/focus?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -194,7 +194,7 @@
 						}
 					});
 				}
-				if(userClass == "3") {
+				if(userClass == "2" || userClass == "201") {
 					var request_url = baseUrl + "/supervision/focus?supervisionCompanyId=" + supervisionCompanyId;
 					var headers = {
 						'Accept': 'application/json',
@@ -295,7 +295,7 @@
 						userName: userName,
 						dangerNumber: dangerNumber,
 						checkTime: checkTime,
-						checkUserId: checkUserId,
+						checkUser: checkUserId,
 						state: state,
 						level: level,
 						description: description,

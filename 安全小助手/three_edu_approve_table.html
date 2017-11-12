@@ -109,6 +109,8 @@
 			});
 			
 			document.getElementById("approve").addEventListener("tap", function() {
+				console.log(companyId);
+				console.log(safetyEduId);
 				if(userClass == "301") {
 					var request_url = baseUrl + "/company/safetyEdu";
 					console.log(request_url);
@@ -119,7 +121,7 @@
 					mui.ajax(request_url, {
 						type: "post",
 						data: {
-							"safetyEduId": safetyEduId,
+							"eduId": safetyEduId,
 							"companyId": companyId
 						},
 						success: function(result) {
@@ -141,7 +143,7 @@
 					mui.ajax(request_url, {
 						type: "post",
 						data: {
-							"safetyEduId": safetyEduId,
+							"eduId": safetyEduId,
 							"companyId": companyId
 						},
 						success: function(result) {
@@ -163,7 +165,7 @@
 					mui.ajax(request_url, {
 						type: "post",
 						data: {
-							"safetyEduId": safetyEduId,
+							"eduId": safetyEduId,
 							"companyId": companyId
 						},
 						success: function(result) {

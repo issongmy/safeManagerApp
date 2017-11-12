@@ -56,7 +56,7 @@
 				console.log(userClass);
 				console.log(userId);
 				
-				if(userClass == "201"){
+				if(userClass == "301"){
 					var request_url = baseUrl + "/company/notApprovalResponsibility?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -72,7 +72,7 @@
 								var responsibilityId = responsibilityList[i].responsibilityId;
 								var responsibilityPath = responsibilityList[i].responsibilityPath;
 								var category = responsibilityList[i].category;
-								var currentState = instituteList[i].currentState;
+								var currentState = responsibilityList[i].currentState;
 								addresponsibility(responsibilityId, responsibilityPath, category, currentState);
 							}
 						},
@@ -118,6 +118,7 @@
 					url: "info_2_.html",
 					id: "info_2_",
 					extras: {
+						userClass: userClass,
 						companyId: companyId,
 						responsibilityId: responsibilityId,
 						responsibilityPath: responsibilityPath, 
@@ -127,7 +128,7 @@
 				});
 			});
 
-			function addresponsibility(responsibilityId, responsibilityPath, category) {
+			function addresponsibility(responsibilityId, responsibilityPath, category, currentState) {
 				var main = document.getElementById("main");					
 				var ul = document.getElementById("responsibilityList");
 				var liObj = document.createElement("li");
@@ -145,7 +146,7 @@
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
-				a.setAttribute("id", dangerNum);
+				a.setAttribute("id", responsibilityId);
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
