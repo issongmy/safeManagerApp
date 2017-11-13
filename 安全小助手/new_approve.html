@@ -120,15 +120,15 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							dangerBadge = extend.dangerBadge;
-							addItem("安全隐患", "1", dangerBadge);
+//							addItem("安全隐患", "1", dangerBadge);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
 					});
 				}
-				if(userClass == "401"){
-					var request_url = baseUrl + "/director/badge?companyId=" + companyId;
+				if(userClass == "201"){
+					var request_url = baseUrl + "/supervisionCompany/badge?supervisionCompanyId=" + supervisionCompanyId + "&companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -164,20 +164,40 @@
 						}
 					});					
 				}
-				if(userClass == "201"){
-					if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
-//						addItem("安全隐患", "1", 0);
-					}
-					if(userClass == "201" || userClass == "301" || userClass == "401") {
-//						addItem("三级教育", "2", eduBadge);
-//						addItem("安全交底", "3", testBadge);
-						addItem("三级教育", "2", 0);
-						addItem("安全交底", "3", 0);						
-					}
-					if(userClass == "301" || userClass == "401"){
-//						addItem("安全基本资料", "4", instituteBadge+majorStaffBadge+preplanBadge+responsibilityBadge+specialStaffBadge);								
-						addItem("安全基本资料", "4", 0);	
-					}
+				if(userClass == "401"){
+					var request_url = baseUrl + "/director/badge?companyId=" + companyId;
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							eduBadge = extend.eduBadge;
+							testBadge = extend.testBadge;
+							dangerBadge = extend.dangerBadge;
+							instituteBadge = extend.instituteBadge;
+							specialStaffBadge = extend.specialStaffBadge;
+							preplanBadge = extend.preplanBadge;
+							responsibilityBadge = extend.responsibilityBadge;
+							majorStaffBadge = extend.majorStaffBadge;
+							if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
+		//						addItem("安全隐患", "1", 0);
+							}
+							if(userClass == "201" || userClass == "301" || userClass == "401") {
+								addItem("三级教育", "2", eduBadge);
+								addItem("安全交底", "3", testBadge);				
+							}
+							if(userClass == "301" || userClass == "401"){
+								addItem("安全基本资料", "4", instituteBadge+majorStaffBadge+preplanBadge+responsibilityBadge+specialStaffBadge);								
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});						
 				}
 			});
 
@@ -253,6 +273,11 @@
 				}
 				ul.appendChild(li);
 			}
+			
+			window.addEventListener("refresh", function(){
+				console.log("haha");
+				location.reload();
+			});
 			
 //			function addSpecialItem(itemName, class_, badge) {
 //				var item_name = ["组织结构", "岗位职责", "应急预案", "专职人员", "特种人员"];

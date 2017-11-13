@@ -28,7 +28,7 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">特种人员持证</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="main" class="mui-content">
 			<div class="mui-scroll">
 				<ul id="specialStaffList" class="mui-table-view mui-table-view-chevron">
 				</ul>
@@ -39,12 +39,17 @@
 			var baseUrl = "http://smyz.me";
 			var companyId;
 			var userClass;
+			var length;
 			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+						id: "5",
+						num: length
+					});					
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
@@ -68,6 +73,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var specialStaffList = extend.list;
+							length = specialStaffList.length;
 							for(var i = 0; i < specialStaffList.length; i++) {
 								var specialStaffId = specialStaffList[i].specialStaffId;
 								var specialStaffImgPath = specialStaffList[i].specialStaffImgPath;
@@ -77,7 +83,12 @@
 								var specialStaffIdNumber = specialStaffList[i].specialStaffIdNumber;
 								var category = specialStaffList[i].category;
 								var currentState = specialStaffList[i].currentState;
-								addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState);
+								var name_;
+								if(category == "1")
+									name_ = specialStaffList[i].subsidiary.subsidiaryName;
+								else 
+									name_ = specialStaffList[i].supervisionCompany.supervisionCompanyName;																								
+								addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState, name_);
 							}
 						},
 						error: function() {
@@ -97,6 +108,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var specialStaffList = extend.list;
+							length = specialStaffList.length;
 							for(var i = 0; i < specialStaffList.length; i++) {
 								var specialStaffId = specialStaffList[i].specialStaffId;
 								var specialStaffImgPath = specialStaffList[i].specialStaffImgPath;
@@ -106,14 +118,19 @@
 								var specialStaffIdNumber = specialStaffList[i].specialStaffIdNumber;
 								var category = specialStaffList[i].category;
 								var currentState = specialStaffList[i].currentState;
-								addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState);
+								var name_;
+								if(category == "1")
+									name_ = specialStaffList[i].subsidiary.subsidiaryName;
+								else 
+									name_ = specialStaffList[i].supervisionCompany.supervisionCompanyName;																								
+								addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState, name_);
 							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
 					});
-				}
+				} 
 			});
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
@@ -144,11 +161,14 @@
 				});
 			});
 
-			function addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState) {
+			function addspecialStaff(specialStaffId, specialStaffImgPath, job, name, idNumber, specialStaffIdNumber, category, currentState, name_) {
 				var main = document.getElementById("main");					
 				var ul = document.getElementById("specialStaffList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_com = document.createElement("span");
+				span_com.setAttribute("id", "span_left");
+				span_com.innerHTML = name_;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = job;
@@ -164,6 +184,8 @@
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", specialStaffId);
+				a.appendChild(span_com);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
@@ -216,7 +238,15 @@
 				ul.appendChild(liObj);
 			}
 				
+		window.addEventListener("refresh", function(){
+			location.reload();
+		});
+				
 		document.getElementById("close").addEventListener("tap", function() {
+			mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+				id: "5",
+				num: length
+			});			
 			plus.webview.currentWebview().close();
 		});	
 		</script>

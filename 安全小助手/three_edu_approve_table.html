@@ -126,6 +126,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("three_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();								
 						},
 						error: function(result) {
 							console.log(JSON.stringify(result));
@@ -148,6 +151,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("three_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();								
 						},
 						error: function(result) {
 							console.log(JSON.stringify(result));
@@ -169,6 +175,9 @@
 							"companyId": companyId
 						},
 						success: function(result) {
+							var parent = plus.webview.getWebviewById("three_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();							
 							plus.nativeUI.toast("上传成功!");
 						},
 						error: function() {

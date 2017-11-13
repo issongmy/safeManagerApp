@@ -57,6 +57,9 @@
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					var parent = plus.webview.getWebviewById("new_approve");
+					console.log(parent.id);
+					mui.fire(parent, "refresh");
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
@@ -153,7 +156,7 @@
 				li.setAttribute("class", "mui-table-view-cell");
 				li.setAttribute("id", class_);
 				li.innerHTML = itemName;
-				if(badge != 0 && badge != undefined){
+				if(badge != 0 && badge != undefined) {
 					var span = document.createElement("span");
 					span.setAttribute("class", "mui-badge mui-badge-primary");
 					span.innerHTML = badge;
@@ -163,7 +166,19 @@
 			}
 
 			document.getElementById("close").addEventListener("tap", function() {
+				var parent = plus.webview.getWebviewById("new_approve");
+				mui.fire(parent, "refresh");
 				plus.webview.currentWebview().close();
+			});
+			
+			window.addEventListener("refresh", function(event){
+				var li = document.getElementById(event.detail.id);
+				console.log(event.detail.num);
+				if(event.detail.num == undefined || event.detail.num == "0"){
+					li.getElementsByTagName("span")[0].style.display = "none";
+				}
+				else
+					li.getElementsByTagName("span")[0].innerHTML = event.detail.num;
 			});
 		</script>
 	</body>

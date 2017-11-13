@@ -129,6 +129,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();								
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");
@@ -152,6 +155,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();								
 						},
 						error: function(result) {
 							console.log(JSON.stringify(result));
@@ -173,8 +179,11 @@
 							"testId": $.trim(safetyTestsId),
 							"companyId": $.trim(companyId) 
 						},
-						success: function(result) {
+						success: function(result) {							
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();								
 						},
 						error: function(result) {
 							console.log(JSON.stringify(result));
@@ -197,6 +206,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_edu_approve");
+							mui.fire(parent, "refresh");							
+							plus.webview.currentWebview().close();								
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");

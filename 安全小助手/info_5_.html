@@ -84,7 +84,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";;
+			var baseUrl = "http://smyz.me";
 			var class_;
 			var mark = false;
 			var specialStaffId;
@@ -165,8 +165,11 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("info_5");
+							mui.fire(parent, "refresh");									
+							plus.webview.currentWebview().close();							
 						},
-						error: function() {
+						error: function() {		
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
@@ -190,6 +193,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("info_5");
+							mui.fire(parent, "refresh");									
+							plus.webview.currentWebview().close();								
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");

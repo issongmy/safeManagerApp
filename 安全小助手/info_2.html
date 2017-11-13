@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -14,7 +15,7 @@
 			
 			#span_left {
 				float: left;
-				color: #000 
+				color: #000
 			}
 			
 			#span_right {
@@ -28,7 +29,7 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全生产岗位职责</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="main" class="mui-content">
 			<div class="mui-scroll">
 				<ul id="responsibilityList" class="mui-table-view mui-table-view-chevron">
 				</ul>
@@ -40,13 +41,18 @@
 			mui.init();
 			var userClass;
 			var companyId;
-			
+			var length;
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+						id: "2",
+						num: length
+					});
 					plus.webview.currentWebview().close();
-				};				
+				};
 				var self = plus.webview.currentWebview();
 				userClass = self.userClass;
 				companyId = self.companyId;
@@ -55,8 +61,8 @@
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
 				console.log(userId);
-				
-				if(userClass == "301"){
+
+				if(userClass == "301") {
 					var request_url = baseUrl + "/company/notApprovalResponsibility?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -68,12 +74,18 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var responsibilityList = extend.list;
+							length = responsibilityList.length;
 							for(var i = 0; i < responsibilityList.length; i++) {
 								var responsibilityId = responsibilityList[i].responsibilityId;
 								var responsibilityPath = responsibilityList[i].responsibilityPath;
 								var category = responsibilityList[i].category;
 								var currentState = responsibilityList[i].currentState;
-								addresponsibility(responsibilityId, responsibilityPath, category, currentState);
+								var name;
+								if(category == "1")
+									name = responsibilityList[i].subsidiary.subsidiaryName;
+								else
+									name = responsibilityList[i].supervisionCompany.supervisionCompanyName;
+								addresponsibility(responsibilityId, responsibilityPath, category, currentState, name);
 							}
 						},
 						error: function() {
@@ -81,7 +93,7 @@
 						}
 					});
 				}
-				if(userClass == "401"){
+				if(userClass == "401") {
 					var request_url = baseUrl + "/safetyDirector/notApprovalResponsibility?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -93,12 +105,18 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var responsibilityList = extend.list;
+							length = responsibilityList.length;
 							for(var i = 0; i < responsibilityList.length; i++) {
 								var responsibilityId = responsibilityList[i].responsibilityId;
 								var responsibilityPath = responsibilityList[i].responsibilityPath;
 								var category = responsibilityList[i].category;
 								var currentState = responsibilityList[i].currentState;
-								addresponsibility(responsibilityId, responsibilityPath, category, currentState);
+								var name;
+								if(category == "1")
+									name = responsibilityList[i].subsidiary.subsidiaryName;
+								else
+									name = responsibilityList[i].supervisionCompany.supervisionCompanyName;
+								addresponsibility(responsibilityId, responsibilityPath, category, currentState, name);
 							}
 						},
 						error: function() {
@@ -121,18 +139,21 @@
 						userClass: userClass,
 						companyId: companyId,
 						responsibilityId: responsibilityId,
-						responsibilityPath: responsibilityPath, 
+						responsibilityPath: responsibilityPath,
 						category: category,
 						currentState: currentState
 					}
 				});
 			});
 
-			function addresponsibility(responsibilityId, responsibilityPath, category, currentState) {
-				var main = document.getElementById("main");					
+			function addresponsibility(responsibilityId, responsibilityPath, category, currentState, name) {
+				var main = document.getElementById("main");
 				var ul = document.getElementById("responsibilityList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_com = document.createElement("span");
+				span_com.setAttribute("id", "span_left");
+				span_com.innerHTML = name;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = responsibilityPath.slice(10);
@@ -142,11 +163,13 @@
 					span_other.innerHTML = "项目";
 				else if(category == "2")
 					span_other.innerHTML = "监理";
-				else 
+				else
 					span_other.innerHTML = "业主";
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", responsibilityId);
+				a.appendChild(span_com);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
@@ -169,14 +192,23 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "currentState";
 				hidden_input.value = currentState;
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
-		document.getElementById("close").addEventListener("tap", function() {
-			plus.webview.currentWebview().close();
-		});	
+
+			window.addEventListener("refresh", function() {
+				location.reload();
+			});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+					id: "2",
+					num: length
+				});
+				plus.webview.currentWebview().close();
+			});
 		</script>
 	</body>
+
 </html>

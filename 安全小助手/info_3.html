@@ -28,7 +28,7 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全生产应急预案</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="main" class="mui-content">
 			<div class="mui-scroll">
 				<ul id="preplanList" class="mui-table-view mui-table-view-chevron">
 				</ul>
@@ -39,12 +39,17 @@
 			var baseUrl = "http://smyz.me";
 			var companyId;
 			var userClass;
+			var length;
 			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+						id: "3",
+						num: length
+					});					
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
@@ -68,12 +73,18 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var preplanList = extend.list;
+							length = preplanList.length;
 							for(var i = 0; i < preplanList.length; i++) {
 								var preplanId = preplanList[i].preplanId;
 								var preplanPath = preplanList[i].preplanPath;
 								var category = preplanList[i].category;
 								var currentState = preplanList[i].currentState;
-								addpreplan(preplanId, preplanPath, category, currentState);
+								var name;
+								if(category == "1")
+									name = preplanList[i].subsidiary.subsidiaryName;
+								else 
+									name = preplanList[i].supervisionCompany.supervisionCompanyName;										
+								addpreplan(preplanId, preplanPath, category, currentState, name);
 							}
 						},
 						error: function() {
@@ -93,12 +104,18 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var preplanList = extend.list;
+							length = preplanList.length;
 							for(var i = 0; i < preplanList.length; i++) {
 								var preplanId = preplanList[i].preplanId;
 								var preplanPath = preplanList[i].preplanPath;
 								var category = preplanList[i].category;
 								var currentState = preplanList[i].currentState;
-								addpreplan(preplanId, preplanPath, category, currentState);
+								var name;
+								if(category == "1")
+									name = preplanList[i].subsidiary.subsidiaryName;
+								else 
+									name = preplanList[i].supervisionCompany.supervisionCompanyName;									
+								addpreplan(preplanId, preplanPath, category, currentState, name);
 							}
 						},
 						error: function() {
@@ -128,11 +145,14 @@
 				});
 			});
 
-			function addpreplan(preplanId, preplanPath, category, currentState) {
+			function addpreplan(preplanId, preplanPath, category, currentState, name) {
 				var main = document.getElementById("main");					
 				var ul = document.getElementById("preplanList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_com = document.createElement("span");
+				span_com.setAttribute("id", "span_left");
+				span_com.innerHTML = name;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = preplanPath.slice(10);
@@ -147,6 +167,8 @@
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", preplanId);
+				a.appendChild(span_com);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
@@ -173,8 +195,16 @@
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
+			
+		window.addEventListener("refresh", function(){
+			location.reload();
+		});
+			
 		document.getElementById("close").addEventListener("tap", function() {
+			mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+				id: "3",
+				num: length
+			});
 			plus.webview.currentWebview().close();
 		});	
 		</script>

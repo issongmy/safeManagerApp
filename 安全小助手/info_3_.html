@@ -39,7 +39,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全组织机构审批</h1>
+			<h1 class="mui-title">安全生产应急预案审批</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
@@ -68,7 +68,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			var companyId;
 			var userClass;
 			var preplanId;
@@ -129,6 +129,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("info_3");
+							mui.fire(parent, "refresh");									
+							plus.webview.currentWebview().close();	
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");
@@ -150,6 +153,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("info_3");
+							mui.fire(parent, "refresh");									
+							plus.webview.currentWebview().close();	
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");

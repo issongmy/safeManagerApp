@@ -28,7 +28,7 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">专职人员持证</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="main" class="mui-content">
 			<div class="mui-scroll">
 				<ul id="majorStaffList" class="mui-table-view mui-table-view-chevron">
 				</ul>
@@ -39,12 +39,17 @@
 			var baseUrl = "http://smyz.me";
 			var userClass;
 			var companyId;
-			
+			var length;
+
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					mui.fire(plus.webview.getWebviewById("info_4"), "refresh", {
+						id: "4",
+						num: length
+					});					
 					plus.webview.currentWebview().close();
 				};				
 				var self = plus.webview.currentWebview();
@@ -68,6 +73,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var majorStaffList = extend.list;
+							length = majorStaffList.length;
 							for(var i = 0; i < majorStaffList.length; i++) {
 								var majorStaffId = majorStaffList[i].majorStaffId;
 								var majorStaffImgPath = majorStaffList[i].majorStaffImgPath;
@@ -77,7 +83,12 @@
 								var majorStaffIdNumber = majorStaffList[i].majorStaffIdNumber;
 								var category = majorStaffList[i].category;
 								var currentState = majorStaffList[i].currentState;
-								addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState);
+								var name_;
+								if(category == "1")
+									name_ = majorStaffList[i].subsidiary.subsidiaryName;
+								else 
+									name_ = majorStaffList[i].supervisionCompany.supervisionCompanyName;																
+								addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState, name_);
 							}
 						},
 						error: function() {
@@ -97,6 +108,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var majorStaffList = extend.list;
+							length = majorStaffList.length;
 							for(var i = 0; i < majorStaffList.length; i++) {
 								var majorStaffId = majorStaffList[i].majorStaffId;
 								var majorStaffImgPath = majorStaffList[i].majorStaffImgPath;
@@ -106,7 +118,12 @@
 								var majorStaffIdNumber = majorStaffList[i].majorStaffIdNumber;
 								var category = majorStaffList[i].category;
 								var currentState = majorStaffList[i].currentState;
-								addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState);
+								var name_;
+								if(category == "1")
+									name_ = majorStaffList[i].subsidiary.subsidiaryName;
+								else 
+									name_ = majorStaffList[i].supervisionCompany.supervisionCompanyName;																
+								addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState, name_);
 							}
 						},
 						error: function() {
@@ -144,11 +161,14 @@
 				});
 			});
 
-			function addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState) {
+			function addmajorStaff(majorStaffId, majorStaffImgPath, job, name, idNumber, majorStaffIdNumber, category, currentState, name_) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("majorStaffList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
+				var span_com = document.createElement("span");
+				span_com.setAttribute("id", "span_left");
+				span_com.innerHTML = name_;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = job;
@@ -164,6 +184,8 @@
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", majorStaffId);
+				a.appendChild(span_com);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
@@ -217,8 +239,16 @@
 			}
 				
 		document.getElementById("close").addEventListener("tap", function() {
+			mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+				id: "4",
+				num: length
+			});
 			plus.webview.currentWebview().close();
 		});	
+		
+		window.addEventListener("refresh", function(){
+			location.reload();
+		});
 		</script>
 	</body>
 </html>

@@ -15,9 +15,11 @@
 			.mui-content-padded {
 				margin-top: 30px;
 			}
-			.info{
+			
+			.info {
 				text-align: center;
 			}
+			
 			.pic {
 				margin-right: 10px;
 				margin: 0 auto;
@@ -37,7 +39,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">安全组织机构审批</h1>
+			<h1 class="mui-title">安全生产岗位职责审批</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
@@ -53,7 +55,7 @@
 					<label>资料分类</label>
 					<input id='category' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input">	
+				<div class="mui-input">
 					<input type="text" class="mui-input-clear mui-input" value="审批资料" disabled="true">
 				</div>
 				<div class="info">
@@ -66,11 +68,11 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://smyz.me";
 			var companyId;
 			var userClass;
 			var responsibilityId;
-			
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -85,7 +87,7 @@
 				var responsibilityPath = self.responsibilityPath;
 				var currentState = self.currentState;
 				document.getElementById("num").value = responsibilityId;
-				if(category == "1")	
+				if(category == "1")
 					document.getElementById("category").value = "项目";
 				else if(category == "2")
 					document.getElementById("category").value = "监理";
@@ -98,8 +100,8 @@
 				var info = document.getElementById("info");
 				info.innerHTML = responsibilityPath;
 				file_url = baseUrl + "/resource/responsibility/" + responsibilityPath;
-//				if(!mui.os.ios)
-//					info.href = baseUrl + "/resource/responsibility/" + responsibilityPath;			
+				//				if(!mui.os.ios)
+				//					info.href = baseUrl + "/resource/responsibility/" + responsibilityPath;			
 			});
 			mui.init();
 
@@ -108,7 +110,6 @@
 			});
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				console.log("haha");
 				console.log(userClass);
 				if(userClass == "301") {
 					var request_url = baseUrl + "/company/responsibility";
@@ -124,7 +125,10 @@
 							"companyId": companyId
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");	
+							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("info_2");
+							mui.fire(parent, "refresh");									
+							plus.webview.currentWebview().close();	
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");
@@ -146,6 +150,9 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("info_2");
+							mui.fire(parent, "refresh");									
+							plus.webview.currentWebview().close();	
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");
@@ -164,18 +171,18 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
-			
+
 			document.getElementById("info").addEventListener("tap", function() {
-//				if(mui.os.ios) {
-//					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
-//						if(status == 200) {
-//							plus.nativeUI.toast(d.filename + "下载成功");
-//						} else {
-//							plus.nativeUI.toast("下载失败, 错误码:" + status);
-//						}
-//					});
-//					dtask.start();
-//				}
+				//				if(mui.os.ios) {
+				//					var dtask = plus.downloader.createDownload(file_url, {}, function(d, status) {
+				//						if(status == 200) {
+				//							plus.nativeUI.toast(d.filename + "下载成功");
+				//						} else {
+				//							plus.nativeUI.toast("下载失败, 错误码:" + status);
+				//						}
+				//					});
+				//					dtask.start();
+				//				}
 				mui.openWindow({
 					url: "file_show.html",
 					id: "file_show",
@@ -183,7 +190,7 @@
 						path: file_url
 					}
 				});
-			});				
+			});
 		</script>
 	</body>
 
