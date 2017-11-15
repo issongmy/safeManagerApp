@@ -54,6 +54,7 @@
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var userClass;
+			var length;
 
 			mui.init({
 				gestureConfig: {
@@ -71,8 +72,10 @@
 				var backButtonPress = 0;
 				mui.back = function(event) {
 					var parent = plus.webview.getWebviewById("new_approve");
-					console.log(parent.id);
-					mui.fire(parent, "refresh");
+					mui.fire(parent, "refresh", {
+						id: "3",
+						safe_num: length
+					});
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
@@ -93,6 +96,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyTestsId = eduList[i].safetyTestsId;
 								var uploadTime = eduList[i].uploadTime;
@@ -118,6 +122,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyTestsId = eduList[i].safetyTestsId;
 								var uploadTime = eduList[i].uploadTime;
@@ -144,6 +149,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyTestsId = eduList[i].safetyTestsId;
 								var uploadTime = eduList[i].uploadTime;
@@ -190,7 +196,7 @@
 				span_pro.innerHTML = proname;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = safetyTestsHtml.slice(10);
+				span_num.innerHTML = safetyTestsHtml.slice(9);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = convUnixTimestamp(uploadTime);
@@ -246,7 +252,16 @@
 			
 			window.addEventListener("refresh", function(){
 				location.reload();
-			});			
+			});	
+			
+			document.getElementById("close").addEventListener("tap", function() {
+				var parent = plus.webview.getWebviewById("new_approve");
+				mui.fire(parent, "refresh", {
+					id: "3",
+					safe_num: length
+				});
+				plus.webview.currentWebview().close();
+			});				
 		</script>
 	</body>
 

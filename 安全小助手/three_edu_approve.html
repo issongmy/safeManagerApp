@@ -48,15 +48,17 @@
 			var baseUrl = "http://123.206.87.22";
 			var companyId;
 			var userClass;
+			var length;
 
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
-					var parent = plus.webview.getWebviewById("new_approve");
-					console.log(parent.id);
-					mui.fire(parent, "refresh");
+					mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
+						id: "2",
+						safe_num: length
+					});
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
@@ -78,6 +80,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyEduId = eduList[i].safetyEdu;
 								console.log(safetyEduId);
@@ -105,6 +108,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyEduId = eduList[i].safetyEdu;
 								var uploadTime = eduList[i].uploadTime;
@@ -130,6 +134,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyEduId = eduList[i].safetyEdu;
 								var uploadTime = eduList[i].uploadTime;
@@ -156,6 +161,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var eduList = extend.list;
+							length = eduList.length;
 							for(var i = 0; i < eduList.length; i++) {
 								var safetyEduId = eduList[i].safetyEdu;
 								console.log(safetyEduId);
@@ -205,7 +211,7 @@
 				span_pro.innerHTML = proname;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = safetyEudHtml.slice(10);
+				span_num.innerHTML = safetyEudHtml.slice(9);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = convUnixTimestamp(uploadTime);
@@ -262,6 +268,14 @@
 			window.addEventListener("refresh", function(){
 				location.reload();
 			});
+			
+			document.getElementById("close").addEventListener("tap", function() {
+				mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
+					id: "2",
+					safe_num: length
+				});
+				plus.webview.currentWebview().close();
+			});				
 		</script>
 	</body>
 

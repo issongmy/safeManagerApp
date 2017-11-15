@@ -282,9 +282,16 @@
 				ul.appendChild(li);
 			}
 			
-			window.addEventListener("refresh", function(){
-				console.log("haha");
-				location.reload();
+			window.addEventListener("refresh", function(event){
+				console.log(event.detail.id);
+				var li = document.getElementById(event.detail.id);
+				console.log(event.detail.safe_num);
+				if(event.detail.safe_num == undefined || event.detail.safe_num == "0"){
+					li.getElementsByTagName("span")[0].style.display = "none";
+				}
+				else{
+					li.getElementsByTagName("span")[0].innerHTML = event.detail.safe_num;
+				}
 			});
 			
 //			function addSpecialItem(itemName, class_, badge) {

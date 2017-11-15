@@ -175,7 +175,19 @@
 
 			document.getElementById("close").addEventListener("tap", function() {
 				var parent = plus.webview.getWebviewById("new_approve");
-				mui.fire(parent, "refresh");
+				var safe_num = 0;
+				for(var i=1;i<6;i++){
+					var li = document.getElementById(i.toString());
+					console.log(i.toString());
+					if(li.getElementsByTagName("span")[0] == undefined)
+						continue;					
+					var num = li.getElementsByTagName("span")[0].innerHTML;
+					console.log(num);
+					safe_num = safe_num + parseInt(num);
+				}
+				mui.fire(parent, "refresh", {
+					safe_num: safe_num,
+					id: "4"});
 				plus.webview.currentWebview().close();
 			});
 			
