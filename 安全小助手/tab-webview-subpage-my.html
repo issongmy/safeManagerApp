@@ -15,7 +15,6 @@
 				background-color: #efeff4;
 			}
 			
-			
 			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
@@ -33,19 +32,21 @@
 			<ul class="mui-table-view">
 				<li id="myapprove" class="mui-table-view-cell">
 					<a class="mui-navigate-right">
-						<img src="image/process.png" width="18px"/>
+						<img src="image/process.png" width="18px" />
 						<span>新的审批</span>
+						<span id="approve" class="mui-badge mui-badge-primary"></span>
 					</a>
 				</li>
 				<li id="myres" class="mui-table-view-cell">
 					<a class="mui-navigate-right">
-						<img src="image/pin.png" width="18px"/>
+						<img src="image/pin.png" width="18px" />
 						<span>我的责任</span>
+						<span id="res" class="mui-badge mui-badge-primary"></span>
 					</a>
 				</li>
 				<li id="mysub" class="mui-table-view-cell">
 					<a class="mui-navigate-right">
-						<img src="image/share.png" width="18px"/>
+						<img src="image/share.png" width="18px" />
 						<span>我的提交</span>
 					</a>
 				</li>
@@ -53,7 +54,7 @@
 			<ul class="mui-table-view" style="margin-top: 25px;">
 				<li class="mui-table-view-cell">
 					<a id="about" class="mui-navigate-right">
-						<img src="image/Smile.png" width="18px"/>
+						<img src="image/Smile.png" width="18px" />
 						<span>关于</span>
 					</a>
 				</li>
@@ -77,41 +78,175 @@
 	</body>
 	<script src="js/mui.min.js"></script>
 	<script>
+		var baseUrl = "http://123.206.87.22";
 		var userName;
 		var userClass;
 		var companyId;
 		var userId;
 		var subsidiaryId;
 		var supervisionCompanyId;
-		
+		var eduBadge;
+		var testBadge;
+		var dangerBadge;
+		var instituteBadge;
+		var specialStaffBadge;
+		var dataBadge;
+		var preplanBadge;
+		var responsibilityBadge;
+		var majorStaffBadge;
+
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
-		
+
 		mui.plusReady(function() {
-				mui.oldBack = mui.back;
-				var backButtonPress = 0;
-				mui.back = function(event) {
-					backButtonPress++;
-					if(backButtonPress > 1) {
-						plus.runtime.quit();
-					} else {
-						plus.nativeUI.toast('再按一次退出应用');
-					}
-					setTimeout(function() {
-						backButtonPress = 0;
-					}, 1000);
-					return false;
+			mui.oldBack = mui.back;
+			var backButtonPress = 0;
+			mui.back = function(event) {
+				backButtonPress++;
+				if(backButtonPress > 1) {
+					plus.runtime.quit();
+				} else {
+					plus.nativeUI.toast('再按一次退出应用');
+				}
+				setTimeout(function() {
+					backButtonPress = 0;
+				}, 1000);
+				return false;
+			};
+			var self = plus.webview.currentWebview();
+			userName = self.userName;
+			userClass = self.userClass;
+			companyId = self.companyId;
+			userId = self.userId;
+			subsidiaryId = self.subsidiaryId;
+			supervisionCompanyId = self.supervisionCompanyId;
+			var request_url = baseUrl + "/user/responsibilityDangers?userId=" + userId;
+			var headers = {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=utf-8',
+			};
+			mui.ajax(request_url, {
+				type: "get",
+				success: function(result) {
+					var extend = eval(result.extend);
+					var dangerList = extend.list;
+					document.getElementById("res").innerHTML = dangerList.length;
+					if(dangerList.length == 0)
+						document.getElementById("res").style.display = "none";
+				},
+				error: function() {
+					plus.nativeUI.toast("请求失败!");
+				}
+			});
+			if(userClass == "301") {
+				var request_url = baseUrl + "/company/badge?companyId=" + companyId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
 				};
-				var self = plus.webview.currentWebview();
-				userName = self.userName;
-				userClass = self.userClass;
-				companyId = self.companyId;
-				userId = self.userId;
-				subsidiaryId = self.subsidiaryId;
-				supervisionCompanyId = self.supervisionCompanyId;
-				console.log(userClass);
-				
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						eduBadge = extend.eduBadge;
+						testBadge = extend.testBadge;
+						dangerBadge = extend.dangerBadge;
+						instituteBadge = extend.instituteBadge;
+						specialStaffBadge = extend.specialStaffBadge;
+						dataBadge = extend.dataBadge;
+						preplanBadge = extend.preplanBadge;
+						responsibilityBadge = extend.responsibilityBadge;
+						majorStaffBadge = extend.majorStaffBadge;
+						document.getElementById("approve").innerHTML = testBadge + eduBadge + instituteBadge + majorStaffBadge +
+							responsibilityBadge + specialStaffBadge + preplanBadge;
+						if((testBadge + eduBadge + instituteBadge + majorStaffBadge +
+								responsibilityBadge + specialStaffBadge + preplanBadge) == 0)
+							document.getElementById("approve").style.display = "none";
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			if(userClass == "101") {
+				var request_url = baseUrl + "/subsidiary/badge?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						document.getElementById("approve").style.display = "none";
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			if(userClass == "201") {
+				var request_url = baseUrl + "/supervisionCompany/badge?supervisionCompanyId=" + supervisionCompanyId + "&companyId=" + companyId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						eduBadge = extend.eduBadge;
+						testBadge = extend.testBadge;
+						dangerBadge = extend.dangerBadge;
+						instituteBadge = extend.instituteBadge;
+						specialStaffBadge = extend.specialStaffBadge;
+						preplanBadge = extend.preplanBadge;
+						responsibilityBadge = extend.responsibilityBadge;
+						majorStaffBadge = extend.majorStaffBadge;
+						document.getElementById("approve").innerHTML = testBadge + eduBadge;
+						if((testBadge + eduBadge) == 0)
+							document.getElementById("approve").style.display = "none";
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			if(userClass == "401") {
+				var request_url = baseUrl + "/director/badge?companyId=" + companyId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						eduBadge = extend.eduBadge;
+						testBadge = extend.testBadge;
+						dangerBadge = extend.dangerBadge;
+						instituteBadge = extend.instituteBadge;
+						specialStaffBadge = extend.specialStaffBadge;
+						preplanBadge = extend.preplanBadge;
+						responsibilityBadge = extend.responsibilityBadge;
+						majorStaffBadge = extend.majorStaffBadge;
+						document.getElementById("approve").innerHTML = testBadge + eduBadge + instituteBadge + majorStaffBadge +
+							responsibilityBadge + specialStaffBadge + preplanBadge;
+						if((testBadge + eduBadge + instituteBadge + majorStaffBadge +
+								responsibilityBadge + specialStaffBadge + preplanBadge) == 0)
+							document.getElementById("approve").style.display = "none";
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+
 		});
 
 		document.getElementById("exit").addEventListener('tap', function() {
@@ -123,7 +258,7 @@
 			localStorage.removeItem("pass");
 			var all = plus.webview.all();
 			console.log(all.length);
-			for(var i=0;i<all.length;i++){
+			for(var i = 0; i < all.length; i++) {
 				console.log(all[i].id);
 			}
 			plus.webview.close("main");
@@ -139,48 +274,58 @@
 			plus.webview.close(" tab-webview-subpage-activity.html");
 			plus.webview.close(" tab-webview-subpage-project.html");
 		})
-		
-		document.getElementById("myapprove").addEventListener("tap", function(){
+
+		document.getElementById("myapprove").addEventListener("tap", function() {
 			mui.openWindow({
 				url: "new_approve.html",
 				id: "new_approve",
-				extras:{
-					userId:userId,
-					userClass:userClass,
-					companyId:companyId,
-					subsidiaryId:subsidiaryId,
-					supervisionCompanyId:supervisionCompanyId
+				extras: {
+					userId: userId,
+					userClass: userClass,
+					companyId: companyId,
+					subsidiaryId: subsidiaryId,
+					supervisionCompanyId: supervisionCompanyId
 				}
 			});
 		});
-		
-		document.getElementById("myres").addEventListener("tap", function(){
+
+		document.getElementById("myres").addEventListener("tap", function() {
 			mui.openWindow({
 				url: "my_responsibility.html",
 				id: "my_responsibility.html",
-				extras:{
-					userId:userId,
-					userClass:userClass,
-					companyId:companyId,
-					subsidiaryId:subsidiaryId,
-					supervisionCompanyId:supervisionCompanyId
+				extras: {
+					userId: userId,
+					userClass: userClass,
+					companyId: companyId,
+					subsidiaryId: subsidiaryId,
+					supervisionCompanyId: supervisionCompanyId
 				}
 			});
 		});
-		
-		document.getElementById("mysub").addEventListener("tap", function(){
+
+		document.getElementById("mysub").addEventListener("tap", function() {
 			mui.openWindow({
 				url: "my_submit.html",
 				id: "my_submit.html",
-				extras:{
+				extras: {
 					userName: userName,
-					userId:userId,
-					userClass:userClass,
-					companyId:companyId,
-					subsidiaryId:subsidiaryId,
-					supervisionCompanyId:supervisionCompanyId
+					userId: userId,
+					userClass: userClass,
+					companyId: companyId,
+					subsidiaryId: subsidiaryId,
+					supervisionCompanyId: supervisionCompanyId
 				}
 			});
+		});
+
+		window.addEventListener("refresh", function(event) {
+			var li = document.getElementById(event.detail.id);
+			if(event.detail.safe_num == undefined || event.detail.safe_num == "0") {
+				li.style.display = "none";
+				li.innerHTML = "0";
+			} else {
+				li.innerHTML = event.detail.safe_num;
+			}
 		});
 	</script>
 

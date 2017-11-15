@@ -13,11 +13,11 @@
 				background: #555555;
 			}
 			
-			.mui-icon{
+			.mui-icon {
 				color: #fff;
-			}				
+			}
 			
-			.mui-title{
+			.mui-title {
 				color: #fff;
 			}
 			
@@ -40,7 +40,7 @@
 		<div class="mui-content">
 			<div class="mui-card">
 				<ul id="main" class="mui-table-view mui-table-view-chevron">
-					
+
 				</ul>
 			</div>
 		</div>
@@ -69,6 +69,20 @@
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					var parent = plus.webview.getWebviewById("tab-webview-subpage-my");
+					var safe_num = 0;
+					for(var i = 2; i < 5; i++) {
+						var li = document.getElementById(i.toString());
+						if(li.getElementsByTagName("span")[0] == undefined)
+							continue;
+						var num = li.getElementsByTagName("span")[0].innerHTML;
+						console.log(num);
+						safe_num = safe_num + parseInt(num);
+					}
+					mui.fire(parent, "refresh", {
+						safe_num: safe_num,
+						id: "approve"
+					});
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
@@ -102,21 +116,21 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "301" || userClass == "201" || userClass == "401") {
-//								addItem("安全隐患", "1", dangerBadge);
+								//								addItem("安全隐患", "1", dangerBadge);
 							}
 							if(userClass == "301" || userClass == "201" || userClass == "401") {
 								addItem("三级教育", "2", eduBadge);
 								addItem("安全交底", "3", testBadge);
 							}
 							if(userClass == "301" || userClass == "401")
-								addItem("安全基本资料", "4", instituteBadge+majorStaffBadge+preplanBadge+responsibilityBadge+specialStaffBadge);
+								addItem("安全基本资料", "4", instituteBadge + majorStaffBadge + preplanBadge + responsibilityBadge + specialStaffBadge);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
 					});
 				}
-				if(userClass == "101"){
+				if(userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/badge?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
@@ -128,14 +142,14 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							dangerBadge = extend.dangerBadge;
-//							addItem("安全隐患", "1", dangerBadge);
+							//							addItem("安全隐患", "1", dangerBadge);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
 					});
 				}
-				if(userClass == "201"){
+				if(userClass == "201") {
 					var request_url = baseUrl + "/supervisionCompany/badge?supervisionCompanyId=" + supervisionCompanyId + "&companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -155,7 +169,7 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
-//								addItem("安全隐患", "1", dangerBadge);
+								//								addItem("安全隐患", "1", dangerBadge);
 							}
 							if(userClass == "201" || userClass == "301" || userClass == "401") {
 								if(eduBadge >= 0)
@@ -165,14 +179,14 @@
 							}
 							if(userClass == "301" || userClass == "401")
 								if(instituteBadge >= 0)
-								addItem("安全基本资料", "4", instituteBadge+majorStaffBadge+preplanBadge+responsibilityBadge+specialStaffBadge);
+									addItem("安全基本资料", "4", instituteBadge + majorStaffBadge + preplanBadge + responsibilityBadge + specialStaffBadge);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
-					});					
+					});
 				}
-				if(userClass == "401"){
+				if(userClass == "401") {
 					var request_url = baseUrl + "/director/badge?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -192,20 +206,20 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
-		//						addItem("安全隐患", "1", 0);
+								//						addItem("安全隐患", "1", 0);
 							}
 							if(userClass == "201" || userClass == "301" || userClass == "401") {
 								addItem("三级教育", "2", eduBadge);
-								addItem("安全交底", "3", testBadge);				
+								addItem("安全交底", "3", testBadge);
 							}
-							if(userClass == "301" || userClass == "401"){
-								addItem("安全基本资料", "4", instituteBadge+majorStaffBadge+preplanBadge+responsibilityBadge+specialStaffBadge);								
+							if(userClass == "301" || userClass == "401") {
+								addItem("安全基本资料", "4", instituteBadge + majorStaffBadge + preplanBadge + responsibilityBadge + specialStaffBadge);
 							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
-					});						
+					});
 				}
 			});
 
@@ -273,7 +287,7 @@
 				li.setAttribute("class", "mui-table-view-cell");
 				li.setAttribute("id", class_);
 				li.innerHTML = itemName;
-				if(badge > 0){
+				if(badge > 0) {
 					var span = document.createElement("span");
 					span.setAttribute("class", "mui-badge mui-badge-primary");
 					span.innerHTML = badge;
@@ -281,51 +295,69 @@
 				}
 				ul.appendChild(li);
 			}
-			
-			window.addEventListener("refresh", function(event){
+
+			window.addEventListener("refresh", function(event) {
 				console.log(event.detail.id);
 				var li = document.getElementById(event.detail.id);
 				console.log(event.detail.safe_num);
-				if(event.detail.safe_num == undefined || event.detail.safe_num == "0"){
+				if(event.detail.safe_num == undefined || event.detail.safe_num == "0") {
 					li.getElementsByTagName("span")[0].style.display = "none";
-				}
-				else{
+				} else {
 					li.getElementsByTagName("span")[0].innerHTML = event.detail.safe_num;
 				}
 			});
-			
-//			function addSpecialItem(itemName, class_, badge) {
-//				var item_name = ["组织结构", "岗位职责", "应急预案", "专职人员", "特种人员"];
-//				var ul = document.getElementById("main");
-//				var li = document.createElement("li");
-//				var a = document.createElement("a");
-//				var item_ul = document.createElement("ul");
-//				item_ul.setAttribute("class", "mui-table-view mui-table-view-chevron");
-//				for(var i=0;i<5;i++){
-//					var item_li = document.createElement("li");
-//					item_li.setAttribute("class", "mui-table-view-cell");
-//					var item_a = document.createElement("a");
-//					item_a.setAttribute("class", "mui-navigate-right");
-//					item_a.innerHTML = item_name[i];
-//					item_li.appendChild(item_a);
-//					item_ul.appendChild(item_li);
-//				}
-//				li.setAttribute("class", "mui-table-view-cell mui-collapse");
-//				li.setAttribute("id", class_);
-//				li.innerHTML = item_name;
-//				if(badge != 0){
-//					var span = document.createElement("span");
-//					span.setAttribute("class", "mui-badge mui-badge-primary");
-//					span.innerHTML = badge;
-//					li.appendChild(span);
-//				}
-//				li.appendChild(item_ul);
-//				ul.appendChild(li);
-//			}			
+
+			//			function addSpecialItem(itemName, class_, badge) {
+			//				var item_name = ["组织结构", "岗位职责", "应急预案", "专职人员", "特种人员"];
+			//				var ul = document.getElementById("main");
+			//				var li = document.createElement("li");
+			//				var a = document.createElement("a");
+			//				var item_ul = document.createElement("ul");
+			//				item_ul.setAttribute("class", "mui-table-view mui-table-view-chevron");
+			//				for(var i=0;i<5;i++){
+			//					var item_li = document.createElement("li");
+			//					item_li.setAttribute("class", "mui-table-view-cell");
+			//					var item_a = document.createElement("a");
+			//					item_a.setAttribute("class", "mui-navigate-right");
+			//					item_a.innerHTML = item_name[i];
+			//					item_li.appendChild(item_a);
+			//					item_ul.appendChild(item_li);
+			//				}
+			//				li.setAttribute("class", "mui-table-view-cell mui-collapse");
+			//				li.setAttribute("id", class_);
+			//				li.innerHTML = item_name;
+			//				if(badge != 0){
+			//					var span = document.createElement("span");
+			//					span.setAttribute("class", "mui-badge mui-badge-primary");
+			//					span.innerHTML = badge;
+			//					li.appendChild(span);
+			//				}
+			//				li.appendChild(item_ul);
+			//				ul.appendChild(li);
+			//			}			
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				var parent = plus.webview.getWebviewById("tab-webview-subpage-my.html");
+				var safe_num = 0;
+				for(var i = 2; i < 5; i++) {
+					var li = document.getElementById(i.toString());
+					if(li.getElementsByTagName("span")[0] == undefined)
+						continue;
+					var num = li.getElementsByTagName("span")[0].innerHTML;
+					console.log(num);
+					safe_num = safe_num + parseInt(num);
+				}
+				mui.fire(parent, "refresh", {
+					safe_num: safe_num,
+					id: "approve"
+				});
+				plus.webview.currentWebview().close();
+			});
 		</script>
 	</body>
+
 </html>

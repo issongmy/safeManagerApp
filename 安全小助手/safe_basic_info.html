@@ -196,6 +196,7 @@
 				console.log(event.detail.num);
 				if(event.detail.num == undefined || event.detail.num == "0"){
 					li.getElementsByTagName("span")[0].style.display = "none";
+					li.getElementsByTagName("span")[0].innerHTML = "0";
 				}
 				else
 					li.getElementsByTagName("span")[0].innerHTML = event.detail.num;
