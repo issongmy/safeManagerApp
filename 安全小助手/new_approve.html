@@ -116,7 +116,7 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "301" || userClass == "201" || userClass == "401") {
-								//								addItem("安全隐患", "1", dangerBadge);
+								addItem("安全隐患", "1", dangerBadge);
 							}
 							if(userClass == "301" || userClass == "201" || userClass == "401") {
 								addItem("三级教育", "2", eduBadge);
@@ -142,7 +142,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							dangerBadge = extend.dangerBadge;
-							//							addItem("安全隐患", "1", dangerBadge);
+							addItem("安全隐患", "1", dangerBadge);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -169,7 +169,7 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
-								//								addItem("安全隐患", "1", dangerBadge);
+								addItem("安全隐患", "1", dangerBadge);
 							}
 							if(userClass == "201" || userClass == "301" || userClass == "401") {
 								if(eduBadge >= 0)
@@ -206,7 +206,7 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
-								//						addItem("安全隐患", "1", 0);
+								addItem("安全隐患", "1", 0);
 							}
 							if(userClass == "201" || userClass == "301" || userClass == "401") {
 								addItem("三级教育", "2", eduBadge);
@@ -345,7 +345,7 @@
 				var safe_num = 0;
 				for(var i = 2; i < 5; i++) {
 					var li = document.getElementById(i.toString());
-					if(li.getElementsByTagName("span")[0] == undefined)
+					if(li == undefined)
 						continue;
 					var num = li.getElementsByTagName("span")[0].innerHTML;
 					console.log(num);

@@ -81,6 +81,10 @@
 			<div class="mui-content-padded">
 				<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
 			</div>
+			
+			<div class="mui-content-padded">
+				<button id='return' class="mui-btn mui-btn-block mui-btn-primary">退回</button>
+			</div>			
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
@@ -88,6 +92,7 @@
 			var companyId;
 			var userClass;
 			var responsibilityId;
+			var return_reason;
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -120,6 +125,24 @@
 				//					info.href = baseUrl + "/resource/responsibility/" + responsibilityPath;			
 			});
 			mui.init();
+			
+			document.getElementById("return").addEventListener('tap', function(e) 
+			{
+			    //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+			    e.detail.gesture.preventDefault(); 
+			    var btnArray = ['取消', '确定'];
+			    mui.prompt('请输入退回的原因：', '', '安全管理助手', btnArray, function(e) 
+			    {
+			        if (e.index == 1) 
+			        {
+			            return_reason = e.value;
+			        } 
+			        else 
+			        {
+			            
+			        }
+			    })
+			});					
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();

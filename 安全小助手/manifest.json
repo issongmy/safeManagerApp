@@ -272,7 +272,8 @@
 					"tab-webview-subpage-chat.html",
 					"tab-webview-subpage-frame.html",
 					"tab-webview-subpage-activity.html",
-					"tab-webview-subpage-my.html"
+					"tab-webview-subpage-my.html",
+					"tab-webview-subpage-home.html"
 				],
 				"priority": 0
 			},

@@ -17,11 +17,16 @@
 				color: black;
 				font-size: medium;
 			}
+			
+			.mui-badge{
+				font-size: x-small;
+				float: right;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="main" id="pullrefresh" class="mui-content">
 			<div class="mui-scroll">
 				<ul id="activity" class="mui-table-view mui-table-view-chevron">
 				</ul>
@@ -77,8 +82,10 @@
 							var activityTitle = actList[i].activityTitle;
 							var activityContent = actList[i].activityContent;
 							var activityAppendixPath = actList[i].activityAppendixPath;
-							var activityCategoryId = actList[i].activityCategoryId;					
-							addAct(activityTitle, activityDate, activityContent, activityAppendixPath);
+							var activityCategoryId = actList[i].activityCategoryId;
+							if(localStorage.getItem(activityId) == undefined || localStorage.getItem(activityId) == null)
+								localStorage.setItem(activityId, "0");
+							addAct(activityId, activityTitle, activityDate, activityContent, activityAppendixPath);
 						}
 					},
 					error: function() {
@@ -93,6 +100,11 @@
 				var date = node[1].innerHTML;
 				var content = node[2].innerHTML;
 				var activityAppendixPath = node[3].value;
+				var id = node[4].value;
+				if(localStorage.getItem(id) == "0"){
+					localStorage.setItem(id, "1");
+					document.getElementById(id).style.display = "none";
+				}
 				mui.openWindow({
 					url: "activity_content.html",
 					id: "activity_content",
@@ -105,7 +117,7 @@
 				});
 			});
 
-			function addAct(title, date, content, activityAppendixPath) {
+			function addAct(id, title, date, content, activityAppendixPath) {
 				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -121,11 +133,20 @@
 				liObj.appendChild(a);
 				liObj.appendChild(p1);
 				liObj.appendChild(p2);
+//				<span class="mui-badge mui-badge-primary">12</span>
+				if(localStorage.getItem(id) == "0"){
+					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">s</span>";
+				}
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
 				hidden_input.id = "activityAppendixPath";
 				hidden_input.value = activityAppendixPath;
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "id";
+				hidden_input.value = id;
+				liObj.appendChild(hidden_input);					
 				ul.appendChild(liObj);
 			}
 			

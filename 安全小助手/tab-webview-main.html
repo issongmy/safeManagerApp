@@ -27,11 +27,15 @@
 	<body id="main">
 		<!--导航栏标题-->
 		<header id="title_header" class="mui-bar mui-bar-nav">
-			<h1 id="title" class="mui-title">首页</h1>
+			<h1 id="title" class="mui-title"></h1>
 		</header>
 
 		<!--外观-->
 		<nav id="menu" class="mui-bar mui-bar-tab">
+			<!--<a id="defaultTab" class="mui-tab-item" href="tab-webview-subpage-home.html">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">主页</span>
+			</a>			-->
 			<a id="defaultTab" class="mui-tab-item" href="tab-webview-subpage-project.html">
 				<span class="mui-icon mui-icon-plus"></span>
 				<!--<span class="mui-badge"></span>-->
@@ -50,6 +54,7 @@
 				<!--<span class="mui-badge"></span>-->
 				<span class="mui-tab-label">我的</span>
 			</a>
+			
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
@@ -111,7 +116,7 @@
 				subsidiaryName = self.subsidiaryName;
 				console.log(subsidiaryName);
 				supervisionCompanyName = self.supervisionCompanyName;
-				for(var i = 0; i < 4; i++) {
+				for(var i = 0; i < 5; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style, {
 								userId:userId,

@@ -28,6 +28,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">设置</h1>
 		</header>-->
+		
 		<div id="main" class="mui-content mui-scroll-wrapper">
 			<ul class="mui-table-view">
 				<li id="myapprove" class="mui-table-view-cell">
@@ -131,7 +132,16 @@
 				success: function(result) {
 					var extend = eval(result.extend);
 					var dangerList = extend.list;
-					document.getElementById("res").innerHTML = dangerList.length;
+					var res_num = localStorage.getItem("res");
+					if(res_num == undefined || res == null)
+						localStorage.setItem("res", dangerList.length);
+					else {
+						var num = dangerList.length - parseInt(res_num);
+						localStorage.setItem("res", num);
+						document.getElementById("res").innerHTML = num;
+						if(num == 0)
+							document.getElementById("res").style.display = "none";
+					}
 					if(dangerList.length == 0)
 						document.getElementById("res").style.display = "none";
 				},
@@ -162,8 +172,9 @@
 						document.getElementById("approve").innerHTML = testBadge + eduBadge + instituteBadge + majorStaffBadge +
 							responsibilityBadge + specialStaffBadge + preplanBadge;
 						if((testBadge + eduBadge + instituteBadge + majorStaffBadge +
-								responsibilityBadge + specialStaffBadge + preplanBadge) == 0)
+								responsibilityBadge + specialStaffBadge + preplanBadge) <= 0){
 							document.getElementById("approve").style.display = "none";
+						}
 					},
 					error: function() {
 						plus.nativeUI.toast("请求失败!");
@@ -188,7 +199,7 @@
 					}
 				});
 			}
-			if(userClass == "201") {
+			else if(userClass == "201") {
 				var request_url = baseUrl + "/supervisionCompany/badge?supervisionCompanyId=" + supervisionCompanyId + "&companyId=" + companyId;
 				console.log(request_url);
 				var headers = {
@@ -208,15 +219,16 @@
 						responsibilityBadge = extend.responsibilityBadge;
 						majorStaffBadge = extend.majorStaffBadge;
 						document.getElementById("approve").innerHTML = testBadge + eduBadge;
-						if((testBadge + eduBadge) == 0)
+						if((testBadge + eduBadge) <= 0){
 							document.getElementById("approve").style.display = "none";
+						}
 					},
 					error: function() {
 						plus.nativeUI.toast("请求失败!");
 					}
 				});
 			}
-			if(userClass == "401") {
+			else if(userClass == "401") {
 				var request_url = baseUrl + "/director/badge?companyId=" + companyId;
 				console.log(request_url);
 				var headers = {
@@ -238,15 +250,18 @@
 						document.getElementById("approve").innerHTML = testBadge + eduBadge + instituteBadge + majorStaffBadge +
 							responsibilityBadge + specialStaffBadge + preplanBadge;
 						if((testBadge + eduBadge + instituteBadge + majorStaffBadge +
-								responsibilityBadge + specialStaffBadge + preplanBadge) == 0)
+								responsibilityBadge + specialStaffBadge + preplanBadge) <= 0){
 							document.getElementById("approve").style.display = "none";
+						}
 					},
 					error: function() {
 						plus.nativeUI.toast("请求失败!");
 					}
 				});
 			}
-
+			else{
+				document.getElementById("approve").style.display = "none";
+			}
 		});
 
 		document.getElementById("exit").addEventListener('tap', function() {
@@ -326,6 +341,40 @@
 			} else {
 				li.innerHTML = event.detail.safe_num;
 			}
+		});
+
+		window.addEventListener("refresh_res", function() {
+			var request_url = baseUrl + "/user/responsibilityDangers?userId=" + userId;
+			var headers = {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=utf-8',
+			};
+			mui.ajax(request_url, {
+				type: "get",
+				success: function(result) {
+					var extend = eval(result.extend);
+					var dangerList = extend.list;
+					var user = "user" + userName;
+					var res_num = localStorage.getItem(user);
+					console.log(user);
+					if(res_num == undefined || res_num == null)
+						localStorage.setItem(user, dangerList.length);
+					else {	
+						var num = dangerList.length - parseInt(res_num);
+						localStorage.setItem(user, dangerList.length);
+						if(num <= 0){
+							document.getElementById(user).style.display = "none";
+						}else{
+							document.getElementById(user).innerHTML = num;
+						}
+					}
+					if(dangerList.length == 0)
+						document.getElementById(user).style.display = "none";
+				},
+				error: function() {
+					plus.nativeUI.toast("请求失败!");
+				}
+			});
 		});
 	</script>
 

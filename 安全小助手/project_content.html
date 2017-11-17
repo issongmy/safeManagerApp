@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -12,18 +13,18 @@
 				background-color: #fff;
 			}
 			
-			.mui-icon{
+			.mui-icon {
 				color: #fff;
-			}				
+			}
 			
-			.mui-bar-nav{
+			.mui-bar-nav {
 				background: #555555;
 			}
 			
-			.mui-title{
+			.mui-title {
 				color: #fff;
 			}
-				
+			
 			.mui-bar-popover {
 				width: 30%;
 			}
@@ -38,7 +39,7 @@
 				overflow-y: scroll;
 			}
 			
-			#load{
+			#load {
 				color: black;
 			}
 		</style>
@@ -96,10 +97,11 @@
 		<script type="text/javascript" charset="utf-8">
 			var counter = 0;
 			var baseUrl = "http://smyz.me";
-			
+
 			mui.init();
 			var subpages = ['danger-state.html', 'SomeInfo/safe_edu_approve.html', 'SomeInfo/three_edu_approve.html',
-				'SomeInfo/info_4.html', 'SomeInfo/info_5.html'];
+				'SomeInfo/info_4.html', 'SomeInfo/info_5.html'
+			];
 			var id_;
 			var class_;
 			var aniShow = {};
@@ -115,11 +117,10 @@
 				console.log(self.id);
 				mui.back = function() {
 					var self = plus.webview.currentWebview();
-					var parent = plus.webview.getWebviewById("project_content");
-					mui.fire(parent, "close");
-					parent.close();
+					var parent = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+					mui.fire(parent, "refresh_num");
 					self.close();
-				};				
+				};
 				id_ = self.id_;
 				class_ = self.class_;
 				subsidiaryId = self.id_;
@@ -159,7 +160,7 @@
 				plus.webview.hide("SomeInfo/info_4.html");
 				plus.webview.hide("SomeInfo/info_5.html");
 				counter += 1;
-				if(counter > 1) return;				
+				if(counter > 1) return;
 				var request_url = baseUrl + "/subsidiary/institute?subsidiaryId=" + subsidiaryId;
 				console.log(request_url);
 				var headers = {
@@ -309,15 +310,17 @@
 					defaultTab.classList.add('mui-active');
 				}
 			});
-			
-		document.getElementById("close").addEventListener("tap", function(){
-			var self = plus.webview.currentWebview();
-			self.close();
-		});
-		
-		window.addEventListener("close", function(event){
-			plus.webview.currentWebview().close();
-		});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				var self = plus.webview.currentWebview();
+				var parent = plus.webview.getWebviewById("tab-webview-subpage-project.html");
+				mui.fire(parent, "refresh_num");
+				self.close();
+			});
+
+			window.addEventListener("close", function(event) {
+				plus.webview.currentWebview().close();
+			});
 		</script>
 	</body>
 
