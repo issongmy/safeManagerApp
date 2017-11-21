@@ -26,6 +26,8 @@
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var baseUrl = "http://123.206.87.22";
+			var length;
+			
 			mui.init({
 				gestureConfig: {
 					tap: true, //默认为true
@@ -72,6 +74,7 @@
 							console.log(result.length);
 							var extend = eval(result.extend);
 							var focusList = extend.list;
+							length = focusList.length;
 							for(var i = 0; i < focusList.length; i++) {
 								var dangerId = focusList[i].dangerId;
 								var projectName = focusList[i].subsidiary.subsidiaryName;
@@ -139,6 +142,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var focusList = extend.list;
+							length = focusList.length;
 							for(var i = 0; i < focusList.length; i++) {
 								var dangerId = focusList[i].dangerId;
 								var projectName = focusList[i].subsidiary.subsidiaryName;
@@ -206,6 +210,7 @@
 							console.log(result.length);
 							var extend = eval(result.extend);
 							var focusList = extend.list;
+							length = focusList.length;
 							for(var i = 0; i < focusList.length; i++) {
 								var dangerId = focusList[i].dangerId;
 								var projectName = focusList[i].subsidiary.subsidiaryName;
@@ -408,7 +413,65 @@
 			}	
 			
 			window.addEventListener("refresh_", function(){
-				
+				console.log(length);
+				if(userClass == "301" || userClass == "3" || userClass == "401" || userClass == "4"){
+					var request_url = baseUrl + "/company/focusCount?companyId=" + companyId;
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							if(extend.focusCount != length){
+								location.reload();
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});					
+				}else if(userClass == "201" || userClass == "2"){
+					var request_url = baseUrl + "/supervision/focusCount?supervisionCompanyId=" + supervisionCompanyId;
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							if(extend.focusCount != length){
+								location.reload();
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});						
+				}else{
+					var request_url = baseUrl + "/subsidiary/focusCount?subsidiaryId=" + subsidiaryId;
+					console.log(request_url);
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							if(extend.focusCount != length){
+								location.reload();
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});						
+				}
 			});			
 		</script>
 	</body>

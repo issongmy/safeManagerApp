@@ -44,6 +44,7 @@
 			var subsidiaryId;
 			var supervisionCompanyId;
 			var baseUrl = "http://123.206.87.22";
+			var length;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -76,6 +77,7 @@
 					success: function(result) {
 						var extend = eval(result.extend);
 						var actList = extend.list;
+						length = actList.length;
 						for(var i=0;i<actList.length;i++){
 							var activityId = actList[i].activityId;
 							var activityDate = actList[i].activityDate;
@@ -162,9 +164,26 @@
 			}
 			
 			window.addEventListener("refresh_", function(){
-				console.log("haha");
-			});			
-		</script>
+				console.log(length);
+				var request_url = baseUrl + "/activityCount?companyId=" + companyId;
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						if(extend.activityCount != length){
+							location.reload();
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});				
+			});
+	</script>
 	</body>
 
 </html>

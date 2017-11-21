@@ -189,27 +189,27 @@
 			//点击触发项目的刷新事件
 			document.getElementById("defaultTab").addEventListener("tap", function(){
 				var target = plus.webview.getWebviewById("tab-webview-subpage-project.html");
-				mui.trigger(target, "refresh_");
+				mui.fire(target, "refresh_");
 			});
 			
 			
 			//点击触发活动的刷新事件
 			document.getElementById("1").addEventListener("tap", function(){
 				var target = plus.webview.getWebviewById("tab-webview-subpage-activity.html");
-				mui.trigger(target, "refresh_");
+				mui.fire(target, "refresh_");
 			});
 
 			//点击触发关注的刷新事件
 			document.getElementById("2").addEventListener("tap", function(){
 				var target = plus.webview.getWebviewById("tab-webview-subpage-focus.html");
-				mui.trigger(target, "refresh_");
+				mui.fire(target, "refresh_");
 			});
 			
 			//点击触发我的的刷新事件
 			document.getElementById("3").addEventListener("tap", function(){
 				console.log("haha");
 				var target = plus.webview.getWebviewById("tab-webview-subpage-my.html");
-//				mui.trigger(target, "refresh_");
+				mui.fire(target, "refresh_");
 			});			
 		</script>
 	</body>

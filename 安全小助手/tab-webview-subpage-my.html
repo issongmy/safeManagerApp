@@ -384,8 +384,155 @@
 			});
 		});
 		
-		window.addEventListener("refresh_main", function(){
-				
+		window.addEventListener("refresh_", function(){
+			var request_url = baseUrl + "/user/responsibilityDangers?userId=" + userId;
+			var headers = {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=utf-8',
+			};
+			mui.ajax(request_url, {
+				type: "get",
+				success: function(result) {
+					var extend = eval(result.extend);
+					var dangerList = extend.list;
+					var res_num = localStorage.getItem("res");
+					if(res_num == undefined || res == null)
+						localStorage.setItem("res", dangerList.length);
+					else {
+						var num = dangerList.length - parseInt(res_num);
+						localStorage.setItem("res", num);
+						document.getElementById("res").innerHTML = num;
+						if(num == 0)
+							document.getElementById("res").style.display = "none";
+					}
+					if(dangerList.length == 0)
+						document.getElementById("res").style.display = "none";
+				},
+				error: function() {
+					plus.nativeUI.toast("请求失败!");
+				}
+			});
+			if(userClass == "301") {
+				var request_url = baseUrl + "/company/badge?companyId=" + companyId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						eduBadge = extend.eduBadge;
+						testBadge = extend.testBadge;
+						dangerBadge = extend.dangerBadge;
+						instituteBadge = extend.instituteBadge;
+						specialStaffBadge = extend.specialStaffBadge;
+						dataBadge = extend.dataBadge;
+						preplanBadge = extend.preplanBadge;
+						responsibilityBadge = extend.responsibilityBadge;
+						majorStaffBadge = extend.majorStaffBadge;
+						document.getElementById("approve").style.display = "inline";
+						document.getElementById("approve").innerHTML = dangerBadge + testBadge + eduBadge + instituteBadge + majorStaffBadge +
+							responsibilityBadge + specialStaffBadge + preplanBadge;
+						if((dangerBadge + testBadge + eduBadge + instituteBadge + majorStaffBadge +
+								responsibilityBadge + specialStaffBadge + preplanBadge) <= 0){
+							document.getElementById("approve").style.display = "none";
+						}else{
+							document.getElementById("approve").style.display = "inline";
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			if(userClass == "101") {
+				var request_url = baseUrl + "/subsidiary/badge?subsidiaryId=" + subsidiaryId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						document.getElementById("approve").style.display = "none";
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			else if(userClass == "201") {
+				var request_url = baseUrl + "/supervisionCompany/badge?supervisionCompanyId=" + supervisionCompanyId + "&companyId=" + companyId;
+				console.log(request_url);
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						eduBadge = extend.eduBadge;
+						testBadge = extend.testBadge;
+						dangerBadge = extend.dangerBadge;
+						instituteBadge = extend.instituteBadge;
+						specialStaffBadge = extend.specialStaffBadge;
+						preplanBadge = extend.preplanBadge;
+						responsibilityBadge = extend.responsibilityBadge;
+						majorStaffBadge = extend.majorStaffBadge;
+						document.getElementById("approve").style.display = "inline";
+						document.getElementById("approve").innerHTML = dangerBadge + testBadge + eduBadge;
+						if((testBadge + eduBadge + dangerBadge) <= 0){
+							document.getElementById("approve").style.display = "none";
+						}else{
+							document.getElementById("approve").style.display = "inline";
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			else if(userClass == "401") {
+				var request_url = baseUrl + "/director/badge?companyId=" + companyId;
+				var headers = {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+				};
+				mui.ajax(request_url, {
+					type: "get",
+					success: function(result) {
+						var extend = eval(result.extend);
+						eduBadge = extend.eduBadge;
+						testBadge = extend.testBadge;
+						dangerBadge = extend.dangerBadge;
+						instituteBadge = extend.instituteBadge;
+						specialStaffBadge = extend.specialStaffBadge;
+						preplanBadge = extend.preplanBadge;
+						responsibilityBadge = extend.responsibilityBadge;
+						majorStaffBadge = extend.majorStaffBadge;
+						document.getElementById("approve").style.display = "inline";
+						document.getElementById("approve").innerHTML = dangerBadge + testBadge + eduBadge + instituteBadge + majorStaffBadge +
+							responsibilityBadge + specialStaffBadge + preplanBadge;
+						if((dangerBadge +  testBadge + eduBadge + instituteBadge + majorStaffBadge +
+								responsibilityBadge + specialStaffBadge + preplanBadge) <= 0){
+							document.getElementById("approve").style.display = "none";
+						}else{
+							document.getElementById("approve").style.display = "inline";						
+						}
+					},
+					error: function() {
+						plus.nativeUI.toast("请求失败!");
+					}
+				});
+			}
+			else{
+				document.getElementById("approve").style.display = "none";
+			}				
 		});		
 	</script>
 

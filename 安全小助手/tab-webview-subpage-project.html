@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
 			html,
@@ -48,6 +47,9 @@
 			var dayBigDangerNum;
 			var monthDangerNum;
 			var monthBigDangerNum;
+			
+			var proLen = 0;
+			var superLen = 0;
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -112,6 +114,7 @@
 							addSupervision(supervisionCompanyName, supervisionCompanyId);
 							var extend = eval(result.extend);
 							var projectList = extend.subsidiaryList;
+							proLen = projectList.length;
 							console.log(projectList.length);
 							for(var i = 0; i < projectList.length; i++) {
 								var pro_company = projectList[i].subsidiaryName;
@@ -172,6 +175,7 @@
 								success: function(result) {
 									var extend = eval(result.extend);
 									var projectList = extend.subsidiaryList;
+									proLen = projectList.length;
 									var i = 0;
 									for(i = 0; i < projectList.length; i++) {
 										var pro_company = projectList[i].subsidiaryName;
@@ -217,6 +221,7 @@
 									success: function(result) {
 										var extend = eval(result.extend);
 										var supervisionList = extend.supervisionCompanyList;
+										superLen = supervisionList.length;
 										for(var i = 0; i < supervisionList.length; i++) {
 											var super_company = supervisionList[i].supervisionCompanyName;
 											//											console.log(supervisionList[i].supervisionCompanyId);
@@ -277,6 +282,7 @@
 							//							addSupervision(supervisionCompanyName, supervisionCompanyId);
 							var extend = eval(result.extend);
 							var projectList = extend.subsidiaryList;
+							proLen = projectList.length;
 							console.log(projectList.length);
 							for(var i = 0; i < projectList.length; i++) {
 								var pro_company = projectList[i].subsidiaryName;
@@ -346,6 +352,7 @@
 								success: function(result) {
 									var extend = eval(result.extend);
 									var projectList = extend.subsidiaryList;
+									proLen = projectList.length;
 									var i = 0;
 									for(i = 0; i < projectList.length; i++) {
 										var pro_company = projectList[i].subsidiaryName;
@@ -551,7 +558,45 @@
 			}
 			
 			window.addEventListener("refresh_", function(){
-				
+				console.log(proLen);
+				console.log(superLen);
+				if(userClass == "301" || userClass == "3" || userClass == "401" || userClass == "4"){
+					var request_url = baseUrl + "/company/unitsCount?companyId=" + companyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							if(extend.supervisionCompanyCount != superLen || proLen != extend.subsidiaryCount){
+								location.reload();
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});					
+				}else if(userClass == "201" || userClass == "2"){
+					var request_url = baseUrl + "/supervision/subsCount?supervisionCompanyId=" + supervisionCompanyId;
+					var headers = {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8',
+					};
+					mui.ajax(request_url, {
+						type: "get",
+						success: function(result) {
+							var extend = eval(result.extend);
+							if(proLen != extend.subsidiaryCount){
+								location.reload();
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("请求失败!");
+						}
+					});						
+				}
 			});
 		</script>
 
