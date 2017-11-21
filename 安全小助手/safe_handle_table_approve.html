@@ -8,23 +8,23 @@
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/feedback.css" rel="stylesheet" />
 		<style>
-			.mui-icon{
+			.mui-icon {
 				color: #fff;
 			}
 			
-			label{
+			label {
 				color: #0062CC;
 			}
 			
-			.mui-media-body{
+			.mui-media-body {
 				color: #0062CC;
-			}				
+			}
 			
 			.mui-bar {
 				background: #555555;
 			}
 			
-			.mui-title{
+			.mui-title {
 				color: #fff;
 			}
 			
@@ -130,16 +130,18 @@
 		<div class="mui-content-padded">
 			<button id='approve' class="mui-btn mui-btn-block mui-btn-primary">通过</button>
 		</div>
-		
+
 		<div class="mui-content-padded">
-			<button id='return' class="mui-btn mui-btn-block mui-btn-primary">退回</button>
-		</div>		
+			<button id='return' class="mui-btn mui-btn-block mui-btn-yellow">退回</button>
+		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
+		<script src="js/jquery.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var companyId;
+			var dangerPos;
 			var userClass;
 			var dangerNumber;
 			var checkTime;
@@ -168,9 +170,12 @@
 				companyId = self.companyId;
 				var userName = self.userName;
 				var mark = self.mark;
-				var dangerNumber = self.dangerNumber;
-				var checkTime = self.checkTime;
+				dangerNumber = self.dangerNumber;
+				checkTime = self.checkTime;
 				var checkUser = self.checkUserId;
+				if(userClass != "201" && userClass != "301" && userClass != "401") {
+					document.getElementById("return").style.display = "none";
+				}
 				if(self.from == "1") {
 					var parent = document.getElementById("submit").parentNode;
 					parent.removeChild(document.getElementById("submit"));
@@ -180,6 +185,7 @@
 				description = self.description;
 				var suggestion = self.suggestion;
 				console.log(description);
+				dangerPos = self.dangerPos;
 				rectificationMeasures = self.rectificationMeasures;
 				rectificationPeriod = self.rectificationPeriod;
 				responsibilityUser = self.responsibilityUser;
@@ -271,23 +277,36 @@
 				plus.webview.currentWebview().close();
 			});
 
-			document.getElementById("return").addEventListener('tap', function(e) 
-			{
-			    //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-			    e.detail.gesture.preventDefault(); 
-			    var btnArray = ['取消', '确定'];
-			    mui.prompt('请输入退回的原因：', '', '安全管理助手', btnArray, function(e) 
-			    {
-			        if (e.index == 1) 
-			        {
-			            return_reason = e.value;
-			        } 
-			        else 
-			        {
-			            
-			        }
-			    })
-			});		
+			document.getElementById("return").addEventListener('tap', function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				e.detail.gesture.preventDefault();
+				var btnArray = ['取消', '确定'];
+				mui.prompt('请输入退回的原因：', '', '安全管理助手', btnArray, function(e) {
+					if(e.index == 1) {
+						return_reason = e.value;
+						var request_url = baseUrl + "/dangerRefuse";
+						console.log(request_url);
+						mui.ajax(request_url, {
+							type: "post",
+							data: {
+								dangerId: dangerId,
+								suggestion: return_reason
+							},
+							success: function(result) {
+								plus.nativeUI.toast("反馈成功!");
+								var parent = plus.webview.getWebviewById("safe_handle_table_approve");
+								mui.fire(parent, "refresh");
+								plus.webview.currentWebview().close();
+							},
+							error: function() {
+								plus.nativeUI.toast("反馈失败!");
+							}
+						});
+					} else {
+
+					}
+				})
+			});
 
 			function addImg(path) {
 				var mainimg = document.createElement("img");
@@ -319,9 +338,9 @@
 			}
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(level == "重大隐患"){
+				if(level == "重大隐患") {
 					level = 1;
-				}else{
+				} else {
 					level = 0;
 				}
 				if(userClass == "101") {
@@ -332,30 +351,37 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							"dangerId": dangerId,
-							"companyId": companyId,
+							"dangerId": $.trim(dangerId),
+							"companyId": $.trim(companyId),
 							"dangerNumber": dangerNumber,
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod,
-							"responsibilityUserId": responsibilityUser
+							"responsibleUserId": $.trim(responsibilityUser),
+							"dangerPosition": dangerPos
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_danger_approve");
+							mui.fire(parent, "refresh");
+							plus.webview.currentWebview().close();
 						},
-						error: function(res) {
-							console.log(JSON.stringify(res));
+						error: function() {
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(userClass == "201") {
+				if(userClass == "301") {
+					console.log(dangerId);
+					console.log(companyId);
+					console.log(dangerNumber);
+					console.log(level);
 					console.log(description);
-					console.log(level + " " + typeof(level));
-					console.log();
+					console.log(rectificationMeasures + " " + rectificationPeriod);
+					console.log(responsibilityUser);
+					console.log(dangerPos);
 					var request_url = baseUrl + "/company/danger";
 					console.log(request_url);
 					var headers = {
@@ -363,50 +389,54 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							"dangerId": dangerId,
-							"companyId": companyId,
+							"dangerId": $.trim(dangerId),
+							"companyId": $.trim(companyId),
 							"dangerNumber": dangerNumber,
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod,
-							"responsibilityUserId": responsibilityUser
+							"responsibleUserId": $.trim(responsibilityUser),
+							"dangerPosition": dangerPos
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_danger_approve");
+							mui.fire(parent, "refresh");
+							plus.webview.currentWebview().close();
 						},
-						error: function(res) {
-							console.log(JSON.stringify(res));
+						error: function() {
 							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
-				if(userClass == "301") {
+				if(userClass == "201") {
 					var request_url = baseUrl + "/supervision/danger";
-					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							"dangerId": dangerId,
-							"companyId": companyId,
+							"dangerId": $.trim(dangerId),
+							"companyId": $.trim(companyId),
 							"dangerNumber": dangerNumber,
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod,
-							"responsibilityUserId": responsibilityUser
+							"responsibleUserId": $.trim(responsibilityUser),
+							"dangerPosition": dangerPos
 						},
 						success: function(result) {
-							plus.nativeUI.toast("审核成功!");
+							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_danger_approve");
+							mui.fire(parent, "refresh");
+							plus.webview.currentWebview().close();
 						},
 						error: function() {
-							plus.nativeUI.toast("审核失败!");
+							plus.nativeUI.toast("上传失败!");
 						}
 					});
 				}
@@ -418,19 +448,22 @@
 						'Content-Type': 'application/json;charset=utf-8',
 					};
 					mui.ajax(request_url, {
-						type: "put",
+						type: "post",
 						data: {
-							"dangerId": dangerId,
-							"companyId": companyId,
+							"dangerId": $.trim(dangerId),
+							"companyId": $.trim(companyId),
 							"dangerNumber": dangerNumber,
 							"severity": level,
 							"dangerDescription": description,
 							"rectificationMeasures": rectificationMeasures,
-							"rectificationPeriod": rectificationPeriod,
-							"responsibilityUserId": responsibilityUser
+							"responsibleUserId": $.trim(responsibilityUser),
+							"dangerPosition": dangerPos
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
+							var parent = plus.webview.getWebviewById("safe_danger_approve");
+							mui.fire(parent, "refresh");
+							plus.webview.currentWebview().close();
 						},
 						error: function() {
 							plus.nativeUI.toast("上传失败!");

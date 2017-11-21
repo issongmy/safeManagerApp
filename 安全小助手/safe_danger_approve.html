@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -12,11 +13,11 @@
 				background: #555555;
 			}
 			
-			.mui-icon{
+			.mui-icon {
 				color: #fff;
-			}				
+			}
 			
-			.mui-title{
+			.mui-title {
 				color: #fff;
 			}
 			
@@ -47,13 +48,19 @@
 			var companyId;
 			var userClass;
 			var baseUrl = "http://123.206.87.22";
+			var length;
+			
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
+					mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
+						id: "1",
+						safe_num: length
+					});
 					plus.webview.currentWebview().close();
-				};				
+				}
 				var self = plus.webview.currentWebview();
 				userClass = self.userClass;
 				companyId = self.companyId;
@@ -62,7 +69,7 @@
 				var supervisionCompanyId = self.supervisionCompanyId;
 				console.log(userClass);
 				console.log(userId);
-				if(userClass == "101"){
+				if(userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/notApprovalDangers?subsidiaryId=" + subsidiaryId + "&companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -74,6 +81,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var dangerList = extend.list;
+							length = dangerList.length;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
 								var position = dangerList[i].dangerPosition;
@@ -128,8 +136,8 @@
 						}
 					});
 				}
-				if(userClass == "301"){
-					var request_url = baseUrl + "/company/notApprovalDangers?companyId="+companyId;
+				if(userClass == "301") {
+					var request_url = baseUrl + "/company/notApprovalDangers?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
@@ -140,6 +148,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var dangerList = extend.list;
+							length = dangerList.length;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
 								var position = dangerList[i].dangerPosition;
@@ -195,8 +204,9 @@
 						}
 					});
 				}
-				if(userClass == "201"){
-					var request_url = baseUrl + "/supervision/notApprovalDangers?supervisionCompanyId="+ supervisionCompanyId +"&companyId=" + companyId;
+				if(userClass == "201") {
+					var request_url = baseUrl + "/supervision/notApprovalDangers?supervisionCompanyId=" + supervisionCompanyId + "&companyId=" + companyId;
+					console.log(request_url);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
@@ -206,6 +216,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var dangerList = extend.list;
+							length = dangerList.length;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
 								var position = dangerList[i].dangerPosition;
@@ -260,7 +271,7 @@
 						}
 					});
 				}
-				if(userClass == "401"){
+				if(userClass == "401") {
 					var request_url = baseUrl + "/safetyDirector/notApprovalDangers?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -272,6 +283,7 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var dangerList = extend.list;
+							length = dangerList.length;
 							for(var i = 0; i < dangerList.length; i++) {
 								var dangerId = dangerList[i].dangerId;
 								var position = dangerList[i].dangerPosition;
@@ -342,6 +354,7 @@
 				var dangerImgPath = node[9].value;
 				var rectificationImgPath = node[10].value;
 				var dangerId = node[11].value;
+				var dangerPos = node[12].value;
 				mui.openWindow({
 					url: "safe_handle_table_approve.html",
 					id: "safe_handle_table_approve",
@@ -350,23 +363,24 @@
 						dangerId: dangerId,
 						companyId: companyId,
 						dangerNumber: dangerNumber,
-						checkTime: checkTime, 
+						checkTime: checkTime,
 						checkUserId: checkUser,
-						state: state, 
+						state: state,
 						level: level,
 						description: description,
 						rectificationMeasures: rectificationMeasures,
-						rectificationPeriod: rectificationPeriod, 
+						rectificationPeriod: rectificationPeriod,
 						responsibilityUser: responsibilityUser,
 						dangerImgPath: dangerImgPath,
-						rectificationImgPath: rectificationImgPath
+						rectificationImgPath: rectificationImgPath,
+						dangerPos: dangerPos
 					}
 				});
 			});
 
 			function addDanger(dangerNum, dangerPos, level, state, dangerNumber,
 				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath) {
-				var main = document.getElementById("main");					
+				var main = document.getElementById("main");
 				var ul = document.getElementById("dangerList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -391,7 +405,7 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "checkTime";
 				hidden_input.value = checkTime;
-				liObj.appendChild(hidden_input);
+				liObj.appendChild(hidden_input);				
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
 				hidden_input.id = "checkUser";
@@ -436,19 +450,38 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "rectificationImgPath";
 				hidden_input.value = rectificationImgPath;
-				liObj.appendChild(hidden_input);	
+				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
 				hidden_input.id = "dangerNum";
 				hidden_input.value = dangerNum;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.setAttribute("type", "hidden");
+				hidden_input.setAttribute("id", "dangerPos");
+				hidden_input.setAttribute("value", dangerPos);
 				liObj.appendChild(hidden_input);				
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
-		document.getElementById("close").addEventListener("tap", function() {
-			plus.webview.currentWebview().close();
-		});	
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
+
+			window.addEventListener("refresh", function() {
+				location.reload();
+			});
+
+			document.getElementById("close").addEventListener("tap", function() {
+				console.log(length);
+				mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
+					id: "1",
+					safe_num: length
+				});
+				plus.webview.currentWebview().close();
+			});
 		</script>
 	</body>
+
 </html>

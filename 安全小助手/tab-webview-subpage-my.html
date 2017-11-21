@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
 			html,
@@ -95,7 +94,6 @@
 		var preplanBadge;
 		var responsibilityBadge;
 		var majorStaffBadge;
-
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
@@ -169,11 +167,14 @@
 						preplanBadge = extend.preplanBadge;
 						responsibilityBadge = extend.responsibilityBadge;
 						majorStaffBadge = extend.majorStaffBadge;
-						document.getElementById("approve").innerHTML = testBadge + eduBadge + instituteBadge + majorStaffBadge +
+						document.getElementById("approve").style.display = "inline";
+						document.getElementById("approve").innerHTML = dangerBadge + testBadge + eduBadge + instituteBadge + majorStaffBadge +
 							responsibilityBadge + specialStaffBadge + preplanBadge;
-						if((testBadge + eduBadge + instituteBadge + majorStaffBadge +
+						if((dangerBadge + testBadge + eduBadge + instituteBadge + majorStaffBadge +
 								responsibilityBadge + specialStaffBadge + preplanBadge) <= 0){
 							document.getElementById("approve").style.display = "none";
+						}else{
+							document.getElementById("approve").style.display = "inline";
 						}
 					},
 					error: function() {
@@ -218,9 +219,12 @@
 						preplanBadge = extend.preplanBadge;
 						responsibilityBadge = extend.responsibilityBadge;
 						majorStaffBadge = extend.majorStaffBadge;
-						document.getElementById("approve").innerHTML = testBadge + eduBadge;
-						if((testBadge + eduBadge) <= 0){
+						document.getElementById("approve").style.display = "inline";
+						document.getElementById("approve").innerHTML = dangerBadge + testBadge + eduBadge;
+						if((testBadge + eduBadge + dangerBadge) <= 0){
 							document.getElementById("approve").style.display = "none";
+						}else{
+							document.getElementById("approve").style.display = "inline";
 						}
 					},
 					error: function() {
@@ -247,11 +251,14 @@
 						preplanBadge = extend.preplanBadge;
 						responsibilityBadge = extend.responsibilityBadge;
 						majorStaffBadge = extend.majorStaffBadge;
-						document.getElementById("approve").innerHTML = testBadge + eduBadge + instituteBadge + majorStaffBadge +
+						document.getElementById("approve").style.display = "inline";
+						document.getElementById("approve").innerHTML = dangerBadge + testBadge + eduBadge + instituteBadge + majorStaffBadge +
 							responsibilityBadge + specialStaffBadge + preplanBadge;
-						if((testBadge + eduBadge + instituteBadge + majorStaffBadge +
+						if((dangerBadge +  testBadge + eduBadge + instituteBadge + majorStaffBadge +
 								responsibilityBadge + specialStaffBadge + preplanBadge) <= 0){
 							document.getElementById("approve").style.display = "none";
+						}else{
+							document.getElementById("approve").style.display = "inline";						
 						}
 					},
 					error: function() {
@@ -376,6 +383,10 @@
 				}
 			});
 		});
+		
+		window.addEventListener("refresh_main", function(){
+				
+		});		
 	</script>
 
 </html>

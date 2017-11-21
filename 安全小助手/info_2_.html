@@ -83,7 +83,7 @@
 			</div>
 			
 			<div class="mui-content-padded">
-				<button id='return' class="mui-btn mui-btn-block mui-btn-primary">退回</button>
+				<button id='return' class="mui-btn mui-btn-block mui-btn-yellow">退回</button>
 			</div>			
 		</div>
 		<script src="js/mui.min.js"></script>
@@ -107,6 +107,9 @@
 				responsibilityId = self.responsibilityId;
 				var responsibilityPath = self.responsibilityPath;
 				var currentState = self.currentState;
+				if(userClass != "301" && userClass != "401"){
+					document.getElementById("return").style.display = "none";					
+				}				
 				document.getElementById("num").value = responsibilityId;
 				if(category == "1")
 					document.getElementById("category").value = "项目";
@@ -136,6 +139,24 @@
 			        if (e.index == 1) 
 			        {
 			            return_reason = e.value;
+			            var request_url = baseUrl + "/responsibilityRefuse";
+						console.log(request_url);
+						mui.ajax(request_url, {
+							type: "post",
+							data:{
+								responsibilityId: responsibilityId,
+								suggestion: return_reason
+							},
+							success: function(result) {
+								plus.nativeUI.toast("反馈成功!");
+								var parent = plus.webview.getWebviewById("info_2");
+								mui.fire(parent, "refresh");									
+								plus.webview.currentWebview().close();									
+							},
+							error: function() {
+								plus.nativeUI.toast("反馈失败!");
+							}
+						});			            
 			        } 
 			        else 
 			        {

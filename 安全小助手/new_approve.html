@@ -206,7 +206,7 @@
 							responsibilityBadge = extend.responsibilityBadge;
 							majorStaffBadge = extend.majorStaffBadge;
 							if(userClass == "101" || userClass == "201" || userClass == "301" || userClass == "401") {
-								addItem("安全隐患", "1", 0);
+								addItem("安全隐患", "1", dangerBadge);
 							}
 							if(userClass == "201" || userClass == "301" || userClass == "401") {
 								addItem("三级教育", "2", eduBadge);
@@ -300,6 +300,7 @@
 				console.log(event.detail.id);
 				var li = document.getElementById(event.detail.id);
 				console.log(event.detail.safe_num);
+				console.log(li.innerHTML);
 				if(event.detail.safe_num == undefined || event.detail.safe_num == "0") {
 					li.getElementsByTagName("span")[0].style.display = "none";
 				} else {
@@ -343,9 +344,9 @@
 			document.getElementById("close").addEventListener("tap", function() {
 				var parent = plus.webview.getWebviewById("tab-webview-subpage-my.html");
 				var safe_num = 0;
-				for(var i = 2; i < 5; i++) {
+				for(var i = 1; i < 5; i++) {
 					var li = document.getElementById(i.toString());
-					if(li == undefined)
+					if(li == undefined || li.getElementsByTagName("span")[0] == undefined)
 						continue;
 					var num = li.getElementsByTagName("span")[0].innerHTML;
 					console.log(num);
