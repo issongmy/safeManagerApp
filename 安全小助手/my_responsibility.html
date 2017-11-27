@@ -57,6 +57,8 @@
 		<script src="js/bomb.js"></script>
 		<script type="text/javascript">
 			var baseUrl = "http://123.206.87.22";
+			var length;
+			var dangerInfo;
 			mui.init();
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -83,8 +85,13 @@
 					success: function(result) {
 						var extend = eval(result.extend);
 						var dangerList = extend.list;
+						dangerInfo = dangerList;
+						length = dangerList.length;
 						for(var i = 0; i < dangerList.length; i++) {
 							var dangerId = dangerList[i].dangerId;
+							if(localStorage.getItem("res:" + dangerId) == null || localStorage.getItem("res:"+dangerId) == undefined){
+								localStorage.setItem("res:"+dangerId, "0");
+							}
 							var position = dangerList[i].dangerPosition;
 							var level = dangerList[i].severity;
 							var state = dangerList[i].currentState;
@@ -98,35 +105,47 @@
 							var dangerImgPath = dangerList[i].dangerImgPath;
 							var rectificationImgPath = dangerList[i].rectificationImgPath;
 							if(state == "1") {
-								if(level) {
+								if(level == "1") {
 									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-								} else {
+								} else if(level == "0") {
 									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else {
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else if(state == "2") {
-								if(level) {
-									addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
+								if(level == "1") {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else if(level == "0") {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
-									addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else if(state == "3") {
-								if(level) {
-									addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
+								if(level == "1") {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else if(level == "0") {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
-									addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else {
-								if(level) {
-									addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
+								if(level == "1") {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else if(level == "0") {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
-									addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							}
@@ -141,6 +160,9 @@
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
 				var node = this.childNodes;
 				var dangerId = node[0].value
+				if(localStorage.getItem("res:"+dangerId) == "0"){
+					localStorage.setItem("res:" + dangerId, "1");
+				}
 				var dangerNumber = node[1].value;
 				var checkTime = node[2].value;
 				var checkUser = node[3].value;
@@ -256,8 +278,17 @@
 			}
 
 			document.getElementById("close").addEventListener("tap", function() {
+				for(var i = 0; i < dangerInfo.length; i++) {
+					var dangerId = dangerInfo[i].dangerId;
+					if(localStorage.getItem("res:" + dangerId) == "1"){
+						length -= 1;
+					}
+				}
+				console.log(length);
 				var parent = plus.webview.getWebviewById("tab-webview-subpage-my.html");
-				mui.fire(parent, "refresh_res");
+				mui.fire(parent, "refresh_res", {
+					res_num: length
+				});
 				plus.webview.currentWebview().close();
 			});
 		</script>

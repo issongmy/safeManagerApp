@@ -21,6 +21,16 @@
 			#title_header{
 				background: #555555;
 			}
+			
+			.mui-icon .mui-badge{
+				background: #007AFF;
+				padding: 2px;
+				font-size: xx-small;
+			}
+			
+			.mui-badge{
+				border-radius: 50px;
+			}		
 		</style>
 	</head>
 
@@ -42,15 +52,15 @@
 				<span class="mui-tab-label">项目</span>
 			</a>
 			<a id="1" class="mui-tab-item" href="tab-webview-subpage-activity.html">
-				<span class="mui-icon mui-icon-compose"></span>
+				<span class="mui-icon mui-icon-compose"><span id="1-badge" class="mui-badge">&nbsp;</span></span>
 				<span class="mui-tab-label">活动</span>
 			</a>
 			<a id="2" class="mui-tab-item mui-active" href="tab-webview-subpage-focus.html">
-				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-icon mui-icon-search"><span id="2-badge" class="mui-badge">&nbsp;</span></span>
 				<span class="mui-tab-label">关注</span>
 			</a>
 			<a id="3" class="mui-tab-item" href="tab-webview-subpage-my.html">
-				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-icon mui-icon-person"><span id="3-badge" class="mui-badge">&nbsp;</span></span>
 				<!--<span class="mui-badge"></span>-->
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -77,6 +87,9 @@
 
 			//创建子页面，首个选项卡页面显示，其它均隐藏；
 			mui.plusReady(function() {
+				document.getElementById("3-badge").style.display = "none";
+				document.getElementById("2-badge").style.display = "none";
+				document.getElementById("1-badge").style.display = "none";
 //				mui.oldBack = mui.back;
 //				var backButtonPress = 0;
 //				mui.back = function(event) {
@@ -98,6 +111,7 @@
 				companyId = self.companyId;
 				userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
+				console.log(subsidiaryId);
 				supervisionCompanyId = self.supervisionCompanyId;
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
@@ -185,7 +199,6 @@
 				}
 			});
 			
-			
 			//点击触发项目的刷新事件
 			document.getElementById("defaultTab").addEventListener("tap", function(){
 				var target = plus.webview.getWebviewById("tab-webview-subpage-project.html");
@@ -207,9 +220,35 @@
 			
 			//点击触发我的的刷新事件
 			document.getElementById("3").addEventListener("tap", function(){
-				console.log("haha");
 				var target = plus.webview.getWebviewById("tab-webview-subpage-my.html");
 				mui.fire(target, "refresh_");
+			});		
+
+			window.addEventListener("update_1", function(event){
+				console.log(event.detail.state);
+				if(event.detail.state == 1){
+					document.getElementById("1-badge").style.display = "inline";
+				}else{
+					document.getElementById("1-badge").style.display = "none";
+				}				
+			});
+			
+			window.addEventListener("update_2", function(event){
+				console.log(event.detail.state);
+				if(event.detail.state == "1"){
+					document.getElementById("2-badge").style.display = "inline";
+				}else{
+					document.getElementById("2-badge").style.display = "none";
+				}				
+			});
+			
+			window.addEventListener("update_3", function(event){
+				console.log(event.detail.state);
+				if(event.detail.state == "1"){
+					document.getElementById("3-badge").style.display = "inline";
+				}else{
+					document.getElementById("3-badge").style.display = "none";
+				}				
 			});			
 		</script>
 	</body>

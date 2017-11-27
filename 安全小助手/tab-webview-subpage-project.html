@@ -148,7 +148,7 @@
 						}
 					});
 				}
-				if(userClass == "3" || userClass == "301" || userClass == "401") {
+				if(userClass == "3" || userClass == "301" || userClass == "401") {					
 					var request_url = baseUrl + "/company/todayDangers?companyId=" + companyId;
 					var headers = {
 						'Accept': 'application/json',
@@ -558,8 +558,8 @@
 			}
 			
 			window.addEventListener("refresh_", function(){
-				console.log(proLen);
-				console.log(superLen);
+				if(userClass == undefined)
+					return;
 				if(userClass == "301" || userClass == "3" || userClass == "401" || userClass == "4"){
 					var request_url = baseUrl + "/company/unitsCount?companyId=" + companyId;
 					var headers = {
@@ -596,6 +596,8 @@
 							plus.nativeUI.toast("请求失败!");
 						}
 					});						
+				}else{
+					
 				}
 			});
 		</script>

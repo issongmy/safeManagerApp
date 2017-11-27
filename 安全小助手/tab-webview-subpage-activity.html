@@ -18,9 +18,11 @@
 				font-size: medium;
 			}
 			
-			.mui-badge{
-				font-size: x-small;
+			.mui-badge {
+				padding: 0px;
+				font-size: xx-small;
 				float: right;
+				margin: 5px;
 			}
 		</style>
 	</head>
@@ -45,6 +47,8 @@
 			var supervisionCompanyId;
 			var baseUrl = "http://123.206.87.22";
 			var length;
+			var length_;
+			var actInfo;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -77,34 +81,55 @@
 					success: function(result) {
 						var extend = eval(result.extend);
 						var actList = extend.list;
+						actInfo = actList;
 						length = actList.length;
-						for(var i=0;i<actList.length;i++){
+						var count = 0;
+						for(var i = 0; i < actList.length; i++) {
 							var activityId = actList[i].activityId;
 							var activityDate = actList[i].activityDate;
 							var activityTitle = actList[i].activityTitle;
 							var activityContent = actList[i].activityContent;
 							var activityAppendixPath = actList[i].activityAppendixPath;
 							var activityCategoryId = actList[i].activityCategoryId;
-							if(localStorage.getItem(activityId) == undefined || localStorage.getItem(activityId) == null)
-								localStorage.setItem(activityId, "0");
+							if(localStorage.getItem("user-act" + userId + activityId) == undefined || localStorage.getItem("user-act" + userId + activityId) == null) {
+								localStorage.setItem("user-act" + userId + activityId, "0");
+								count += 1;
+							} else if(localStorage.getItem("user-act" + userId + activityId) == "0") {
+								count += 1;
+							}
+							if(count > 0) {
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_1", {
+									state: "1"
+								});
+							} else {
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_1", {
+									state: "0"
+								});
+							}
+							length_ = count;
 							addAct(activityId, activityTitle, activityDate, activityContent, activityAppendixPath);
 						}
+
 					},
 					error: function() {
 						plus.nativeUI.toast("请求失败!");
 					}
-					});
+				});
 			});
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+				if(length_ > 0)
+					length_ -= 1;
 				var node = this.childNodes;
 				var title = node[0].getAttribute("id");
 				var date = node[1].innerHTML;
 				var content = node[2].innerHTML;
 				var activityAppendixPath = node[3].value;
 				var id = node[4].value;
-				if(localStorage.getItem(id) == "0"){
-					localStorage.setItem(id, "1");
+				if(localStorage.getItem("user-act" + userId + id) == "0") {
+					localStorage.setItem("user-act" + userId + id, "1");
 					document.getElementById(id).style.display = "none";
 				}
 				mui.openWindow({
@@ -135,9 +160,9 @@
 				liObj.appendChild(a);
 				liObj.appendChild(p1);
 				liObj.appendChild(p2);
-//				<span class="mui-badge mui-badge-primary">12</span>
-				if(localStorage.getItem(id) == "0"){
-					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">s</span>";
+				//				<span class="mui-badge mui-badge-primary">12</span>
+				if(localStorage.getItem("user-act" + userId + id) == "0") {
+					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">&nbsp;</span>";
 				}
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
@@ -146,12 +171,12 @@
 				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
-				hidden_input.id = "id";
+				hidden_input.id = id;
 				hidden_input.value = id;
-				liObj.appendChild(hidden_input);					
+				liObj.appendChild(hidden_input);
 				ul.appendChild(liObj);
 			}
-			
+
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));
 				var Y = date.getFullYear() + '-';
@@ -162,9 +187,18 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
-			
-			window.addEventListener("refresh_", function(){
+
+			window.addEventListener("refresh_", function() {
+				if(length_ == 0) {
+					var parent = plus.webview.getWebviewById("main");
+					mui.fire(parent, "update_1", {
+						state: "0"
+					});
+				}
 				console.log(length);
+				console.log(companyId);
+				if(companyId == undefined)
+					return;
 				var request_url = baseUrl + "/activityCount?companyId=" + companyId;
 				var headers = {
 					'Accept': 'application/json',
@@ -174,16 +208,16 @@
 					type: "get",
 					success: function(result) {
 						var extend = eval(result.extend);
-						if(extend.activityCount != length){
+						if(extend.activityCount != length) {
 							location.reload();
 						}
 					},
 					error: function() {
 						plus.nativeUI.toast("请求失败!");
 					}
-				});				
+				});
 			});
-	</script>
+		</script>
 	</body>
 
 </html>

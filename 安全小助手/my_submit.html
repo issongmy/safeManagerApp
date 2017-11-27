@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -12,16 +13,16 @@
 				background: #555555;
 			}
 			
-			.mui-icon{
-				color: #fff;
-			}				
-			
-			.mui-title{
+			.mui-icon {
 				color: #fff;
 			}
 			
-			#span_mid{
-				float:left;
+			.mui-title {
+				color: #fff;
+			}
+			
+			#span_mid {
+				float: left;
 				margin-left: 20px;
 			}
 			
@@ -57,7 +58,7 @@
 				var backButtonPress = 0;
 				mui.back = function(event) {
 					plus.webview.currentWebview().close();
-				};				
+				};
 				var self = plus.webview.currentWebview();
 				userName = self.userName;
 				var userClass = self.userClass;
@@ -91,35 +92,47 @@
 							var dangerImgPath = dangerList[i].dangerImgPath;
 							var rectificationImgPath = dangerList[i].rectificationImgPath;
 							if(state == "1") {
-								if(level) {
+								if(level == "1") {
 									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-								} else {
+								} else if(level == "0") {
 									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else {
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else if(state == "2") {
-								if(level) {
-									addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
+								if(level == "1") {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else if(level == "0") {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
-									addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else if(state == "3") {
-								if(level) {
-									addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
+								if(level == "1") {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else if(level == "0") {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
-									addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							} else {
-								if(level) {
-									addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
+								if(level == "1") {
+									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
+										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+								} else if(level == "0") {
+									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								} else {
-									addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
+									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
 								}
 							}
@@ -153,13 +166,13 @@
 						userName: userName,
 						dangerId: dangerNum,
 						dangerNumber: dangerNumber,
-						checkTime: checkTime, 
+						checkTime: checkTime,
 						checkUser: checkUser,
-						state: state, 
+						state: state,
 						level: level,
 						description: description,
 						rectificationMeasures: rectificationMeasures,
-						rectificationPeriod: rectificationPeriod, 
+						rectificationPeriod: rectificationPeriod,
 						responsibilityUser: responsibilityUser,
 						dangerImgPath: dangerImgPath,
 						rectificationImgPath: rectificationImgPath,
@@ -170,7 +183,7 @@
 
 			function addDanger(dangerNum, dangerPos, level, state, dangerNumber,
 				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath) {
-				var main = document.getElementById("main");					
+				var main = document.getElementById("main");
 				var ul = document.getElementById("dangerList");
 				var liObj = document.createElement("li");
 				var a = document.createElement("p");
@@ -190,7 +203,7 @@
 				hidden_input.setAttribute("type", "hidden");
 				hidden_input.setAttribute("id", "dangerNum");
 				hidden_input.setAttribute("value", dangerNum);
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.setAttribute("type", "hidden");
 				hidden_input.setAttribute("id", "dangerNumber");
@@ -240,19 +253,20 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "dangerImgPath";
 				hidden_input.value = dangerImgPath;
-				liObj.appendChild(hidden_input);	
+				liObj.appendChild(hidden_input);
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
 				hidden_input.id = "rectificationImgPath";
 				hidden_input.value = rectificationImgPath;
-				liObj.appendChild(hidden_input);				
+				liObj.appendChild(hidden_input);
 				liObj.appendChild(a);
 				ul.appendChild(liObj);
 			}
-				
-		document.getElementById("close").addEventListener("tap", function() {
-			plus.webview.currentWebview().close();
-		});	
+
+			document.getElementById("close").addEventListener("tap", function() {
+				plus.webview.currentWebview().close();
+			});
 		</script>
 	</body>
+
 </html>

@@ -32,9 +32,9 @@
 		<div id="logo">
 			<img src="image/logo.png" width="100px"/>
 		</div>
-		<div id="icon">
+		<!--<div id="icon">
 			安全管理系统
-		</div>
+		</div>-->
 		<script src="js/bmob-min.js"></script>
 		<script src="js/bmob.js"></script>
 		<script src="js/mui.min.js"></script>
@@ -86,23 +86,42 @@
 						data: data,
 						success: function(result) {
 							var extend = eval(result.extend);
-							console.log(result.code);
-							var user = extend.user;
-							mui.openWindow({
-								url:"tab-webview-main.html",
-								id:"main",
-								extras:{
-									userId:user.userId,	
-									userName: user.userName,
-									userClass:user.userCategory,
-									companyId:user.companyId,
-									subsidiaryId:user.subsidiaryId,
-									supervisionCompanyId:user.supervisionCompanyId,
-									companyName:user.company.companyName,
-									subsidiaryName:user.subsidiary.subsidiaryName,
-									supervisionCompanyName:user.supervisionCompany.supervisionCompanyName
-								}
-							});
+							if(result.code == "100"){
+								var user = extend.user;
+								mui.openWindow({
+									url:"tab-webview-main.html",
+									id:"main",
+									extras:{
+										userId:user.userId,	
+										userName: user.userName,
+										userClass:user.userCategory,
+										companyId:user.companyId,
+										subsidiaryId:user.subsidiaryId,
+										supervisionCompanyId:user.supervisionCompanyId,
+										companyName:user.company.companyName,
+										subsidiaryName:user.subsidiary.subsidiaryName,
+										supervisionCompanyName:user.supervisionCompany.supervisionCompanyName
+									}
+								});
+							}else if(result.code == "601"){							
+								plus.nativeUI.toast("账号不存在");
+								mui.openWindow({
+									url: "login.html",
+									id: "login"
+								});									
+							}else if(result.code == "602"){
+								plus.nativeUI.toast("密码错误");
+								mui.openWindow({
+									url: "login.html",
+									id: "login"
+								});									
+							}else{
+								plus.nativeUI.toast("系统异常");
+								mui.openWindow({
+									url: "login.html",
+									id: "login"
+								});									
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("登录失败!");

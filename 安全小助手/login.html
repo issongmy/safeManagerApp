@@ -235,25 +235,32 @@
 						data: data,
 						success: function(result) {
 							var extend = eval(result.extend);
-							console.log(result.code);
-							var user = extend.user;
-							localStorage.setItem("username", username.value);
-							localStorage.setItem("pass", password.value);
-							mui.openWindow({
-								url:"tab-webview-main.html",
-								id:"main",
-								extras:{
-									userId:user.userId,	
-									userName: user.userName,
-									userClass:user.userCategory,
-									companyId:user.companyId,
-									subsidiaryId:user.subsidiaryId,
-									supervisionCompanyId:user.supervisionCompanyId,
-									companyName:user.company.companyName,
-									subsidiaryName:user.subsidiary.subsidiaryName,
-									supervisionCompanyName:user.supervisionCompany.supervisionCompanyName
-								}
-							});
+							if(result.code == "100"){
+								var user = extend.user;
+								localStorage.setItem("username", username.value);
+								localStorage.setItem("pass", password.value);
+								mui.openWindow({
+									url:"tab-webview-main.html",
+									id:"main",
+									extras:{
+										userId:user.userId,	
+										userName: user.userName,
+										userClass:user.userCategory,
+										companyId:user.companyId,
+										subsidiaryId:user.subsidiaryId,
+										supervisionCompanyId:user.supervisionCompanyId,
+										companyName:user.company.companyName,
+										subsidiaryName:user.subsidiary.subsidiaryName,
+										supervisionCompanyName:user.supervisionCompany.supervisionCompanyName
+									}
+								});
+							}else if(result.code == "601"){
+								plus.nativeUI.toast("账号不存在");
+							}else if(result.code == "602"){
+								plus.nativeUI.toast("密码错误");
+							}else{
+								plus.nativeUI.toast("系统异常");
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("登录失败!");

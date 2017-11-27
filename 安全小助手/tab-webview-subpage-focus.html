@@ -27,7 +27,7 @@
 			var supervisionCompanyId;
 			var baseUrl = "http://123.206.87.22";
 			var length;
-			
+
 			mui.init({
 				gestureConfig: {
 					tap: true, //默认为true
@@ -58,12 +58,15 @@
 				var self = plus.webview.currentWebview();
 				userName = self.userName;
 				userClass = self.userClass;
+				console.log(userClass);
 				companyId = self.companyId;
 				userId = self.userId;
 				subsidiaryId = self.subsidiaryId;
+				console.log(subsidiaryId);
 				supervisionCompanyId = self.supervisionCompanyId;
 				if(userClass == "1" || userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/focus?subsidiaryId=" + subsidiaryId;
+					console.log(subsidiaryId);
 					var headers = {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8',
@@ -268,10 +271,6 @@
 				}
 			});
 
-			window.addEventListener('refresh', function(event) {
-				location.reload();
-			});
-
 			String.prototype.format = function() {
 				var args = arguments;
 				return this.replace(/\{(\d+)\}/g, function(s, i) {
@@ -410,11 +409,14 @@
 				li.appendChild(hidden_input);
 				li.appendChild(con);
 				ul.appendChild(li);
-			}	
-			
-			window.addEventListener("refresh_", function(){
+			}
+
+			window.addEventListener("refresh_", function() {
 				console.log(length);
-				if(userClass == "301" || userClass == "3" || userClass == "401" || userClass == "4"){
+				console.log(userClass);
+				if(userClass == undefined)
+					return;
+				if(userClass == "301" || userClass == "3" || userClass == "401" || userClass == "4") {
 					var request_url = baseUrl + "/company/focusCount?companyId=" + companyId;
 					console.log(request_url);
 					var headers = {
@@ -425,15 +427,24 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							if(extend.focusCount != length){
+							if(extend.focusCount != length) {
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_2", {
+									state: "1"
+								});								
 								location.reload();
+							}else{
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_2", {
+									state: "0"
+								});								
 							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
-					});					
-				}else if(userClass == "201" || userClass == "2"){
+					});
+				} else if(userClass == "201" || userClass == "2") {
 					var request_url = baseUrl + "/supervision/focusCount?supervisionCompanyId=" + supervisionCompanyId;
 					console.log(request_url);
 					var headers = {
@@ -444,15 +455,28 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							if(extend.focusCount != length){
+							if(extend.focusCount != length) {
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_2", {
+									state: "1"
+								});								
 								location.reload();
+							}else{
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_2", {
+									state: "0"
+								});								
 							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
-					});						
-				}else{
+					});
+				} else {
+
+				}
+				if(userClass == "101" || userClass == "1") {
+					console.log(userClass);
 					var request_url = baseUrl + "/subsidiary/focusCount?subsidiaryId=" + subsidiaryId;
 					console.log(request_url);
 					var headers = {
@@ -463,16 +487,25 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
-							if(extend.focusCount != length){
+							if(extend.focusCount != length) {
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_2", {
+									state: "1"
+								});								
 								location.reload();
+							}else{
+								var parent = plus.webview.getWebviewById("main");
+								mui.fire(parent, "update_2", {
+									state: "0"
+								});								
 							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
 						}
-					});						
+					});
 				}
-			});			
+			});
 		</script>
 	</body>
 

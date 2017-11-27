@@ -340,8 +340,10 @@
 			document.getElementById("approve").addEventListener("tap", function() {
 				if(level == "重大隐患") {
 					level = 1;
-				} else {
+				} else if(level == "一般隐患") {
 					level = 0;
+				} else{
+					level = 2;
 				}
 				if(userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/danger";
