@@ -12,19 +12,19 @@
 				background: #555555;
 			}
 			
-			.mui-icon{
+			.mui-icon {
 				color: #fff;
 			}
 			
-			label{
+			label {
 				color: #0062CC;
 			}
 			
-			.mui-media-body{
+			.mui-media-body {
 				color: #0062CC;
-			}				
+			}
 			
-			.mui-title{
+			.mui-title {
 				color: #fff;
 			}
 			
@@ -41,26 +41,184 @@
 				text-align: center;
 			}
 			
-			p {
-				color: black;
-				font-size: 18px;
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
 			}
 			
-			textarea{
-				text-indent: 2em;
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
 			}
 			
-			.row {
-				height: 100px;
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
 			}
-		</style>
+			
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p { color: black; font-size: 18px; } textarea{ text-indent: 2em; } .row { height: 100px; }
+		</style>		
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a id="submit" style="float:right;margin-top: 10px;" >
-				<img id="submit" src="image/share.png" width="18px"/>
+			<a id="submit" style="float:right;margin-top: 10px;">
+				<img id="submit" src="image/share.png" width="18px" />
 			</a>
 			<h1 class="mui-title">安全隐患排查处置表</h1>
 		</header>
@@ -128,10 +286,10 @@
 						整改后隐患截图
 					</div>
 				</div>
-			</div>			
+			</div>
 			<div id='image-list-2'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
-			</div>			
+			</div>
 			<!--<div class="mui-card-footer">
 					<a class="mui-card-link">Like</a>
 					<a class="mui-card-link">Comment</a>
@@ -139,14 +297,19 @@
 				</div>-->
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/mui.previewimage.js"></script>
+		<script src="js/mui.zoom.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/jqthumb.js"></script>
 		<script type="text/javascript">
+			mui.previewImage();
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list-1");
 			var imgContenter_ = document.getElementById("image-list-2");
-			
+
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -161,7 +324,7 @@
 				var dangerNumber = self.dangerNumber;
 				var checkTime = self.checkTime;
 				var checkUser = self.checkUser;
-				if(self.from == "1"){
+				if(self.from == "1") {
 					var parent = document.getElementById("submit").parentNode;
 					parent.removeChild(document.getElementById("submit"));
 				}
@@ -199,6 +362,16 @@
 						}
 					});
 				}
+				
+				$('img').jqthumb({
+				    width: "20%",
+				    height: "50%",
+				    position: {
+				        x : '50%',                          // x position of the image. DEFAULT is 50%. 50% also means centerize the image.
+				        y : '50%'                           // y position of the image. DEFAULT is 50%. 50% also means centerize the image.
+				    }
+				});
+				                
 				document.getElementById("state").value = state;
 				document.getElementById("class").value = level;
 				if(description == "") {
@@ -244,17 +417,16 @@
 					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
 				}
 				console.log(rectificationImgPath);
-				if(rectificationImgPath == null || rectificationImgPath == ""){
-					if(state == "整改审核中" || state == "整改完毕"){
+				if(rectificationImgPath == null || rectificationImgPath == "") {
+					if(state == "整改审核中" || state == "整改完毕") {
 						addImg_("image/zw.jpg")
-					}else{
+					} else {
 						var parent = document.getElementById("other").parentNode;
 						parent.removeChild(document.getElementById("other"));
 					}
-				}
-				else {
+				} else {
 					addImg_(baseUrl + "/resource/dangerImg/" + rectificationImgPath);
-				}				
+				}
 			});
 			mui.init();
 
@@ -266,19 +438,24 @@
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
 				mainimg.src = path;
-				mainimg.width = document.body.clientWidth - 10;
-				mainimg.height = document.body.clientWidth - 10;
+				mainimg.setAttribute("data-preview-src", "");
+				mainimg.setAttribute("data-preview-group", "1");
+				mainimg.style.width = "100%";
+				mainimg.height = document.body.clientWidth;
+//				mainimg.height = document.body.clientWidth - 10;
 				imgContenter.appendChild(mainimg);
 			}
-			
+
 			function addImg_(path) {
 				var mainimg = document.createElement("img");
 				mainimg.setAttribute("class", "pic");
 				mainimg.src = path;
-				mainimg.width = document.body.clientWidth - 10;
-				mainimg.height = document.body.clientWidth - 10;
+				mainimg.setAttribute("data-preview-src", "");
+				mainimg.setAttribute("data-preview-group", "1");				
+				mainimg.style.width = "100%";
+				mainimg.height = document.body.clientWidth;
 				imgContenter_.appendChild(mainimg);
-			}			
+			}		
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));
@@ -290,15 +467,15 @@
 				var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 				return Y + M + D + h + m + s;
 			}
-			
+
 			document.getElementById("submit").addEventListener("tap", function() {
-					mui.openWindow({
-						url: "safe_handle_table__.html",
-						id: "safe_handle_table__",
-						extras: {
-							dangerId: dangerId
-						}
-					});
+				mui.openWindow({
+					url: "safe_handle_table__.html",
+					id: "safe_handle_table__",
+					extras: {
+						dangerId: dangerId
+					}
+				});
 			});
 		</script>
 	</body>
