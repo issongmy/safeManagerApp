@@ -14,6 +14,11 @@
 				color: #fff;
 			}
 			
+			.mui-card{
+				margin-left: 0px;
+				width: 100%;
+			}			
+			
 			.mui-content-padded {
 				margin-top: 30px;
 			}
@@ -267,6 +272,7 @@
 		<script src="../js/mui.previewimage.js"></script>
 		<script src="../js/mui.zoom.js"></script>
 		<script type="text/javascript">
+			mui.previewImage();
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
@@ -278,6 +284,7 @@
 			var name;
 			var idNumber;
 			var majorStaffId;
+			var path;
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -289,6 +296,7 @@
 				companyId = self.companyId;
 				majorStaffId = self.majorStaffId;
 				var majorStaffImgPath = self.majorStaffImgPath;
+				path = majorStaffImgPath;
 				job = self.job;
 				name = self.name;
 				idNumber = self.idNumber;
@@ -321,16 +329,54 @@
 				plus.webview.currentWebview().close();
 			});
 
+//			function addImg(path) {
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.width = document.body.clientWidth - 10;
+//				mainimg.height = document.body.clientWidth - 10;
+//				imgContenter.appendChild(mainimg);
+//			}
+			
 			function addImg(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");				
-				mainimg.width = document.body.clientWidth - 10;
-				mainimg.height = document.body.clientWidth - 10;
-				imgContenter.appendChild(mainimg);
+				console.log(path);
+				var mainimg = document.createElement("div");
+				mainimg.setAttribute("class", "mui-card-header mui-card-media");
+				mainimg.style.height = document.body.clientWidth/4 + "vw";
+				mainimg.style.backgroundImage = "url(" + path + ")";
+				imgContenter.appendChild(mainimg);		
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.style.width = "100%";
+//				mainimg.height = document.body.clientWidth;
+//				imgContenter_.appendChild(mainimg);
+//				imgContenter_.style.backgroundSize = document.body.clientWidth;
 			}
+			
+			document.getElementById("image-list").addEventListener("tap", function(){
+				console.log(mark);
+				console.log(baseUrl + "/resource/majorStaff/" + path);
+				if(!mark){
+					mark = true;
+					var mainimg = document.createElement("img");
+					mainimg.setAttribute("id", "pic1_");
+					mainimg.src = baseUrl + "/resource/majorStaff/" + path;
+					mainimg.setAttribute("data-preview-src", "");
+					mainimg.setAttribute("data-preview-group", "1");
+					mainimg.style.width = "100%";
+					mainimg.style.height = document.body.clientWidth;
+					mainimg.style.display="none";
+					imgContenter.appendChild(mainimg);
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}else{
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}
+			})			
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));

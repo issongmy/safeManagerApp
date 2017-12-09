@@ -15,6 +15,11 @@
 				color: #fff;
 			}
 			
+			.mui-card{
+				margin-left: 0px;
+				width: 100%;
+			}			
+			
 			.mui-icon{
 				color: #fff;
 			}
@@ -274,9 +279,11 @@
 		<script src="js/mui.previewimage.js"></script>
 		<script src="js/mui.zoom.js"></script>
 		<script type="text/javascript">
+			mui.previewImage();
 			var baseUrl = "http://smyz.me";
 			var dangerId;
 			var class_;
+			var path;
 			var mark = false;
 			var imgContenter = document.getElementById("image-list");
 			var companyId;
@@ -299,6 +306,7 @@
 				companyId = self.companyId;
 				majorStaffId = self.majorStaffId;
 				var majorStaffImgPath = self.majorStaffImgPath;
+				path = majorStaffImgPath;
 				job = self.job;
 				name = self.name;
 				idNumber = self.idNumber;
@@ -372,15 +380,41 @@
 			});					
 
 			function addImg(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");				
-				mainimg.width = document.body.clientWidth - 10;
-				mainimg.height = document.body.clientWidth - 10;
-				imgContenter.appendChild(mainimg);
+				console.log(path);
+				var mainimg = document.createElement("div");
+				mainimg.setAttribute("class", "mui-card-header mui-card-media");
+				mainimg.style.backgroundImage = "url(" + path + ")";
+				mainimg.style.height = document.body.clientWidth/4 + "vw";
+				imgContenter.appendChild(mainimg);		
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.style.width = "100%";
+//				mainimg.height = document.body.clientWidth;
+//				imgContenter_.appendChild(mainimg);
+//				imgContenter_.style.backgroundSize = document.body.clientWidth;
 			}
+			
+			document.getElementById("image-list").addEventListener("tap", function(){
+				console.log(mark);
+				console.log(baseUrl + "/resource/dangerImg/" + path);
+				if(!mark){
+					mark = true;
+					var mainimg = document.createElement("img");
+					mainimg.setAttribute("id", "pic1_");
+					mainimg.src = baseUrl + "/resource/dangerImg/" + path;
+					mainimg.setAttribute("data-preview-src", "");
+					mainimg.setAttribute("data-preview-group", "1");
+					mainimg.style.width = "100%";
+					mainimg.style.display="none";
+					imgContenter.appendChild(mainimg);
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}else{
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}
+			})	
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));

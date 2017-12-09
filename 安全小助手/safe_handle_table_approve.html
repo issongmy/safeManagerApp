@@ -214,7 +214,11 @@
 				100% {
 					opacity: 0;
 				}
-			}			
+			}
+			.mui-card{
+				margin-left: 0px;
+				width: 100%;
+			}						
 		</style>
 	</head>
 
@@ -309,6 +313,7 @@
 		<script src="js/mui.zoom.js"></script>
 		<script src="js/jquery.js"></script>
 		<script type="text/javascript">
+			mui.previewImage();
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var companyId;
@@ -327,6 +332,10 @@
 			var imgContenter = document.getElementById("image-list-1");
 			var imgContenter_ = document.getElementById("image-list-2");
 			var return_reason;
+			var mark1 = false;
+			var mark2 = false;
+			var path1;
+			var path2;
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -361,7 +370,9 @@
 				rectificationPeriod = self.rectificationPeriod;
 				responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
+				path1 = dangerImgPath;
 				var rectificationImgPath = self.rectificationImgPath;
+				path2 = rectificationImgPath;
 				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
 					document.getElementById("num").value = "暂无";
 				else
@@ -478,28 +489,90 @@
 					}
 				})
 			});
-
+			
 			function addImg(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");				
-				mainimg.width = document.body.clientWidth - 10;
-				mainimg.height = document.body.clientWidth - 10;
-				imgContenter.appendChild(mainimg);
-			}
-
+				var mainimg = document.createElement("div");
+				mainimg.setAttribute("class", "mui-card-header mui-card-media");
+				mainimg.style.height = document.body.clientWidth/4 + "vw";
+				mainimg.style.backgroundImage = "url(" + path + ")";
+				imgContenter.appendChild(mainimg);		
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.style.width = "100%";
+//				mainimg.height = document.body.clientWidth;
+//				imgContenter_.appendChild(mainimg);
+//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+			}	
+			
+			document.getElementById("image-list-1").addEventListener("tap", function(){
+				console.log(mark1);
+				console.log(baseUrl + "/resource/dangerImg/" + path1);
+				if(!mark1){
+					mark1 = true;
+					var mainimg = document.createElement("img");
+					mainimg.setAttribute("id", "pic1_");
+					mainimg.src = baseUrl + "/resource/dangerImg/" + path1;
+					mainimg.setAttribute("data-preview-src", "");
+					mainimg.setAttribute("data-preview-group", "1");
+					mainimg.style.width = "100%";
+					mainimg.style.height = document.body.clientWidth;
+					mainimg.style.display="none";
+					imgContenter.appendChild(mainimg);
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}else{
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}
+			})			
+			
 			function addImg_(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");				
-				mainimg.width = document.body.clientWidth - 10;
-				mainimg.height = document.body.clientWidth - 10;
-				imgContenter_.appendChild(mainimg);
-			}
+				var mainimg = document.createElement("div");
+				mainimg.setAttribute("class", "mui-card-header mui-card-media");
+				mainimg.style.height = "60vw";
+				mainimg.style.backgroundImage = "url(" + path + ")";
+				imgContenter_.appendChild(mainimg);		
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.style.width = "100%";
+//				mainimg.height = document.body.clientWidth;
+//				imgContenter_.appendChild(mainimg);
+//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+			}	
+			
+			document.getElementById("image-list-2").addEventListener("tap", function(){
+				console.log(mark2);
+				console.log(baseUrl + "/resource/dangerImg/" + path2);
+				if(!mark2){
+					mark2 = true;
+					var mainimg = document.createElement("img");
+					mainimg.setAttribute("id", "pic2_");
+					mainimg.src = baseUrl + "/resource/dangerImg/" + path2;
+					mainimg.setAttribute("data-preview-src", "");
+					mainimg.setAttribute("data-preview-group", "1");
+					mainimg.style.width = "100%";
+					mainimg.style.display="none";
+					imgContenter.appendChild(mainimg);
+					mui.trigger(document.getElementById("pic2_"), "tap");
+				}else{
+					mui.trigger(document.getElementById("pic2_"), "tap");
+				}
+			})
+
+//			function addImg_(path) {
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.width = document.body.clientWidth - 10;
+//				mainimg.height = document.body.clientWidth - 10;
+//				imgContenter_.appendChild(mainimg);
+//			}
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));

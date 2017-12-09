@@ -18,21 +18,27 @@
 				font-size: medium;
 			}
 			
+			
+			
 			.mui-badge {
-				padding: 0px;
-				font-size: xx-small;
+				width: auto;
+				height: auto;
+				color: #0062CC;
+				background: #0062CC;
+				font-size: x-small;
 				float: right;
-				margin: 5px;
+			}
+			
+			.mui-table-cell div{
+				float: left
 			}
 		</style>
 	</head>
 
 	<body>
-		<div id="main" id="pullrefresh" class="mui-content">
-			<div class="mui-scroll">
-				<ul id="activity" class="mui-table-view mui-table-view-chevron">
-				</ul>
-			</div>
+		<div class="mui-content" id="main">
+			<ul id="activity" class="mui-table-view">
+			</ul>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.picker.js"></script>
@@ -109,7 +115,7 @@
 								});
 							}
 							length_ = count;
-							addAct(activityId, activityTitle, activityDate, activityContent, activityAppendixPath);
+							addAct(activityId, activityTitle, activityDate, activityContent, activityAppendixPath, activityCategoryId);
 						}
 
 					},
@@ -123,11 +129,15 @@
 				if(length_ > 0)
 					length_ -= 1;
 				var node = this.childNodes;
-				var title = node[0].getAttribute("id");
-				var date = node[1].innerHTML;
-				var content = node[2].innerHTML;
-				var activityAppendixPath = node[3].value;
-				var id = node[4].value;
+				var node_ = node[0];
+				var title = node_.getAttribute("id");
+				console.log(title);
+				console.log(node_.innerHTML);
+				var node__ = node_.childNodes;
+				var date = node__[1].getElementsByClassName("mui-ellipsis")[0].innerHTML;
+				var content = node[3].value;
+				var activityAppendixPath = node[1].value;
+				var id = node[2].value;
 				if(localStorage.getItem("user-act" + userId + id) == "0") {
 					localStorage.setItem("user-act" + userId + id, "1");
 					document.getElementById(id).style.display = "none";
@@ -142,27 +152,39 @@
 						activityAppendixPath: activityAppendixPath
 					}
 				});
-			});
-
-			function addAct(id, title, date, content, activityAppendixPath) {
+			});			
+			
+			function addAct(id, title, date, content, activityAppendixPath, activityCategoryId) {
 				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
-				var a = document.createElement("p");
-				var p1 = document.createElement("p");
-				var p2 = document.createElement("p");
-				liObj.setAttribute("class", "mui-table-view-cell");
-				a.setAttribute("class", "mui-navigate-right");
+				var a = document.createElement("a");
+				var img = document.createElement("img");
+				var div = document.createElement("div");
+				var p = document.createElement("p");
+				liObj.setAttribute("class", "mui-table-view-cell mui-media");
+				img.setAttribute("class", "mui-media-object mui-pull-left");
+				if(activityCategoryId == "0"){
+					img.src = "image/cbd.jpg";	
+				}else if(activityCategoryId == "1"){
+					img.src = "image/yuantiao.jpg";
+				}else if(activityCategoryId == "2"){
+					img.src = "image/zw.jpg";
+				}else{
+					img.src = "image/shuijiao.jpg";
+				}
+				var div = document.createElement("div");
+				div.setAttribute("class", "mui-media-body");
 				a.setAttribute("id", title);
-				a.innerHTML = title;
-				p1.innerHTML = convUnixTimestamp(date);
-				p2.innerHTML = content;
-				p2.setAttribute("hidden", 'true');
+				div.innerHTML = title;
+				p.setAttribute("class", "mui-ellipsis");
+				p.innerHTML = convUnixTimestamp(date);
+				a.appendChild(img);
+				div.innerHTML = title;
+				div.appendChild(p);
+				a.appendChild(div);
 				liObj.appendChild(a);
-				liObj.appendChild(p1);
-				liObj.appendChild(p2);
-				//				<span class="mui-badge mui-badge-primary">12</span>
 				if(localStorage.getItem("user-act" + userId + id) == "0") {
-					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">&nbsp;</span>";
+					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">s</span>";
 				}
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
@@ -174,6 +196,11 @@
 				hidden_input.id = id;
 				hidden_input.value = id;
 				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "content";
+				hidden_input.value = content;
+				liObj.appendChild(hidden_input);				
 				ul.appendChild(liObj);
 			}
 

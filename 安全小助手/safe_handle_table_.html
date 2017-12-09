@@ -37,7 +37,7 @@
 				margin: 0 auto;
 			}
 			
-			#image-list {
+			#image-list-1 {
 				text-align: center;
 			}
 			
@@ -210,6 +210,11 @@
 					opacity: 0;
 				}
 			}
+			
+			.mui-card{
+				margin-left: 0px;
+				width: 100%;
+			}
 			p { color: black; font-size: 18px; } textarea{ text-indent: 2em; } .row { height: 100px; }
 		</style>		
 	</head>
@@ -306,9 +311,12 @@
 			var baseUrl = "http://123.206.87.22";
 			var dangerId;
 			var class_;
-			var mark = false;
+			var mark1 = false;
+			var mark2 = false;
 			var imgContenter = document.getElementById("image-list-1");
 			var imgContenter_ = document.getElementById("image-list-2");
+			var path1;
+			var path2;
 
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -336,7 +344,10 @@
 				var rectificationPeriod = self.rectificationPeriod;
 				var responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
+				path1 = dangerImgPath;
+				
 				var rectificationImgPath = self.rectificationImgPath;
+				path2 = rectificationImgPath;
 				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
 					document.getElementById("num").value = "暂无";
 				else
@@ -362,15 +373,6 @@
 						}
 					});
 				}
-				
-				$('img').jqthumb({
-				    width: "20%",
-				    height: "50%",
-				    position: {
-				        x : '50%',                          // x position of the image. DEFAULT is 50%. 50% also means centerize the image.
-				        y : '50%'                           // y position of the image. DEFAULT is 50%. 50% also means centerize the image.
-				    }
-				});
 				                
 				document.getElementById("state").value = state;
 				document.getElementById("class").value = level;
@@ -407,7 +409,7 @@
 					},
 					error: function() {
 
-					}
+					}	
 				});
 				if(responsibilityUser == "undefined")
 					document.getElementById("res_name").value = "暂无";
@@ -416,6 +418,7 @@
 				else {
 					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
 				}
+				console.log(baseUrl + "/resource/dangerImg/" + dangerImgPath);
 				console.log(rectificationImgPath);
 				if(rectificationImgPath == null || rectificationImgPath == "") {
 					if(state == "整改审核中" || state == "整改完毕") {
@@ -435,27 +438,78 @@
 			});
 
 			function addImg(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");
-				mainimg.style.width = "100%";
-				mainimg.height = document.body.clientWidth;
-//				mainimg.height = document.body.clientWidth - 10;
-				imgContenter.appendChild(mainimg);
+				console.log(path);
+				var mainimg = document.createElement("div");
+				mainimg.setAttribute("class", "mui-card-header mui-card-media");
+				mainimg.style.height = document.body.clientWidth/4 + "vw";
+				mainimg.style.backgroundImage = "url(" + path + ")";
+				console.log(path);
+				imgContenter.appendChild(mainimg);		
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.style.width = "100%";
+//				mainimg.height = document.body.clientWidth;
+//				imgContenter_.appendChild(mainimg);
+//				imgContenter_.style.backgroundSize = document.body.clientWidth;
 			}
+			
+			document.getElementById("image-list-1").addEventListener("tap", function(){
+				console.log(mark1);
+				console.log(baseUrl + "/resource/dangerImg/" + path1);
+				if(!mark1){
+					mark1 = true;
+					var mainimg = document.createElement("img");
+					mainimg.setAttribute("id", "pic1_");
+					mainimg.src = baseUrl + "/resource/dangerImg/" + path1;
+					mainimg.setAttribute("data-preview-src", "");
+					mainimg.setAttribute("data-preview-group", "1");
+					mainimg.style.width = "100%";
+					mainimg.style.display="none";
+					imgContenter.appendChild(mainimg);
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}else{
+					mui.trigger(document.getElementById("pic1_"), "tap");
+				}
+			})
 
 			function addImg_(path) {
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = path;
-				mainimg.setAttribute("data-preview-src", "");
-				mainimg.setAttribute("data-preview-group", "1");				
-				mainimg.style.width = "100%";
-				mainimg.height = document.body.clientWidth;
-				imgContenter_.appendChild(mainimg);
-			}		
+				var mainimg = document.createElement("div");
+				mainimg.setAttribute("class", "mui-card-header mui-card-media");
+				mainimg.style.height = "60vw";
+				mainimg.style.backgroundImage = "url(" + path + ")";
+				imgContenter_.appendChild(mainimg);		
+//				var mainimg = document.createElement("img");
+//				mainimg.setAttribute("class", "pic");
+//				mainimg.src = path;
+//				mainimg.setAttribute("data-preview-src", "");
+//				mainimg.setAttribute("data-preview-group", "1");				
+//				mainimg.style.width = "100%";
+//				mainimg.height = document.body.clientWidth;
+//				imgContenter_.appendChild(mainimg);
+//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+			}	
+			
+			document.getElementById("image-list-2").addEventListener("tap", function(){
+				console.log(mark2);
+				console.log(baseUrl + "/resource/dangerImg/" + path2);
+				if(!mark2){
+					mark2 = true;
+					var mainimg = document.createElement("img");
+					mainimg.setAttribute("id", "pic2_");
+					mainimg.src = baseUrl + "/resource/dangerImg/" + path2;
+					mainimg.setAttribute("data-preview-src", "");
+					mainimg.setAttribute("data-preview-group", "1");
+					mainimg.style.width = "100%";
+					mainimg.style.display="none";
+					imgContenter.appendChild(mainimg);
+					mui.trigger(document.getElementById("pic2_"), "tap");
+				}else{
+					mui.trigger(document.getElementById("pic2_"), "tap");
+				}
+			})
 
 			function convUnixTimestamp(timeStamp) {
 				var date = new Date(parseInt(timeStamp));
