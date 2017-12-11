@@ -16,18 +16,76 @@
 			p {
 				margin-top: 5px;
 				margin-left: 30px;
+				color: #000;
 			}
 			
 			.Number {
 				text-decoration: underline;
-				color: #007aff;
+				color: #555555;
+			}
+			
+			.mui-card{
+				color: #FFFFFF;
+			}
+			
+			#admin{
+				background: #6a98c6;
+			}
+			
+			#admin p{
+				color: #000
+			}
+			
+			#admin .mui-card-media p{
+				font-size: medium;
+			}
+			
+			#admin .mui-card-header{
+				padding-bottom: 1px;
+			}
+			
+			#admin .mui-card-content-inner{
+				background: #FFF;
+			}
+			
+			#project{
+				background: #589dcc;
+			}
+			
+			#project .mui-card-media p{
+				font-size: medium;
+			}
+			
+			#project .mui-card-header{
+				padding-bottom: 1px;
+			}
+			
+			#project .mui-card-content-inner{
+				background: #FFF;
+			}
+			
+			#super{
+				background: #5b8dc4;
+			}
+			
+			#super .mui-card-header{
+				padding-bottom: 1px;
+			}
+			
+			#super .mui-card-media p{
+				font-size: medium;
 			}
 		</style>
 	</head>
 	<body>
 		<div id="main">
-
+			
 		</div>
+		<!--admin 337cb3-->
+		<!--project 62b562-->
+		<!--super 5dc1dc-->
+		<!--efab5b-->
+		
 		<script src="js/mui.min.js"></script>
 		<script src="js/bomb.js"></script>
 		<script src="js/bmob-min.js"></script>
@@ -391,29 +449,6 @@
 									plus.nativeUI.toast("请求失败!");
 								}
 							});
-							//							setTimeout(function() {
-							//
-							//								var request_url = baseUrl + "/company/units?companyId=" + companyId;
-							//								var headers = {
-							//									'Accept': 'application/json',
-							//									'Content-Type': 'application/json;charset=utf-8',
-							//								};
-							//								mui.ajax(request_url, {
-							//									type: "get",
-							//									success: function(result) {
-							//										var extend = eval(result.extend);
-							//										var supervisionList = extend.supervisionCompanyList;
-							//										for(var i = 0; i < supervisionList.length; i++) {
-							//											var super_company = supervisionList[i].supervisionCompanyName;
-							////											console.log(supervisionList[i].supervisionCompanyId);
-							//											addSupervision(super_company, supervisionList[i].supervisionCompanyId);
-							//										}
-							//									},
-							//									error: function() {
-							//										plus.nativeUI.toast("请求失败!");
-							//									}
-							//								});
-							//							}, 1000);
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -423,8 +458,12 @@
 			});
 
 			mui('#main').on('tap', '.mui-card', function(e) {
-				var node = this.childNodes[0].childNodes[0];
-				var name = node.id;
+				var node = this.childNodes[0].childNodes[1];
+				if(name == undefined)
+					name = this.childNodes[0].childNodes[0].id;
+				else{
+					var name = node.id;
+				}
 				var tmp = name.split(",");
 				console.log(tmp[0]);
 				if(tmp[1] == "2") {
@@ -489,31 +528,36 @@
 				monthBigDangerNum = d;
 			}
 
-			function addTitle(titleName) {
-				var title = document.createElement("h3");
-				title.innerHTML = titleName;
-				var con_main = document.getElementById("main");
-				con_main.appendChild(title);
-			}
-
 			function addProject(proName, proId) {
 				var stringDayDanger = "今日新增安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(dayDangerNum, dayBigDangerNum);
 				var stringMonthDanger = "本月累计安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(monthDangerNum, monthBigDangerNum);
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
+				var con_title = document.createElement("div");
+				var img = document.createElement("img");
+				var p = document.createElement("p");				
 				var con_inner = document.createElement("div");
 				li.setAttribute("class", "mui-card");
+				li.setAttribute("id", "project");
 				con.setAttribute("class", "mui-card-content");
+				con_title.setAttribute("class", "mui-card-header mui-card-media");
+				img.src = "image/project.png";
+				img.setAttribute("class", "mui-media-icon");
+				con_title.appendChild(img);
+				p.innerHTML = proName;
+//				con_title.innerHTML = "项目部:" + "<span class=\"Number\">" + proName + "</span>";
+				con_title.appendChild(p);
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", proId + "," + "1" + "," + userId + "," + companyId);
-				con_inner.innerHTML = "项目部:" + "<span class=\"Number\">" + proName + "</span>";
+//				con_inner.innerHTML = "项目部:" + "<span class=\"Number\">" + proName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
 				con_day_danger.innerHTML = stringDayDanger;
 				con_month_danger.innerHTML = stringMonthDanger;
 				con_inner.appendChild(con_day_danger);
 				con_inner.appendChild(con_month_danger);
+				con.appendChild(con_title);
 				con.appendChild(con_inner);
 				li.appendChild(con);
 				ul.appendChild(li);
@@ -525,18 +569,31 @@
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
 				var con = document.createElement("div");
+				var con_title = document.createElement("div");
+				var img = document.createElement("img");
+				var p = document.createElement("p");
 				var con_inner = document.createElement("div");
 				li.setAttribute("class", "mui-card");
+				li.setAttribute("id", "admin");
 				con.setAttribute("class", "mui-card-content");
+				con_title.setAttribute("class", "mui-card-header mui-card-media");
+				img.src = "image/admin.png";
+				img.setAttribute("class", "mui-media-icon");
+				con_title.appendChild(img);
+				p.innerHTML = companyName;
+//				div.setAttribute("class", "mui-media-body");
+//				div.innerHTML = companyName;
+				con_title.appendChild(p);
 				con_inner.setAttribute("class", "mui-card-content-inner");
 				con_inner.setAttribute("id", companyId + "," + "2");
-				con_inner.innerHTML = "业主:" + "<span class=\"Number\">" + companyName + "</span>";
+//				con_inner.innerHTML = "业主:" + "<span class=\"Number\">" + companyName + "</span>";
 				con_day_danger = document.createElement("p");
 				con_month_danger = document.createElement("p");
 				con_day_danger.innerHTML = stringDayDanger;
 				con_month_danger.innerHTML = stringMonthDanger;
 				con_inner.appendChild(con_day_danger);
 				con_inner.appendChild(con_month_danger);
+				con.appendChild(con_title);
 				con.appendChild(con_inner);
 				li.appendChild(con);
 				ul.appendChild(li);
@@ -548,10 +605,17 @@
 				var con = document.createElement("div");
 				var con_inner = document.createElement("div");
 				li.setAttribute("class", "mui-card");
+				li.setAttribute("id", "super");
 				con.setAttribute("class", "mui-card-content");
-				con_inner.setAttribute("class", "mui-card-content-inner");
+				con_inner.setAttribute("class", "mui-card-header mui-card-media");
+				var img = document.createElement("img");
+				img.src = "image/super.png";
+				var p = document.createElement("p");
+				con_inner.appendChild(img);
 				con_inner.setAttribute("id", superId + "," + "3");
-				con_inner.innerHTML = "监理:" + " " + superName;
+//				con_inner.innerHTML = "监理:" + " " + superName;
+				p.innerHTML = superName;
+				con_inner.appendChild(p);
 				con.appendChild(con_inner);
 				li.appendChild(con);
 				ul.appendChild(li);
