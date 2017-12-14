@@ -122,8 +122,13 @@
 								addItem("三级教育", "2", eduBadge);
 								addItem("安全交底", "3", testBadge);
 							}
-							if(userClass == "301" || userClass == "401")
-								addItem("安全基本资料", "4", instituteBadge + majorStaffBadge + preplanBadge + responsibilityBadge + specialStaffBadge);
+							if(userClass == "301" || userClass == "401"){
+								addItem("组织结构", "4", instituteBadge);
+								addItem("岗位职责", "5", majorStaffBadge);
+								addItem("应急预案", "6", preplanBadge);
+								addItem("专职人员", "7", responsibilityBadge);
+								addItem("特种人员", "8", specialStaffBadge);
+							}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -178,8 +183,13 @@
 									addItem("安全交底", "3", testBadge);
 							}
 							if(userClass == "301" || userClass == "401")
-								if(instituteBadge >= 0)
-									addItem("安全基本资料", "4", instituteBadge + majorStaffBadge + preplanBadge + responsibilityBadge + specialStaffBadge);
+								if(instituteBadge >= 0){
+									addItem("组织结构", "4", instituteBadge);
+									addItem("岗位职责", "5", majorStaffBadge);
+									addItem("应急预案", "6", preplanBadge);
+									addItem("专职人员", "7", responsibilityBadge);
+									addItem("特种人员", "8", specialStaffBadge);									
+								}
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -213,7 +223,11 @@
 								addItem("安全交底", "3", testBadge);
 							}
 							if(userClass == "301" || userClass == "401") {
-								addItem("安全基本资料", "4", instituteBadge + majorStaffBadge + preplanBadge + responsibilityBadge + specialStaffBadge);
+								addItem("组织结构", "4", instituteBadge);
+								addItem("岗位职责", "5", majorStaffBadge);
+								addItem("应急预案", "6", preplanBadge);
+								addItem("专职人员", "7", responsibilityBadge);
+								addItem("特种人员", "8", specialStaffBadge);
 							}
 						},
 						error: function() {
@@ -261,16 +275,59 @@
 							supervisionCompanyId: supervisionCompanyId
 						}
 					});
+				} else if(class_ == "4") {
+					mui.openWindow({
+						url: "info_1.html",
+						id: "info_1",
+						extras: {
+							userClass: userClass,
+							companyId: companyId,
+							userId: userId,
+							subsidiaryId: subsidiaryId,
+							supervisionCompanyId: supervisionCompanyId
+						}
+					});
+				} else if(class_ == "5") {
+					mui.openWindow({
+						url: "info_2.html",
+						id: "info_2",
+						extras: {
+							userClass: userClass,
+							companyId: companyId,
+							userId: userId,
+							subsidiaryId: subsidiaryId,
+							supervisionCompanyId: supervisionCompanyId
+						}
+					});
+				} else if(class_ == "6") {
+					mui.openWindow({
+						url: "info_3.html",
+						id: "info_3",
+						extras: {
+							userClass: userClass,
+							companyId: companyId,
+							userId: userId,
+							subsidiaryId: subsidiaryId,
+							supervisionCompanyId: supervisionCompanyId
+						}
+					});
+				} else if(class_ == "7") {
+					mui.openWindow({
+						url: "info_4.html",
+						id: "info_4",
+						extras: {
+							userClass: userClass,
+							companyId: companyId,
+							userId: userId,
+							subsidiaryId: subsidiaryId,
+							supervisionCompanyId: supervisionCompanyId
+						}
+					});
 				} else {
 					mui.openWindow({
-						url: "safe_basic_info.html",
-						id: "safe_basic_info",
+						url: "info_5.html",
+						id: "info_5",
 						extras: {
-							instituteBadge: instituteBadge,
-							specialStaffBadge: specialStaffBadge,
-							majorStaffBadge: majorStaffBadge,
-							preplanBadge: preplanBadge,
-							responsibilityBadge: responsibilityBadge,
 							userClass: userClass,
 							companyId: companyId,
 							userId: userId,

@@ -39,7 +39,7 @@
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全隐患排查处置表</h1>
 		</header>
-		<div id="main"  class="mui-content mui-scroll-wrapper">
+		<div id="main"  class="mui-content">
 			<form id="upload" action="http://123.206.87.22/user/danger" method="post" class="mui-input-group" enctype="multipart/form-data">
 				<div>
 					<input id="1" type="hidden" name="userId">
@@ -68,6 +68,12 @@
 			<div class="mui-content-padded">
 				<button id='submit' class="mui-btn-block mui-btn-primary">提交</button>
 			</div>
+			
+			<div class="mui-content-padded">
+				<button id='test_bt' class="mui-btn-block mui-btn-primary">test</button>
+			</div>			
+			
+			<img src="" id="test"/>
 		</div>
 		<script src="js/jquery.js"></script>
 		<script src="js/mui.min.js"></script>
@@ -79,6 +85,8 @@
 			var companyId;
 			var mark = false;
 			var baseurl = "http://123.206.87.22/";
+			var file_url = "file:///storage/emulated/0/DCIM/";
+			var file_url_ = "/var/mobile/Containers/Data/Application/EC0DD0DC-3632-4D21-A2AE-97A75233D123/Documents/Pandora/apps/HBuilder/doc/"
 //			var imgContenter = document.getElementById("image-list");
 //
 //			mui('.image-list').on('tap', '.pic', function(e) {
@@ -110,12 +118,46 @@
 				plus.webview.currentWebview().close();
 			});
 
+			function getPath(obj)    
+			{    
+			  if(obj)    
+			    {    
+			   
+			    if (window.navigator.userAgent.indexOf("MSIE")>=1)    
+			      {    
+			        obj.select();    
+			   
+			      return document.selection.createRange().text;    
+			      }    
+			   
+			    else if(window.navigator.userAgent.indexOf("Firefox")>=1)    
+			      {    
+			      if(obj.files)    
+			        {    
+			   
+			        return obj.files.item(0).getAsDataURL();    
+			        }    
+			      return obj.value;    
+			      }    
+			    return obj.value;    
+			    }    
+			} 
+
 			document.getElementById("submit").addEventListener("tap", function() {
 				console.log(baseurl + "user/danger");
 				document.getElementById("1").value = userId;
 				console.log(userId);
 				document.getElementById("2").value = companyId;
 				document.getElementById("3").value = id_;
+				var pic_url = document.getElementById("pic").value;
+				console.log(pic_url);
+				console.log(pic_url.split("\\")[2]);
+				if(!mui.os.ios)
+					document.getElementById("test").src = file_url + pic_url.split("\\")[2];
+				else{
+					document.getElementById("test").src = file_url_ + pic_url.split("\\")[2];
+				}
+				console.log(document.getElementById("test").src);
 				$.ajax({
 				    url: baseurl + "user/danger",
 				    type: 'POST',
@@ -132,94 +174,99 @@
 				});
 			})
 
-//			document.getElementById('image-list').addEventListener('tap', function() {
+			document.getElementById('test_bt').addEventListener('tap', function() {
 //				if(mark){
 //					mark = false;
 //					return;
 //				}
-//				if(mui.os.plus) {
-//					var a = [{
-//						title: "拍照"
-//					}, {
-//						title: "从手机相册选择"
-//					}];
-//					plus.nativeUI.actionSheet({
-//						title: "隐患截图",
-//						cancel: "取消",
-//						buttons: a
-//					}, function(b) { /*actionSheet 按钮点击事件*/
-//						switch(b.index) {
-//							case 0:
-//								break;
-//							case 1:
-//								getImage(); /*拍照*/
-//								break;
-//							case 2:
-//								galleryImg(); /*打开相册*/
-//								break;
-//							default:
-//								break;
-//						}
-//					})
-//				}
-//			}, false);
-//
-//			function getImage() {
-//				var c = plus.camera.getCamera();
-//				c.captureImage(function(e) {
-//					plus.io.resolveLocalFileSystemURL(e, function(entry) {
-//						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
-//						addImg(s);
-//					}, function(e) {
-//						console.log("读取拍照文件错误：" + e.message);
-//					});
-//				}, function(s) {
-//					console.log("error:" + s);
-//				}, {
-//					
-//				})
-//			};
-//
-//			//本地相册选择 
-//			function galleryImg() {
-//				plus.gallery.pick(function(a) {
-//					plus.io.resolveLocalFileSystemURL(a, function(entry) {
-//						plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
-//							root.getFile("pic.png", {}, function(file) {
-//								//文件已存在 
-//								file.remove(function() {
-//									console.log("file remove success");
-//									entry.copyTo(root, 'pic.png', function(e) {
-//											var e = e.fullPath + "?version=" + new Date().getTime();
-//											addImg(e);
-//										},
-//										function(e) {
-//											console.log('copy image fail:' + e.message);
-//										});
-//								}, function() {
-//									console.log("delete image fail:" + e.message);
-//								});
-//							}, function() {
-//								//文件不存在 
-//								entry.copyTo(root, 'pic.png', function(e) {
-//										var path = e.fullPath + "?version=" + new Date().getTime();
-//										addImg(path);
-//									},
-//									function(e) {
-//										console.log('copy image fail:' + e.message);
-//									});
-//							});
-//						}, function(e) {
-//							console.log("fail");
-//						})
-//					}, function(e) {
-//						console.log("读取拍照文件错误：" + e.message);
-//					});
-//				}, function(a) {}, {
-//					filter: "image"
-//				})
-//			};
-//
+				if(mui.os.plus) {
+					var a = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "隐患截图",
+						cancel: "取消",
+						buttons: a
+					}, function(b) { /*actionSheet 按钮点击事件*/
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage(); /*拍照*/
+								break;
+							case 2:
+								galleryImg(); /*打开相册*/
+								break;
+							default:
+								break;
+						}
+					})
+				}
+			}, false);
+
+			function getImage() {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						console.log(entry.toLocalURL());
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						document.getElementById("test").src = s;
+//						document.getElementById("pic").value = s;
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(s) {
+					console.log("error:" + s);
+				}, {
+					
+				})
+			};
+
+			//本地相册选择 
+			function galleryImg() {
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						console.log("entry:" + entry.fullPath);
+						plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+							
+							root.getFile("pic.png", {}, function(file) {
+								console.log(root.fullPath);
+								//文件已存在 
+								file.remove(function() {
+									console.log("file remove success");
+									entry.copyTo(root, 'pic.png', function(e) {
+											var e = e.fullPath + "?version=" + new Date().getTime();
+											addImg(e);
+										},
+										function(e) {
+											console.log('copy image fail:' + e.message);
+										});
+								}, function() {
+									console.log("delete image fail:" + e.message);
+								});
+							}, function() {
+								//文件不存在 
+								entry.copyTo(root, 'pic.png', function(e) {
+										var path = e.fullPath + "?version=" + new Date().getTime();
+										addImg(path);
+									},
+									function(e) {
+										console.log('copy image fail:' + e.message);
+									});
+							});
+						}, function(e) {
+							console.log("fail");
+						})
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(a) {}, {
+					filter: "image"
+				})
+			};
+
 //			function submit() {
 //				var position = document.getElementById("position").value;
 //				var name = document.getElementById("name").value;

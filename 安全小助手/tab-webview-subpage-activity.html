@@ -136,9 +136,23 @@
 				var content = node[3].value;
 				var activityAppendixPath = node[1].value;
 				var id = node[2].value;
+				var cat = node[4].value;
+				console.log(cat);
 				if(localStorage.getItem("user-act" + userId + id) == "0") {
 					localStorage.setItem("user-act" + userId + id, "1");
-					document.getElementById(id).style.display = "none";
+//					document.getElementById(id).style.display = "none";
+					var img = document.getElementById("user-act" + userId + id);
+					console.log(img.src);
+					if(cat == "1"){
+						img.src = "image/attention.png";	
+					}else if(cat == "2"){
+						img.src = "image/news.png";
+					}else if(cat == "3"){
+						img.src = "image/act.png";
+					}else{
+						img.src = "image/chat.png";
+					}
+					
 				}
 				mui.openWindow({
 					url: "activity_content.html",
@@ -161,6 +175,7 @@
 				var p = document.createElement("p");
 				liObj.setAttribute("class", "mui-table-view-cell mui-media");
 				img.setAttribute("class", "mui-media-object mui-pull-left");
+				img.setAttribute("id", "user-act" + userId + id);
 				if(activityCategoryId == "1"){
 					img.src = "image/attention.png";	
 				}else if(activityCategoryId == "2"){
@@ -176,14 +191,23 @@
 				div.innerHTML = title;
 				p.setAttribute("class", "mui-ellipsis");
 				p.innerHTML = convUnixTimestamp(date);
+				if(localStorage.getItem("user-act" + userId + id) == "0") {
+//					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">s</span>";
+					if(activityCategoryId == "1"){
+						img.src = "image/re_attention.png";	
+					}else if(activityCategoryId == "2"){
+						img.src = "image/re_news.png";
+					}else if(activityCategoryId == "3"){
+						img.src = "image/re_act.png";
+					}else{
+						img.src = "image/re_chat.png";
+					} 
+				}
 				a.appendChild(img);
 				div.innerHTML = title;
 				div.appendChild(p);
 				a.appendChild(div);
 				liObj.appendChild(a);
-				if(localStorage.getItem("user-act" + userId + id) == "0") {
-					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">s</span>";
-				}
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
 				hidden_input.id = "activityAppendixPath";
@@ -198,6 +222,11 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "content";
 				hidden_input.value = content;
+				liObj.appendChild(hidden_input);				
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "activityCategoryId";
+				hidden_input.value = activityCategoryId;
 				liObj.appendChild(hidden_input);				
 				ul.appendChild(liObj);
 			}

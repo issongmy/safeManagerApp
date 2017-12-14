@@ -574,7 +574,12 @@
 					"safe_danger_approve.html",
 					"three_edu_approve.html",
 					"safe_basic_info.html",
-					"safe_edu_approve.html"
+					"safe_edu_approve.html",
+					"info_1.html",
+					"info_4.html",
+					"info_5.html",
+					"info_3.html",
+					"info_2.html"
 				],
 				"priority": 0
 			},

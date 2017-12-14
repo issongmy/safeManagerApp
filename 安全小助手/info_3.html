@@ -55,7 +55,7 @@
 				var backButtonPress = 0;
 				mui.back = function(event) {
 					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
-						id: "3",
+						id: "6",
 						num: length
 					});					
 					plus.webview.currentWebview().close();
@@ -210,7 +210,7 @@
 			
 		document.getElementById("close").addEventListener("tap", function() {
 			mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
-				id: "3",
+				id: "6",
 				num: length
 			});
 			plus.webview.currentWebview().close();
