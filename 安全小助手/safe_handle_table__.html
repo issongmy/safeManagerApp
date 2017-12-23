@@ -15,6 +15,9 @@
 			.mui-icon{
 				color: #fff;
 			}
+			body{
+				text-align: center;	
+			}
 			
 			label{
 				color: #0062CC;
@@ -39,7 +42,7 @@
 			.mui-card{
 				margin-left: 0px;
 				width: 100%;
-			}			
+			}		
 		</style>
 	</head>
 
@@ -72,6 +75,11 @@
 				<div id='image-list' class="mui-card-content" >
 				</div>
 			</div>	
+			<div id="tip" style="display: none;">
+				<p style="font-size: 1em;">
+					正在上传......
+				</p>
+			</div>		
 			<div class="mui-content-padded">
 				<button id='submit' class="mui-btn-block mui-btn-primary">提交</button>
 			</div>
@@ -125,23 +133,33 @@
 //			});
 
 			document.getElementById("submit").addEventListener("tap", function() {
-				var formData = new FormData();
-				formData.append('dangerImg', $('#file')[0].files[0]);
-				formData.append('dangerId', dangerId);
-				$.ajax({
-					url: baseurl + "user/danger/rectificationImg",
-					type: 'POST',
-					cache: false,
-					data: formData,
-					processData: false,
-					contentType: false
-				}).done(function(res) {
-					plus.nativeUI.toast("上传成功");
-					location.reload();
-				}).fail(function(res) {
-					console.log(JSON.stringify(res));
-					plus.nativeUI.toast("上传失败");
-				});
+				if(document.getElementById("file").value == ""){
+					plus.nativeUI.toast("请添加整改后隐患图片");
+				}else{
+					var bt_submit = document.getElementById("submit");
+					bt_submit.disabled = "true";
+					document.getElementById("tip").style.display = "inline";					
+					var formData = new FormData();
+					formData.append('dangerImg', $('#file')[0].files[0]);
+					formData.append('dangerId', dangerId);
+					$.ajax({
+						url: baseurl + "user/danger/rectificationImg",
+						type: 'POST',
+						cache: false,
+						data: formData,
+						processData: false,
+						contentType: false
+					}).done(function(res) {
+						plus.nativeUI.toast("上传成功");
+						var parent = plus.webview.getWebviewById("safe_handle_table_");
+						mui.fire(parent, "refresh_");
+						plus.webview.currentWebview().close();
+					}).fail(function(res) {
+	//					console.log(JSON.stringify(res));
+						location.reload();
+						plus.nativeUI.toast("上传失败！请选择小于5M的图片上传");
+					});
+				}
 			})
 			
 			function addImg() {

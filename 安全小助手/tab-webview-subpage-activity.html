@@ -76,6 +76,7 @@
 				subsidiaryId = self.subsidiaryId;
 				supervisionCompanyId = self.supervisionCompanyId;
 				var request_url = baseUrl + "/user/activityList?companyId=" + companyId;
+				console.log(request_url);
 				var headers = {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json;charset=utf-8'
@@ -95,6 +96,7 @@
 							var activityContent = actList[i].activityContent;
 							var activityAppendixPath = actList[i].activityAppendixPath;
 							var activityCategoryId = actList[i].activityCategoryId;
+							var activityCategoryName = actList[i].activityCategory.activityCategoryName;
 							if(localStorage.getItem("user-act" + userId + activityId) == undefined || localStorage.getItem("user-act" + userId + activityId) == null) {
 								localStorage.setItem("user-act" + userId + activityId, "0");
 								count += 1;
@@ -113,7 +115,7 @@
 								});
 							}
 							length_ = count;
-							addAct(activityId, activityTitle, activityDate, activityContent, activityAppendixPath, activityCategoryId);
+							addAct(activityId, activityTitle, activityDate, activityContent, activityAppendixPath, activityCategoryId, activityCategoryName);
 						}
 
 					},
@@ -143,11 +145,11 @@
 //					document.getElementById(id).style.display = "none";
 					var img = document.getElementById("user-act" + userId + id);
 					console.log(img.src);
-					if(cat == "1"){
+					if(cat == "通知通报"){
 						img.src = "image/attention.png";	
-					}else if(cat == "2"){
+					}else if(cat == "安全新闻"){
 						img.src = "image/news.png";
-					}else if(cat == "3"){
+					}else if(cat == "文件转发"){
 						img.src = "image/act.png";
 					}else{
 						img.src = "image/chat.png";
@@ -166,7 +168,7 @@
 				});
 			});			
 			
-			function addAct(id, title, date, content, activityAppendixPath, activityCategoryId) {
+			function addAct(id, title, date, content, activityAppendixPath, activityCategoryId, activityCategoryName) {
 				var ul = document.getElementById("activity");
 				var liObj = document.createElement("li");
 				var a = document.createElement("a");
@@ -176,11 +178,11 @@
 				liObj.setAttribute("class", "mui-table-view-cell mui-media");
 				img.setAttribute("class", "mui-media-object mui-pull-left");
 				img.setAttribute("id", "user-act" + userId + id);
-				if(activityCategoryId == "1"){
+				if(activityCategoryName == "通知通报"){
 					img.src = "image/attention.png";	
-				}else if(activityCategoryId == "2"){
+				}else if(activityCategoryName == "安全新闻"){
 					img.src = "image/news.png";
-				}else if(activityCategoryId == "3"){
+				}else if(activityCategoryName == "文件转发"){
 					img.src = "image/act.png";
 				}else{
 					img.src = "image/chat.png";
@@ -193,11 +195,11 @@
 				p.innerHTML = convUnixTimestamp(date);
 				if(localStorage.getItem("user-act" + userId + id) == "0") {
 //					a.innerHTML = a.innerHTML + "<span id=\"" + id + "\" class=\"mui-badge mui-badge-primary\">s</span>";
-					if(activityCategoryId == "1"){
+					if(activityCategoryName == "通知通报"){
 						img.src = "image/re_attention.png";	
-					}else if(activityCategoryId == "2"){
+					}else if(activityCategoryName == "安全新闻"){
 						img.src = "image/re_news.png";
-					}else if(activityCategoryId == "3"){
+					}else if(activityCategoryName == "文件转发"){
 						img.src = "image/re_act.png";
 					}else{
 						img.src = "image/re_chat.png";
@@ -225,8 +227,8 @@
 				liObj.appendChild(hidden_input);				
 				var hidden_input = document.createElement("input");
 				hidden_input.type = "hidden";
-				hidden_input.id = "activityCategoryId";
-				hidden_input.value = activityCategoryId;
+				hidden_input.id = "activityCategoryName";
+				hidden_input.value = activityCategoryName;
 				liObj.appendChild(hidden_input);				
 				ul.appendChild(liObj);
 			}

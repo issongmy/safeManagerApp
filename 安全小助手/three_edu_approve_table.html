@@ -54,7 +54,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">教育审批</h1>
+			<h1 class="mui-title">三级教育审批</h1>
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
@@ -107,13 +107,13 @@
 				else{
 					document.getElementById("time").value = convUnixTimestamp(uploadTime);
 				}
-				if(currentState)
+				if(currentState == "true")
 					document.getElementById("state").value = "审核完成";
 				else
 					document.getElementById("state").value = "待审核";
 				console.log(safetyEduHtml);
 				var info = document.getElementById("info");
-				info.innerHTML = safetyEduHtml.slice(10);
+				info.innerHTML = safetyEduHtml.slice(9);
 				file_url = baseUrl + "/resource/safetyEdu/" + safetyEduHtml;					
 //				if(!mui.os.ios)
 //					info.href = document.getElementById("info").href = baseUrl + "/resource/safetyTest/" + safetyTestsHtml;	
@@ -141,14 +141,14 @@
 							"companyId": companyId
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 							var parent = plus.webview.getWebviewById("three_edu_approve");
 							mui.fire(parent, "refresh");							
 							plus.webview.currentWebview().close();								
 						},
 						error: function(result) {
 							console.log(JSON.stringify(result));
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}
@@ -166,14 +166,14 @@
 							"companyId": companyId
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 							var parent = plus.webview.getWebviewById("three_edu_approve");
 							mui.fire(parent, "refresh");							
 							plus.webview.currentWebview().close();								
 						},
 						error: function(result) {
 							console.log(JSON.stringify(result));
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}
@@ -194,10 +194,10 @@
 							var parent = plus.webview.getWebviewById("three_edu_approve");
 							mui.fire(parent, "refresh");							
 							plus.webview.currentWebview().close();							
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 						},
 						error: function() {
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}

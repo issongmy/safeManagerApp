@@ -269,6 +269,8 @@
 			<div id='image-list'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
 			</div>
+			<div id="img_container" style="display: none;">
+			</div>			
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
@@ -325,7 +327,7 @@
 				if(specialStaffImgPath == null || specialStaffImgPath == "")
 					addImg("image/zw.jpg");
 				else {
-					addImg(baseUrl + "/resource/specialStaff/" + specialStaffImgPath);
+					addImg(baseUrl + "/resource/pressSpecialStaff/" + specialStaffImgPath);
 				}
 			});
 			mui.init();
@@ -354,17 +356,17 @@
 			
 			document.getElementById("image-list").addEventListener("tap", function(){
 				console.log(mark);
-				console.log(baseUrl + "/resource/dangerImg/" + path);
+				console.log(baseUrl + "/resource/pressSpecialStaff/" + path);
 				if(!mark){
 					mark = true;
 					var mainimg = document.createElement("img");
 					mainimg.setAttribute("id", "pic1_");
-					mainimg.src = baseUrl + "/resource/dangerImg/" + path;
+					mainimg.src = baseUrl + "/resource/pressSpecialStaff/" + path;
 					mainimg.setAttribute("data-preview-src", "");
 					mainimg.setAttribute("data-preview-group", "1");
 					mainimg.style.width = "100%";
 					mainimg.style.display="none";
-					imgContenter.appendChild(mainimg);
+					document.getElementById("img_container").appendChild(mainimg);
 					mui.trigger(document.getElementById("pic1_"), "tap");
 				}else{
 					mui.trigger(document.getElementById("pic1_"), "tap");

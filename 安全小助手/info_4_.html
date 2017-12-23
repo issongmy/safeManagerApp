@@ -249,11 +249,11 @@
 					<label>岗位名称</label>
 					<input id='job' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
+				<div class="mui-input-row" style="display: none;">
 					<label>资料分类</label>
 					<input id='category' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
+				<div class="mui-input-row" style="display: none;">
 					<label>当前状态</label>
 					<input id='state' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
@@ -274,6 +274,8 @@
 			<div class="mui-content-padded">
 				<button id='return' class="mui-btn mui-btn-block mui-btn-yellow">退回</button>
 			</div>				
+			<div id="img_container" style="display: none;">
+			</div>			
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.previewimage.js"></script>
@@ -399,17 +401,18 @@
 			
 			document.getElementById("image-list").addEventListener("tap", function(){
 				console.log(mark);
-				console.log(baseUrl + "/resource/dangerImg/" + path);
+				console.log(baseUrl + "/resource/pressMajorStaff/" + path);
 				if(!mark){
 					mark = true;
 					var mainimg = document.createElement("img");
 					mainimg.setAttribute("id", "pic1_");
-					mainimg.src = baseUrl + "/resource/dangerImg/" + path;
+					mainimg.src = baseUrl + "/resource/pressMajorStaff/" + path;
 					mainimg.setAttribute("data-preview-src", "");
 					mainimg.setAttribute("data-preview-group", "1");
 					mainimg.style.width = "100%";
+					mainimg.style.height = document.body.clientWidth;
 					mainimg.style.display="none";
-					imgContenter.appendChild(mainimg);
+					document.getElementById("img_container").appendChild(mainimg);
 					mui.trigger(document.getElementById("pic1_"), "tap");
 				}else{
 					mui.trigger(document.getElementById("pic1_"), "tap");

@@ -55,9 +55,9 @@
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
-					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+					mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
 						id: "4",
-						num: length
+						safe_num: length
 					});
 					plus.webview.currentWebview().close();
 				};
@@ -85,7 +85,12 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var instituteList = extend.list;
-							length = instituteList.length;
+							if(instituteList == null){
+								length = 0;
+							}
+							else{
+								length = instituteList.length;
+							}
 							for(var i = 0; i < instituteList.length; i++) {
 								var instituteId = instituteList[i].instituteId;
 								var institutePath = instituteList[i].institutePath;
@@ -116,7 +121,12 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var instituteList = extend.list;
-							length = instituteList.length;
+							if(instituteList == null){
+								length = 0;
+							}
+							else{
+								length = instituteList.length;
+							}
 							for(var i = 0; i < instituteList.length; i++) {
 								var instituteId = instituteList[i].instituteId;
 								var institutePath = instituteList[i].institutePath;
@@ -167,7 +177,7 @@
 				span_com.innerHTML = name;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = institutePath.slice(10);
+				span_num.innerHTML = institutePath.slice(9);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				if(category == "1")
@@ -209,9 +219,9 @@
 			}
 
 			document.getElementById("close").addEventListener("tap", function() {
-				mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+				mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
 					id: "4",
-					num: length
+					safe_num: length
 				});
 				plus.webview.currentWebview().close();
 			});

@@ -210,6 +210,7 @@
 						type: "get",
 						success: function(result) {
 							var extend = eval(result.extend);
+							console.log(extend.monthAdded + " " + extend.monthImportant)
 							dayDangerNum = extend.todayAdded;
 							dayBigDangerNum = extend.todayImportant;
 							monthDangerNum = extend.monthAdded;
@@ -311,10 +312,10 @@
 							monthBigDangerNum = extend.monthImportant;
 							var parent = document.getElementById(subsidiaryId + "," + "1" + "," + userId + "," + companyId);
 							var span_list = parent.getElementsByTagName("span");
-							span_list[1].innerHTML = " " + dayDangerNum + " "; 
-							span_list[2].innerHTML = " " + dayBigDangerNum + " ";
-							span_list[3].innerHTML = " " + monthDangerNum + " ";
-							span_list[4].innerHTML = " " + monthBigDangerNum + " ";
+							span_list[0].innerHTML = " " + dayDangerNum + " "; 
+							span_list[1].innerHTML = " " + dayBigDangerNum + " ";
+							span_list[2].innerHTML = " " + monthDangerNum + " ";
+							span_list[3].innerHTML = " " + monthBigDangerNum + " ";
 						},
 						error: function() {
 							plus.nativeUI.toast("请求失败!");
@@ -357,10 +358,10 @@
 										var projectName = extend.subsidiary.subsidiaryName;
 										var parent = document.getElementById(projectId + "," + "1" + "," + userId + "," + companyId);
 										var span_list = parent.getElementsByTagName("span");
-										span_list[1].innerHTML = " " + dayDangerNum + " "; 
-										span_list[2].innerHTML = " " + dayBigDangerNum + " ";
-										span_list[3].innerHTML = " " + monthDangerNum + " ";
-										span_list[4].innerHTML = " " + monthBigDangerNum + " ";
+										span_list[0].innerHTML = " " + dayDangerNum + " "; 
+										span_list[1].innerHTML = " " + dayBigDangerNum + " ";
+										span_list[2].innerHTML = " " + monthDangerNum + " ";
+										span_list[3].innerHTML = " " + monthBigDangerNum + " ";
 									},
 									error: function() {
 										plus.nativeUI.toast("请求失败!");
@@ -387,12 +388,13 @@
 							dayBigDangerNum = extend.todayImportant;
 							monthDangerNum = extend.monthAdded;
 							monthBigDangerNum = extend.monthImportant;
+							console.log(monthBigDangerNum + " " + monthDangerNum);
 							var parent = document.getElementById(companyId + "," + "2");
 							var span_list = parent.getElementsByTagName("span");
-							span_list[1].innerHTML = " " + dayDangerNum + " "; 
-							span_list[2].innerHTML = " " + dayBigDangerNum + " ";
-							span_list[3].innerHTML = " " + monthDangerNum + " ";
-							span_list[4].innerHTML = " " + monthBigDangerNum + " ";
+							span_list[0].innerHTML = " " + dayDangerNum + " "; 
+							span_list[1].innerHTML = " " + dayBigDangerNum + " ";
+							span_list[2].innerHTML = " " + monthDangerNum + " ";
+							span_list[3].innerHTML = " " + monthBigDangerNum + " ";
 
 							var request_url = baseUrl + "/company/units?companyId=" + companyId;
 							var headers = {
@@ -428,10 +430,10 @@
 												var projectName = extend.subsidiary.subsidiaryName;
 												var parent = document.getElementById(projectId + "," + "1" + "," + userId + "," + companyId);
 												var span_list = parent.getElementsByTagName("span");
-												span_list[1].innerHTML = " " + dayDangerNum + " "; 
-												span_list[2].innerHTML = " " + dayBigDangerNum + " ";
-												span_list[3].innerHTML = " " + monthDangerNum + " ";
-												span_list[4].innerHTML = " " + monthBigDangerNum + " ";
+												span_list[0].innerHTML = " " + dayDangerNum + " "; 
+												span_list[1].innerHTML = " " + dayBigDangerNum + " ";
+												span_list[2].innerHTML = " " + monthDangerNum + " ";
+												span_list[3].innerHTML = " " + monthBigDangerNum + " ";
 											},
 											error: function() {
 												plus.nativeUI.toast("请求失败!");
@@ -558,6 +560,7 @@
 			}
 
 			function addAdmin(companyName, companyId) {
+				console.log(monthDangerNum + " " + monthBigDangerNum);
 				var stringDayDanger = "今日新增安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(dayDangerNum, dayBigDangerNum);
 				var stringMonthDanger = "本月累计安全隐患<span class=\"Number\"> {0} </span>起，重大隐患<span class=\"Number\"> {1} </span>起".format(monthDangerNum, monthBigDangerNum);
 				var ul = document.getElementById("main");

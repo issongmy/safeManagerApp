@@ -111,7 +111,7 @@
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
 									}
 
-								} else {
+								} else if(reason == "2"){
 									if(state == "1") {
 										addDanger(dangerId, projectName, "逾期未整改", "提交审核中", dangerNumber,
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
@@ -126,6 +126,21 @@
 										addDanger(dangerId, projectName, "逾期未整改", "整改完毕", dangerNumber,
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
 									}
+								} else{
+									if(state == "1") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "提交审核中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									} else if(state == "2") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+
+									} else if(state == "3") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改审核中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									} else {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改完毕", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									}									
 								}
 							}
 						},
@@ -180,7 +195,7 @@
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
 									}
 
-								} else {
+								} else if(reason == "2"){
 									if(state == "1") {
 										addDanger(dangerId, projectName, "逾期未整改", "提交审核中", dangerNumber,
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
@@ -195,6 +210,21 @@
 										addDanger(dangerId, projectName, "逾期未整改", "整改完毕", dangerNumber,
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
 									}
+								} else{
+									if(state == "1") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "提交审核中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									} else if(state == "2") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+
+									} else if(state == "3") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改审核中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									} else {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改完毕", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									}									
 								}
 							}
 						},
@@ -249,7 +279,7 @@
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
 									}
 
-								} else {
+								} else if(reason == "2"){
 									if(state == "1") {
 										addDanger(dangerId, projectName, "逾期未整改", "提交审核中", dangerNumber,
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
@@ -264,6 +294,21 @@
 										addDanger(dangerId, projectName, "逾期未整改", "整改完毕", dangerNumber,
 											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
 									}
+								} else{
+									if(state == "1") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "提交审核中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									} else if(state == "2") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+
+									} else if(state == "3") {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改审核中", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									} else {
+										addDanger(dangerId, projectName, "重大逾期未整改", "整改完毕", dangerNumber,
+											checkTime, checkUserId, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, suggestion, position);
+									}									
 								}
 							}
 						},
@@ -314,7 +359,7 @@
 						responsibilityUser: responsibilityUser,
 						dangerImgPath: dangerImgPath,
 						dangerId: dangerId,
-						position: position
+						dangerPos: position
 					}
 				});
 			});
@@ -331,9 +376,9 @@
 				if(dangerImgPath == null || dangerImgPath == "")
 					var img_url = "image/zw.jpg";
 				else {
-					var img_url = baseUrl + "/resource/dangerImg/" + dangerImgPath;
+					var img_url = baseUrl + "/resource/pressDangerImg/" + dangerImgPath;
 				}				
-//				var img_url = baseUrl + "/resource/dangerImg/" + dangerImgPath;
+//				var img_url = baseUrl + "/resource/pressDangerImg/" + dangerImgPath;
 				con_img.style.backgroundImage = "url(" + img_url + ")";
 				con_img.style.height = "40vw";
 				con_footer.setAttribute("class", "mui-card-footer");
@@ -349,11 +394,14 @@
 				a_pro.innerHTML = proName;
 				a_pro.setAttribute("class", "mui-card-link");
 				a_rea.setAttribute("class", "mui-card-link");
-				a_rea.innerHTML = reason;
-				if(reason == "重大隐患")
+				if(reason == "重大隐患"){
+					a_rea.innerHTML = reason;
 					a_rea.style.color = "red";
-				else{
+				} else if(reason == "逾期未整改"){
+					a_rea.innerHTML = reason;
 					a_rea.style.color = "green";
+				} else { 
+					a_rea.innerHTML = "<span style=\"color: red\">重大</span><span style=\"color: green\">逾期未整改</span>";
 				}
 				p_sit.innerHTML = convUnixTimestamp(checkTime);
 				p_pos.innerHTML = position;

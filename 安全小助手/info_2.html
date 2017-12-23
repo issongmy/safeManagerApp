@@ -55,9 +55,9 @@
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
-					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
-						id: "2",
-						num: length
+					mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
+						id: "5",
+						safe_num: length
 					});
 					plus.webview.currentWebview().close();
 				};
@@ -82,7 +82,12 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var responsibilityList = extend.list;
-							length = responsibilityList.length;
+							if(responsibilityList == null){
+								length = 0;
+							}
+							else{
+								length = responsibilityList.length;
+							}
 							for(var i = 0; i < responsibilityList.length; i++) {
 								var responsibilityId = responsibilityList[i].responsibilityId;
 								var responsibilityPath = responsibilityList[i].responsibilityPath;
@@ -113,7 +118,12 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var responsibilityList = extend.list;
-							length = responsibilityList.length;
+							if(responsibilityList == null){
+								length = 0;
+							}
+							else{
+								length = responsibilityList.length;
+							}
 							for(var i = 0; i < responsibilityList.length; i++) {
 								var responsibilityId = responsibilityList[i].responsibilityId;
 								var responsibilityPath = responsibilityList[i].responsibilityPath;
@@ -164,7 +174,7 @@
 				span_com.innerHTML = name;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = responsibilityPath.slice(10);
+				span_num.innerHTML = responsibilityPath.slice(9);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				if(category == "1")
@@ -210,9 +220,9 @@
 			});
 
 			document.getElementById("close").addEventListener("tap", function() {
-				mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
-					id: "2",
-					num: length
+				mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
+					id: "5",
+					safe_num: length
 				});
 				plus.webview.currentWebview().close();
 			});

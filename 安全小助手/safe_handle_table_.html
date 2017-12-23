@@ -211,12 +211,24 @@
 				}
 			}
 			
-			.mui-card{
+			.mui-card {
 				margin-left: 0px;
 				width: 100%;
 			}
-			p { color: black; font-size: 18px; } textarea{ text-indent: 2em; } .row { height: 100px; }
-		</style>		
+			
+			p {
+				color: black;
+				font-size: 18px;
+			}
+			
+			textarea {
+				text-indent: 2em;
+			}
+			
+			.row {
+				height: 100px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -229,6 +241,10 @@
 		</header>
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>隐患位置</label>
+					<input id='view' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>				
 				<div class="mui-input-row">
 					<label>隐患编号</label>
 					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
@@ -251,11 +267,9 @@
 				</div>
 				<div class="mui-input-row">
 					<label>隐患描述</label>
-					<input id='description' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
-					<label>处置意见</label>
-					<input id='view' type="text" class="mui-input-clear mui-input" disabled="true">
+				<div class="mui-input-speech">
+					<textarea id="description" rows="3" disabled="true"></textarea>
 				</div>
 				<div class="mui-input-row">
 					<label>处置期限</label>
@@ -294,6 +308,8 @@
 			</div>
 			<div id='image-list-2'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
+			</div>
+			<div id="img_container" style="display: none;">
 			</div>
 			<!--<div class="mui-card-footer">
 					<a class="mui-card-link">Like</a>
@@ -335,17 +351,22 @@
 				if(self.from == "1") {
 					var parent = document.getElementById("submit").parentNode;
 					parent.removeChild(document.getElementById("submit"));
+					imgContenter_.style.display = "none";
+					document.getElementById("other").style.display = "none";
 				}
+				if(self.from == "3"){
+					document.getElementById("submit").style.display == "none";
+				}
+				var dangerPos = self.dangerPos;
 				var state = self.state;
 				var level = self.level;
 				var description = self.description;
-				var suggestion = self.suggestion;
+				var suggestion = self.position;
 				var rectificationMeasures = self.rectificationMeasures;
 				var rectificationPeriod = self.rectificationPeriod;
 				var responsibilityUser = self.responsibilityUser;
 				var dangerImgPath = self.dangerImgPath;
 				path1 = dangerImgPath;
-				
 				var rectificationImgPath = self.rectificationImgPath;
 				path2 = rectificationImgPath;
 				if(dangerNumber == "" || dangerNumber == "null" || dangerNumber == null)
@@ -373,7 +394,7 @@
 						}
 					});
 				}
-				                
+
 				document.getElementById("state").value = state;
 				document.getElementById("class").value = level;
 				if(description == "") {
@@ -381,10 +402,10 @@
 				} else {
 					document.getElementById("description").value = description;
 				}
-				if(suggestion == null || suggestion == "") {
+				if(dangerPos == null || dangerPos == "") {
 					document.getElementById("view").value = "暂无";
 				} else {
-					document.getElementById("view").value = suggestion;
+					document.getElementById("view").value = dangerPos;
 				}
 				if(rectificationMeasures == "") {
 					document.getElementById("rectify").value = "暂无";
@@ -409,16 +430,16 @@
 					},
 					error: function() {
 
-					}	
+					}
 				});
 				if(responsibilityUser == "undefined")
 					document.getElementById("res_name").value = "暂无";
 				if(dangerImgPath == null || dangerImgPath == "")
 					addImg("image/zw.jpg");
 				else {
-					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
+					addImg(baseUrl + "/resource/pressDangerImg/" + dangerImgPath);
 				}
-				console.log(baseUrl + "/resource/dangerImg/" + dangerImgPath);
+				console.log(baseUrl + "/resource/pressDangerImg/" + dangerImgPath);
 				console.log(rectificationImgPath);
 				if(rectificationImgPath == null || rectificationImgPath == "") {
 					if(state == "整改审核中" || state == "整改完毕") {
@@ -428,7 +449,7 @@
 						parent.removeChild(document.getElementById("other"));
 					}
 				} else {
-					addImg_(baseUrl + "/resource/dangerImg/" + rectificationImgPath);
+					addImg_(baseUrl + "/resource/pressDangerImg/" + rectificationImgPath);
 				}
 			});
 			mui.init();
@@ -441,36 +462,44 @@
 				console.log(path);
 				var mainimg = document.createElement("div");
 				mainimg.setAttribute("class", "mui-card-header mui-card-media");
-				mainimg.style.height = document.body.clientWidth/4 + "vw";
+				mainimg.style.height = document.body.clientWidth / 4 + "vw";
 				mainimg.style.backgroundImage = "url(" + path + ")";
 				console.log(path);
-				imgContenter.appendChild(mainimg);		
-//				var mainimg = document.createElement("img");
-//				mainimg.setAttribute("class", "pic");
-//				mainimg.src = path;
-//				mainimg.setAttribute("data-preview-src", "");
-//				mainimg.setAttribute("data-preview-group", "1");				
-//				mainimg.style.width = "100%";
-//				mainimg.height = document.body.clientWidth;
-//				imgContenter_.appendChild(mainimg);
-//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+				imgContenter.appendChild(mainimg);
+				var img = document.createElement("img");
+				img.setAttribute("id", "pic1_");
+				img.src = baseUrl + "/resource/pressDangerImg/" + path1;
+				img.setAttribute("data-preview-src", "");
+				img.setAttribute("data-preview-group", "1");
+				img.style.width = "100%";
+				img.style.display = "none";
+				document.getElementById("img_container").appendChild(img);				
+				//				var mainimg = document.createElement("img");
+				//				mainimg.setAttribute("class", "pic");
+				//				mainimg.src = path;
+				//				mainimg.setAttribute("data-preview-src", "");
+				//				mainimg.setAttribute("data-preview-group", "1");				
+				//				mainimg.style.width = "100%";
+				//				mainimg.height = document.body.clientWidth;
+				//				imgContenter_.appendChild(mainimg);
+				//				imgContenter_.style.backgroundSize = document.body.clientWidth;
 			}
-			
-			document.getElementById("image-list-1").addEventListener("tap", function(){
+
+			document.getElementById("image-list-1").addEventListener("tap", function() {
 				console.log(mark1);
-				console.log(baseUrl + "/resource/dangerImg/" + path1);
-				if(!mark1){
+				console.log(baseUrl + "/resource/pressDangerImg/" + path1);
+				if(!mark1) {
 					mark1 = true;
-					var mainimg = document.createElement("img");
-					mainimg.setAttribute("id", "pic1_");
-					mainimg.src = baseUrl + "/resource/dangerImg/" + path1;
-					mainimg.setAttribute("data-preview-src", "");
-					mainimg.setAttribute("data-preview-group", "1");
-					mainimg.style.width = "100%";
-					mainimg.style.display="none";
-					imgContenter.appendChild(mainimg);
+//					var mainimg = document.createElement("img");
+//					mainimg.setAttribute("id", "pic1_");
+//					mainimg.src = baseUrl + "/resource/pressDangerImg/" + path1;
+//					mainimg.setAttribute("data-preview-src", "");
+//					mainimg.setAttribute("data-preview-group", "1");
+//					mainimg.style.width = "100%";
+//					mainimg.style.display = "none";
+//					imgContenter.appendChild(mainimg);
 					mui.trigger(document.getElementById("pic1_"), "tap");
-				}else{
+				} else {
 					mui.trigger(document.getElementById("pic1_"), "tap");
 				}
 			})
@@ -478,35 +507,35 @@
 			function addImg_(path) {
 				var mainimg = document.createElement("div");
 				mainimg.setAttribute("class", "mui-card-header mui-card-media");
-				mainimg.style.height = "60vw";
+				mainimg.style.height = document.body.clientWidth / 4 + "vw";
 				mainimg.style.backgroundImage = "url(" + path + ")";
-				imgContenter_.appendChild(mainimg);		
-//				var mainimg = document.createElement("img");
-//				mainimg.setAttribute("class", "pic");
-//				mainimg.src = path;
-//				mainimg.setAttribute("data-preview-src", "");
-//				mainimg.setAttribute("data-preview-group", "1");				
-//				mainimg.style.width = "100%";
-//				mainimg.height = document.body.clientWidth;
-//				imgContenter_.appendChild(mainimg);
-//				imgContenter_.style.backgroundSize = document.body.clientWidth;
-			}	
-			
-			document.getElementById("image-list-2").addEventListener("tap", function(){
+				imgContenter_.appendChild(mainimg);
+				var img = document.createElement("img");
+				img.setAttribute("id", "pic2_");
+				img.src = baseUrl + "/resource/pressDangerImg/" + path2;
+				img.setAttribute("data-preview-src", "");
+				img.setAttribute("data-preview-group", "1");
+				img.style.width = "100%";
+				img.style.display = "none";
+				document.getElementById("img_container").appendChild(img);
+				//				var mainimg = document.createElement("img");
+				//				mainimg.setAttribute("class", "pic");
+				//				mainimg.src = path;
+				//				mainimg.setAttribute("data-preview-src", "");
+				//				mainimg.setAttribute("data-preview-group", "1");				
+				//				mainimg.style.width = "100%";
+				//				mainimg.height = document.body.clientWidth;
+				//				imgContenter_.appendChild(mainimg);
+				//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+			}
+
+			document.getElementById("image-list-2").addEventListener("tap", function() {
 				console.log(mark2);
-				console.log(baseUrl + "/resource/dangerImg/" + path2);
-				if(!mark2){
+				console.log(baseUrl + "/resource/pressDangerImg/" + path2);
+				if(!mark2) {
 					mark2 = true;
-					var mainimg = document.createElement("img");
-					mainimg.setAttribute("id", "pic2_");
-					mainimg.src = baseUrl + "/resource/dangerImg/" + path2;
-					mainimg.setAttribute("data-preview-src", "");
-					mainimg.setAttribute("data-preview-group", "1");
-					mainimg.style.width = "100%";
-					mainimg.style.display="none";
-					imgContenter.appendChild(mainimg);
 					mui.trigger(document.getElementById("pic2_"), "tap");
-				}else{
+				} else {
 					mui.trigger(document.getElementById("pic2_"), "tap");
 				}
 			})
@@ -530,6 +559,10 @@
 						dangerId: dangerId
 					}
 				});
+			});
+			
+			window.addEventListener("refresh_", function(){
+				location.reload();
 			});
 		</script>
 	</body>

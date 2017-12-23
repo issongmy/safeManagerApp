@@ -125,7 +125,7 @@
 					document.getElementById("category").value = "监理";
 				else
 					document.getElementById("category").value = "业主";
-				if(currentState)
+				if(currentState == "true")
 					document.getElementById("state").value = "已发布";
 				else
 					document.getElementById("state").value = "未发布";
@@ -159,7 +159,6 @@
 						},
 						success: function(result) {
 							plus.nativeUI.toast("上传成功!");
-							console.log("hahah");
 							var parent = plus.webview.getWebviewById("info_1");
 							mui.fire(parent, "refresh");									
 							plus.webview.currentWebview().close();	

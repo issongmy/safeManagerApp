@@ -96,37 +96,50 @@
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
+								var subsidiaryName = dangerList[i].subsidiary.subsidiaryName;
 								if(state == "1") {
-									if(level) {
+									if(level == "1") {
 										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else if(level == "2"){
+										addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);					
 									}
 								} else if(state == "2") {
-									if(level) {
+									if(level == "1") {
 										addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else if(level == "2"){
+										addDanger(dangerId, position, "较大隐患", "整改中", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);					
 									}
 								} else if(state == "3") {
-									if(level) {
+									if(level == "1") {
 										addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else if(level == "2"){
+										addDanger(dangerId, position, "较大隐患", "整改完毕", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else {
-									if(level) {
+									if(level == "1") {
 										addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else if(level == "2"){
+										addDanger(dangerId, position, "较大隐患", "整改完毕", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);									
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								}
 							}
@@ -164,37 +177,38 @@
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
+								var subsidiaryName = dangerList[i].subsidiary.subsidiaryName;
 								if(state == "1") {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else if(state == "2") {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else if(state == "3") {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								}
 							}
@@ -231,37 +245,38 @@
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
+								var subsidiaryName = dangerList[i].subsidiary.subsidiaryName;
 								if(state == "1") {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else if(state == "2") {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else if(state == "3") {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else {
 									if(level) {
 										addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									} else {
 										addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								}
 							}
@@ -298,49 +313,38 @@
 								var responsibilityUser = dangerList[i].responsibleUserId;
 								var dangerImgPath = dangerList[i].dangerImgPath;
 								var rectificationImgPath = dangerList[i].rectificationImgPath;
+								var subsidiaryName = dangerList[i].subsidiary.subsidiaryName;
 								if(state == "1") {
-									if(level == "1") {
+									if(level) {
 										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									} else if(level == "0") {
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else {
 										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									}else{
-										addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);										
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else if(state == "2") {
-									if(level == "1") {
-										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									} else if(level == "0") {
-										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									}else{
-										addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);										
+									if(level) {
+										addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else {
+										addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else if(state == "3") {
-									if(level == "1") {
-										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									} else if(level == "0") {
-										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									}else{
-										addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);										
+									if(level) {
+										addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else {
+										addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								} else {
-									if(level == "1") {
-										addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									} else if(level == "0") {
-										addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);
-									}else{
-										addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
-											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath);										
+									if(level) {
+										addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
+									} else {
+										addDanger(dangerId, position, "一般隐患", "整改完毕", dangerNumber,
+											checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 									}
 								}
 							}
@@ -385,13 +389,14 @@
 						responsibilityUser: responsibilityUser,
 						dangerImgPath: dangerImgPath,
 						rectificationImgPath: rectificationImgPath,
-						dangerPos: dangerPos
+						dangerPos: dangerPos, 
+						subsidiaryName: subsidiaryName
 					}
 				});
 			});
 
 			function addDanger(dangerNum, dangerPos, level, state, dangerNumber,
-				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath) {
+				checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName) {
 				var main = document.getElementById("main");
 				var ul = document.getElementById("dangerList");
 				var liObj = document.createElement("li");
@@ -399,12 +404,17 @@
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
 				span_num.innerHTML = dangerPos;
+				var span_name = document.createElement("span");
+				span_name.setAttribute("id", "span_left");
+				span_name.innerHTML = subsidiaryName;				
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				span_other.innerHTML = level + " " + state;
 				liObj.setAttribute("class", "mui-table-view-cell");
 				a.setAttribute("class", "mui-navigate-right");
 				a.setAttribute("id", dangerNum);
+				a.appendChild(span_name);
+				a.appendChild(document.createElement("br"));
 				a.appendChild(span_num);
 				a.appendChild(document.createElement("br"));
 				a.appendChild(span_other);
@@ -472,6 +482,11 @@
 				hidden_input.setAttribute("type", "hidden");
 				hidden_input.setAttribute("id", "dangerPos");
 				hidden_input.setAttribute("value", dangerPos);
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.setAttribute("type", "hidden");
+				hidden_input.setAttribute("id", "subsidiaryName");
+				hidden_input.setAttribute("value", subsidiaryName);
 				liObj.appendChild(hidden_input);				
 				liObj.appendChild(a);
 				ul.appendChild(liObj);

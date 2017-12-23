@@ -83,20 +83,6 @@
 				document.getElementById("3-badge").style.display = "none";
 				document.getElementById("2-badge").style.display = "none";
 				document.getElementById("1-badge").style.display = "none";
-//				mui.oldBack = mui.back;
-//				var backButtonPress = 0;
-//				mui.back = function(event) {
-//					backButtonPress++;
-//					if(backButtonPress > 1) {
-//						plus.runtime.quit();
-//					} else {
-//						plus.nativeUI.toast('再按一次退出应用');
-//					}
-//					setTimeout(function() {
-//						backButtonPress = 0;
-//					}, 1000);
-//					return false;
-//				};
 				var self = plus.webview.currentWebview();
 				userClass = self.userClass;
 				userName = self.userName;
@@ -241,7 +227,7 @@
 					document.getElementById("3-badge").style.display = "inline";
 				}else{
 					document.getElementById("3-badge").style.display = "none";
-				}				
+				}	
 			});			
 		</script>
 	</body>

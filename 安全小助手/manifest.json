@@ -186,9 +186,9 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "D:/Desktop/sls/480X762.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "D:/Desktop/sls/720P 720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "D:/Desktop/sls/1080P 1080X1882.png"
+					"hdpi": "D:/Desktop/480X762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "D:/Desktop/720P 720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "D:/Desktop/1080P 1080X1882.png"
 				}
 			},"debug":true
 		}
@@ -932,6 +932,13 @@
 				"priority": 0
 			},
 			"three_edu_approve_table.html": {
+				"resources": [],
+				"refer": [
+					"file_show.html"
+				],
+				"priority": 0
+			},
+			"safe_edu_approve_table.html": {
 				"resources": [],
 				"refer": [
 					"file_show.html"

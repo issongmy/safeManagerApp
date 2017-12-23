@@ -40,7 +40,6 @@
 		<div class="mui-content">
 			<div class="mui-card">
 				<ul id="main" class="mui-table-view mui-table-view-chevron">
-
 				</ul>
 			</div>
 		</div>
@@ -71,8 +70,8 @@
 				mui.back = function(event) {
 					var parent = plus.webview.getWebviewById("tab-webview-subpage-my");
 					var safe_num = 0;
-					for(var i = 2; i < 5; i++) {
-						var li = document.getElementById(i.toString());
+					for(var i = 1; i <= 5; i++) {
+						var li = document.getElementById((i+3).toString());
 						if(li.getElementsByTagName("span")[0] == undefined)
 							continue;
 						var num = li.getElementsByTagName("span")[0].innerHTML;
@@ -95,6 +94,7 @@
 				companyName = self.companyName;
 				subsidiaryName = self.subsidiaryName;
 				supervisionCompanyName = self.supervisionCompanyName;
+				console.log(userClass);
 				if(userClass == "301") {
 					var request_url = baseUrl + "/company/badge?companyId=" + companyId;
 					console.log(request_url);
@@ -124,9 +124,9 @@
 							}
 							if(userClass == "301" || userClass == "401"){
 								addItem("组织结构", "4", instituteBadge);
-								addItem("岗位职责", "5", majorStaffBadge);
+								addItem("岗位职责", "5", responsibilityBadge);
 								addItem("应急预案", "6", preplanBadge);
-								addItem("专职人员", "7", responsibilityBadge);
+								addItem("专职人员", "7", majorStaffBadge);
 								addItem("特种人员", "8", specialStaffBadge);
 							}
 						},
@@ -177,17 +177,15 @@
 								addItem("安全隐患", "1", dangerBadge);
 							}
 							if(userClass == "201" || userClass == "301" || userClass == "401") {
-								if(eduBadge >= 0)
 									addItem("三级教育", "2", eduBadge);
-								if(testBadge >= 0)
 									addItem("安全交底", "3", testBadge);
 							}
 							if(userClass == "301" || userClass == "401")
 								if(instituteBadge >= 0){
 									addItem("组织结构", "4", instituteBadge);
-									addItem("岗位职责", "5", majorStaffBadge);
+									addItem("岗位职责", "5", responsibilityBadge);
 									addItem("应急预案", "6", preplanBadge);
-									addItem("专职人员", "7", responsibilityBadge);
+									addItem("专职人员", "7", majorStaffBadge);
 									addItem("特种人员", "8", specialStaffBadge);									
 								}
 						},
@@ -224,9 +222,9 @@
 							}
 							if(userClass == "301" || userClass == "401") {
 								addItem("组织结构", "4", instituteBadge);
-								addItem("岗位职责", "5", majorStaffBadge);
+								addItem("岗位职责", "5", responsibilityBadge);
 								addItem("应急预案", "6", preplanBadge);
-								addItem("专职人员", "7", responsibilityBadge);
+								addItem("专职人员", "7", majorStaffBadge);
 								addItem("特种人员", "8", specialStaffBadge);
 							}
 						},
@@ -341,9 +339,22 @@
 			function addItem(itemName, class_, badge) {
 				var ul = document.getElementById("main");
 				var li = document.createElement("div");
-				li.setAttribute("class", "mui-table-view-cell");
+				var icon = document.createElement("img");
+				var content = document.createElement("div");
+				var p = document.createElement(p);
+				icon.setAttribute("class", "mui-media-object mui-pull-left");
+				icon.src = "image/" + class_ + ".png";
+				icon.style.width = "24px";
+				icon.style.height = "24px";
+				li.setAttribute("class", "mui-table-view-cell mui-card-content");
 				li.setAttribute("id", class_);
-				li.innerHTML = itemName;
+//				li.appendChild(icon);
+//				p.style.font = "1em";
+				p.innerHTML = itemName;
+				content.setAttribute("class", "mui-card-content");
+				content.appendChild(icon);
+				content.appendChild(p);
+				li.appendChild(content);
 				if(badge > 0) {
 					var span = document.createElement("span");
 					span.setAttribute("class", "mui-badge mui-badge-primary");
@@ -359,6 +370,7 @@
 				console.log(event.detail.safe_num);
 				console.log(li.innerHTML);
 				if(event.detail.safe_num == undefined || event.detail.safe_num == "0") {
+					li.getElementsByTagName("span")[0].innerHTML = "0";
 					li.getElementsByTagName("span")[0].style.display = "none";
 				} else {
 					li.getElementsByTagName("span")[0].innerHTML = event.detail.safe_num;
@@ -393,22 +405,22 @@
 			//				li.appendChild(item_ul);
 			//				ul.appendChild(li);
 			//			}			
-
-			document.getElementById("close").addEventListener("tap", function() {
-				plus.webview.currentWebview().close();
-			});
+//			document.getElementById("close").addEventListener("tap", function() {
+//				plus.webview.currentWebview().close();
+//			});
 
 			document.getElementById("close").addEventListener("tap", function() {
 				var parent = plus.webview.getWebviewById("tab-webview-subpage-my.html");
 				var safe_num = 0;
-				for(var i = 1; i < 5; i++) {
+				for(var i = 1; i < 9; i++) {
 					var li = document.getElementById(i.toString());
 					if(li == undefined || li.getElementsByTagName("span")[0] == undefined)
 						continue;
 					var num = li.getElementsByTagName("span")[0].innerHTML;
-					console.log(num);
+					console.log("num:" + num);
 					safe_num = safe_num + parseInt(num);
 				}
+				console.log(safe_num);
 				mui.fire(parent, "refresh", {
 					safe_num: safe_num,
 					id: "approve"

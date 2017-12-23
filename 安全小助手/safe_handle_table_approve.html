@@ -230,6 +230,10 @@
 		<div id="main" class="mui-content">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
+					<label>隐患位置</label>
+					<input id='view' type="text" class="mui-input-clear mui-input" disabled="true">
+				</div>				
+				<div class="mui-input-row">
 					<label>隐患编号</label>
 					<input id='num' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
@@ -251,11 +255,9 @@
 				</div>
 				<div class="mui-input-row">
 					<label>隐患描述</label>
-					<input id='description' type="text" class="mui-input-clear mui-input" disabled="true">
 				</div>
-				<div class="mui-input-row">
-					<label>处置意见</label>
-					<input id='view' type="text" class="mui-input-clear mui-input" disabled="true">
+				<div class="mui-input-speech">
+					<textarea id="description" rows="3" disabled="true"></textarea>
 				</div>
 				<div class="mui-input-row">
 					<label>处置期限</label>
@@ -295,6 +297,7 @@
 			<div id='image-list-2'>
 				<!--<img src="image/Smile.png" alt="" width="100%"/>-->
 			</div>
+			<div id="img_container" style="display: none;">
 			<!--<div class="mui-card-footer">
 					<a class="mui-card-link">Like</a>
 					<a class="mui-card-link">Comment</a>
@@ -405,10 +408,11 @@
 				} else {
 					document.getElementById("description").value = description;
 				}
-				if(suggestion == null || suggestion == "") {
+//				document.getElementById("view").value = dangerPos;
+				if(dangerPos == null || dangerPos == "") {
 					document.getElementById("view").value = "暂无";
 				} else {
-					document.getElementById("view").value = suggestion;
+					document.getElementById("view").value = dangerPos;
 				}
 				if(rectificationMeasures == "") {
 					document.getElementById("rectify").value = "暂无";
@@ -429,9 +433,6 @@
 						console.log(result.extend.userName);
 						if(result.extend.userName == "undefined" || result.extend.userName == undefined)
 							document.getElementById("res_name").value = "暂无";
-					},
-					error: function() {
-
 					}
 				});
 				if(responsibilityUser == "undefined")
@@ -439,7 +440,7 @@
 				if(dangerImgPath == null || dangerImgPath == "")
 					addImg("image/zw.jpg");
 				else {
-					addImg(baseUrl + "/resource/dangerImg/" + dangerImgPath);
+					addImg(baseUrl + "/resource/pressDangerImg/" + dangerImgPath);
 				}
 				console.log(rectificationImgPath);
 				if(rectificationImgPath == null || rectificationImgPath == "") {
@@ -450,7 +451,11 @@
 						parent.removeChild(document.getElementById("other"));
 					}
 				} else {
-					addImg_(baseUrl + "/resource/dangerImg/" + rectificationImgPath);
+					addImg_(baseUrl + "/resource/pressDangerImg/" + rectificationImgPath);
+				}
+				if(userClass == "101" || userClass == "1"){
+					document.getElementById("return").style.display = "none";
+					document.getElementById("approve").style.display = "none";
 				}
 			});
 			mui.init();
@@ -476,7 +481,7 @@
 							},
 							success: function(result) {
 								plus.nativeUI.toast("反馈成功!");
-								var parent = plus.webview.getWebviewById("safe_handle_table_approve");
+								var parent = plus.webview.getWebviewById("safe_danger_approve");
 								mui.fire(parent, "refresh");
 								plus.webview.currentWebview().close();
 							},
@@ -491,74 +496,83 @@
 			});
 			
 			function addImg(path) {
+				console.log(path);
 				var mainimg = document.createElement("div");
 				mainimg.setAttribute("class", "mui-card-header mui-card-media");
-				mainimg.style.height = document.body.clientWidth/4 + "vw";
+				mainimg.style.height = document.body.clientWidth / 4 + "vw";
 				mainimg.style.backgroundImage = "url(" + path + ")";
-				imgContenter.appendChild(mainimg);		
-//				var mainimg = document.createElement("img");
-//				mainimg.setAttribute("class", "pic");
-//				mainimg.src = path;
-//				mainimg.setAttribute("data-preview-src", "");
-//				mainimg.setAttribute("data-preview-group", "1");				
-//				mainimg.style.width = "100%";
-//				mainimg.height = document.body.clientWidth;
-//				imgContenter_.appendChild(mainimg);
-//				imgContenter_.style.backgroundSize = document.body.clientWidth;
-			}	
-			
-			document.getElementById("image-list-1").addEventListener("tap", function(){
+				console.log(path);
+				imgContenter.appendChild(mainimg);
+				var img = document.createElement("img");
+				img.setAttribute("id", "pic1_");
+				img.src = baseUrl + "/resource/pressDangerImg/" + path1;
+				img.setAttribute("data-preview-src", "");
+				img.setAttribute("data-preview-group", "1");
+				img.style.width = "100%";
+				img.style.display = "none";
+				document.getElementById("img_container").appendChild(img);				
+				//				var mainimg = document.createElement("img");
+				//				mainimg.setAttribute("class", "pic");
+				//				mainimg.src = path;
+				//				mainimg.setAttribute("data-preview-src", "");
+				//				mainimg.setAttribute("data-preview-group", "1");				
+				//				mainimg.style.width = "100%";
+				//				mainimg.height = document.body.clientWidth;
+				//				imgContenter_.appendChild(mainimg);
+				//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+			}
+
+			document.getElementById("image-list-1").addEventListener("tap", function() {
 				console.log(mark1);
-				console.log(baseUrl + "/resource/dangerImg/" + path1);
-				if(!mark1){
+				console.log(baseUrl + "/resource/pressDangerImg/" + path1);
+				if(!mark1) {
 					mark1 = true;
-					var mainimg = document.createElement("img");
-					mainimg.setAttribute("id", "pic1_");
-					mainimg.src = baseUrl + "/resource/dangerImg/" + path1;
-					mainimg.setAttribute("data-preview-src", "");
-					mainimg.setAttribute("data-preview-group", "1");
-					mainimg.style.width = "100%";
-					mainimg.style.height = document.body.clientWidth;
-					mainimg.style.display="none";
-					imgContenter.appendChild(mainimg);
+//					var mainimg = document.createElement("img");
+//					mainimg.setAttribute("id", "pic1_");
+//					mainimg.src = baseUrl + "/resource/pressDangerImg/" + path1;
+//					mainimg.setAttribute("data-preview-src", "");
+//					mainimg.setAttribute("data-preview-group", "1");
+//					mainimg.style.width = "100%";
+//					mainimg.style.display = "none";
+//					imgContenter.appendChild(mainimg);
 					mui.trigger(document.getElementById("pic1_"), "tap");
-				}else{
+				} else {
 					mui.trigger(document.getElementById("pic1_"), "tap");
 				}
-			})			
-			
+			})
+
 			function addImg_(path) {
 				var mainimg = document.createElement("div");
 				mainimg.setAttribute("class", "mui-card-header mui-card-media");
-				mainimg.style.height = "60vw";
+				mainimg.style.height = document.body.clientWidth / 4 + "vw";
 				mainimg.style.backgroundImage = "url(" + path + ")";
-				imgContenter_.appendChild(mainimg);		
-//				var mainimg = document.createElement("img");
-//				mainimg.setAttribute("class", "pic");
-//				mainimg.src = path;
-//				mainimg.setAttribute("data-preview-src", "");
-//				mainimg.setAttribute("data-preview-group", "1");				
-//				mainimg.style.width = "100%";
-//				mainimg.height = document.body.clientWidth;
-//				imgContenter_.appendChild(mainimg);
-//				imgContenter_.style.backgroundSize = document.body.clientWidth;
-			}	
-			
-			document.getElementById("image-list-2").addEventListener("tap", function(){
+				imgContenter_.appendChild(mainimg);
+				var img = document.createElement("img");
+				img.setAttribute("id", "pic2_");
+				img.src = baseUrl + "/resource/pressDangerImg/" + path2;
+				img.setAttribute("data-preview-src", "");
+				img.setAttribute("data-preview-group", "1");
+				img.style.width = "100%";
+				img.style.display = "none";
+				document.getElementById("img_container").appendChild(img);
+				//				var mainimg = document.createElement("img");
+				//				mainimg.setAttribute("class", "pic");
+				//				mainimg.src = path;
+				//				mainimg.setAttribute("data-preview-src", "");
+				//				mainimg.setAttribute("data-preview-group", "1");				
+				//				mainimg.style.width = "100%";
+				//				mainimg.height = document.body.clientWidth;
+				//				imgContenter_.appendChild(mainimg);
+				//				imgContenter_.style.backgroundSize = document.body.clientWidth;
+			}
+
+			document.getElementById("image-list-2").addEventListener("tap", function() {
 				console.log(mark2);
-				console.log(baseUrl + "/resource/dangerImg/" + path2);
-				if(!mark2){
+				console.log(baseUrl + "/resource/pressDangerImg/" + path2);
+				if(!mark2) {
 					mark2 = true;
-					var mainimg = document.createElement("img");
-					mainimg.setAttribute("id", "pic2_");
-					mainimg.src = baseUrl + "/resource/dangerImg/" + path2;
-					mainimg.setAttribute("data-preview-src", "");
-					mainimg.setAttribute("data-preview-group", "1");
-					mainimg.style.width = "100%";
-					mainimg.style.display="none";
-					imgContenter.appendChild(mainimg);
 					mui.trigger(document.getElementById("pic2_"), "tap");
-				}else{
+				} else {
 					mui.trigger(document.getElementById("pic2_"), "tap");
 				}
 			})
@@ -586,13 +600,16 @@
 			}
 
 			document.getElementById("approve").addEventListener("tap", function() {
-				if(level == "重大隐患") {
-					level = 1;
+				if(level == "较大隐患") {
+					level = "2";
 				} else if(level == "一般隐患") {
-					level = 0;
+					level = "3";
 				} else{
-					level = 2;
+					level = "1";
 				}
+				console.log(description);
+				console.log("dangerId:" + dangerId);
+				console.log("companyId:" + companyId);
 				if(userClass == "101") {
 					var request_url = baseUrl + "/subsidiary/danger";
 					console.log(request_url);
@@ -613,13 +630,13 @@
 							"dangerPosition": dangerPos
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 							var parent = plus.webview.getWebviewById("safe_danger_approve");
 							mui.fire(parent, "refresh");
 							plus.webview.currentWebview().close();
 						},
 						error: function() {
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}
@@ -651,13 +668,13 @@
 							"dangerPosition": dangerPos
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 							var parent = plus.webview.getWebviewById("safe_danger_approve");
 							mui.fire(parent, "refresh");
 							plus.webview.currentWebview().close();
 						},
 						error: function() {
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}
@@ -680,13 +697,13 @@
 							"dangerPosition": dangerPos
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 							var parent = plus.webview.getWebviewById("safe_danger_approve");
 							mui.fire(parent, "refresh");
 							plus.webview.currentWebview().close();
 						},
 						error: function() {
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}
@@ -710,13 +727,13 @@
 							"dangerPosition": dangerPos
 						},
 						success: function(result) {
-							plus.nativeUI.toast("上传成功!");
+							plus.nativeUI.toast("审批成功!");
 							var parent = plus.webview.getWebviewById("safe_danger_approve");
 							mui.fire(parent, "refresh");
 							plus.webview.currentWebview().close();
 						},
 						error: function() {
-							plus.nativeUI.toast("上传失败!");
+							plus.nativeUI.toast("审批失败!");
 						}
 					});
 				}

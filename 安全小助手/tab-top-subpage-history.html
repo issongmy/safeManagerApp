@@ -123,6 +123,7 @@
 				var responsibilityUser = node[8].value;
 				var dangerImgPath = node[9].value;
 				var rectificationImgPath = node[10].value;
+				var dangerPos = node[11].value;
 				mui.openWindow({
 					url: "safe_handle_table_.html",
 					id: "safe_handle_table_",
@@ -138,7 +139,8 @@
 						responsibilityUser: responsibilityUser,
 						dangerImgPath: dangerImgPath,
 						rectificationImgPath: rectificationImgPath,
-						from: "1"
+						dangerPos: dangerPos,
+						from: "2"
 					}
 				});
 			});
@@ -215,6 +217,11 @@
 				hidden_input.type = "hidden";
 				hidden_input.id = "rectificationImgPath";
 				hidden_input.value = rectificationImgPath;
+				liObj.appendChild(hidden_input);
+				var hidden_input = document.createElement("input");
+				hidden_input.type = "hidden";
+				hidden_input.id = "dangerPos";
+				hidden_input.value = dangerPos;
 				liObj.appendChild(hidden_input);				
 				liObj.appendChild(a);
 				ul.appendChild(liObj);

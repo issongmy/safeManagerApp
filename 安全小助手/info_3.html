@@ -54,9 +54,9 @@
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
-					mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+					mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
 						id: "6",
-						num: length
+						safe_num: length
 					});					
 					plus.webview.currentWebview().close();
 				};				
@@ -81,7 +81,12 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var preplanList = extend.list;
-							length = preplanList.length;
+							if(preplanList == null){
+								length = 0;
+							}
+							else{
+								length = preplanList.length;
+							}
 							for(var i = 0; i < preplanList.length; i++) {
 								var preplanId = preplanList[i].preplanId;
 								var preplanPath = preplanList[i].preplanPath;
@@ -112,7 +117,11 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var preplanList = extend.list;
-							length = preplanList.length;
+							if(preplanList == null){
+								length = 0;
+							}else{
+								length = preplanList.length;
+							}
 							for(var i = 0; i < preplanList.length; i++) {
 								var preplanId = preplanList[i].preplanId;
 								var preplanPath = preplanList[i].preplanPath;
@@ -163,7 +172,7 @@
 				span_com.innerHTML = name;
 				var span_num = document.createElement("span");
 				span_num.setAttribute("id", "span_left");
-				span_num.innerHTML = preplanPath.slice(10);
+				span_num.innerHTML = preplanPath.slice(9);
 				var span_other = document.createElement("span");
 				span_other.setAttribute("id", "span_right");
 				if(category == "1")
@@ -209,9 +218,9 @@
 		});
 			
 		document.getElementById("close").addEventListener("tap", function() {
-			mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+			mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
 				id: "6",
-				num: length
+				safe_num: length
 			});
 			plus.webview.currentWebview().close();
 		});	

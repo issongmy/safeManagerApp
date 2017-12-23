@@ -54,9 +54,9 @@
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
 				mui.back = function(event) {
-					mui.fire(plus.webview.getWebviewById("info_4"), "refresh", {
+					mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
 						id: "7",
-						num: length
+						safe_num: length
 					});					
 					plus.webview.currentWebview().close();
 				};				
@@ -81,7 +81,11 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var majorStaffList = extend.list;
-							length = majorStaffList.length;
+							if(majorStaffList == null)
+								length = 0;
+							else{
+								length = majorStaffList.length;
+							}
 							for(var i = 0; i < majorStaffList.length; i++) {
 								var majorStaffId = majorStaffList[i].majorStaffId;
 								var majorStaffImgPath = majorStaffList[i].majorStaffImgPath;
@@ -116,7 +120,11 @@
 						success: function(result) {
 							var extend = eval(result.extend);
 							var majorStaffList = extend.list;
-							length = majorStaffList.length;
+							if(majorStaffList == null)
+								length = 0;
+							else{
+								length = majorStaffList.length;
+							}
 							for(var i = 0; i < majorStaffList.length; i++) {
 								var majorStaffId = majorStaffList[i].majorStaffId;
 								var majorStaffImgPath = majorStaffList[i].majorStaffImgPath;
@@ -247,9 +255,9 @@
 			}
 				
 		document.getElementById("close").addEventListener("tap", function() {
-			mui.fire(plus.webview.getWebviewById("safe_basic_info"), "refresh", {
+			mui.fire(plus.webview.getWebviewById("new_approve"), "refresh", {
 				id: "7",
-				num: length
+				safe_num: length
 			});
 			plus.webview.currentWebview().close();
 		});	
