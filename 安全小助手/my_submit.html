@@ -50,7 +50,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://106.14.122.40";
 			var userName;
 			mui.init();
 			mui.plusReady(function() {
@@ -92,44 +92,44 @@
 							var responsibilityUser = dangerList[i].responsibleUserId;
 							var dangerImgPath = dangerList[i].dangerImgPath;
 							var rectificationImgPath = dangerList[i].rectificationImgPath;
-							if(state == "1") {
-								if(level == "1") {
+							if(state == 1) {
+								if(level == 1) {
 									addDanger(dangerId, position, "重大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
-								} else if(level == "2"){
+								} else if(level == 2){
 									addDanger(dangerId, position, "较大隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "提交审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);					
 								}
-							} else if(state == "2") {
-								if(level == "1") {
+							} else if(state == 2) {
+								if(level == 1) {
 									addDanger(dangerId, position, "重大隐患", "整改中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
-								} else if(level == "2"){
+								} else if(level == 2){
 									addDanger(dangerId, position, "较大隐患", "整改中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "整改中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);					
 								}
-							} else if(state == "3") {
-								if(level == "1") {
+							} else if(state == 3) {
+								if(level == 1) {
 									addDanger(dangerId, position, "重大隐患", "整改审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
-								} else if(level == "2"){
-									addDanger(dangerId, position, "较大隐患", "整改完毕", dangerNumber,
+								} else if(level == 2){
+									addDanger(dangerId, position, "较大隐患", "整改审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 								} else {
 									addDanger(dangerId, position, "一般隐患", "整改审核中", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
 								}
 							} else {
-								if(level == "1") {
+								if(level == 1) {
 									addDanger(dangerId, position, "重大隐患", "整改完毕", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);
-								} else if(level == "2"){
+								} else if(level == 2){
 									addDanger(dangerId, position, "较大隐患", "整改完毕", dangerNumber,
 										checkTime, checkUser, description, rectificationMeasures, rectificationPeriod, responsibilityUser, dangerImgPath, rectificationImgPath, subsidiaryName);									
 								} else {

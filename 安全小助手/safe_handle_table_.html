@@ -324,7 +324,7 @@
 		<script src="js/jqthumb.js"></script>
 		<script type="text/javascript">
 			mui.previewImage();
-			var baseUrl = "http://123.206.87.22";
+			var baseUrl = "http://106.14.122.40";
 			var dangerId;
 			var class_;
 			var mark1 = false;
@@ -340,9 +340,9 @@
 				mui.back = function(event) {
 					plus.webview.currentWebview().close();
 				};
+
 				var self = plus.webview.currentWebview();
 				dangerId = self.dangerId;
-				console.log(dangerId);
 				var userName = self.userName;
 				var mark = self.mark;
 				var dangerNumber = self.dangerNumber;
@@ -355,7 +355,10 @@
 					document.getElementById("other").style.display = "none";
 				}
 				if(self.from == "3"){
-					document.getElementById("submit").style.display == "none";
+					var parent = document.getElementById("submit").parentNode;
+					parent.removeChild(document.getElementById("submit"));
+					imgContenter_.style.display = "none";
+					document.getElementById("other").style.display = "none";
 				}
 				var dangerPos = self.dangerPos;
 				var state = self.state;
@@ -552,6 +555,7 @@
 			}
 
 			document.getElementById("submit").addEventListener("tap", function() {
+				console.log(dangerId);
 				mui.openWindow({
 					url: "safe_handle_table__.html",
 					id: "safe_handle_table__",
