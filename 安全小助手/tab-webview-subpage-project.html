@@ -93,7 +93,7 @@
 			var companyName;
 			var subsidiaryName;
 			var supervisionCompanyName;
-			var baseUrl = "http://106.14.122.40";
+			var baseUrl = "http://xiaomancloud.com";
 
 			var dayDangerNum;
 			var dayBigDangerNum;
@@ -292,6 +292,12 @@
 						}
 					});
 				}
+				if(userClass == "601" || userClass == "6"){
+					
+				}
+				if(userClass == "501" || userClass == "5"){
+					
+				}				
 			});
 
 			window.addEventListener("refresh_num", function() {
@@ -450,6 +456,12 @@
 							plus.nativeUI.toast("请求失败!");
 						}
 					});
+				}
+				if(userClass == "601" || userClass == "6"){
+					
+				}
+				if(userClass == "501" || userClass == "5"){
+					
 				}
 			});
 
@@ -661,6 +673,10 @@
 							plus.nativeUI.toast("请求失败!");
 						}
 					});						
+				}else if(userClass == "501" || userClass == "5"){
+					
+				}else if(userClass == "601" || userClass == "6"){
+					
 				}else{
 					
 				}

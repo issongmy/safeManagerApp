@@ -37,15 +37,22 @@
 			<a id="close" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">三级教育</h1>
 		</header>
-		<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="main">
+			<div class="mui-scroll mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#" data-wid="tab-top-subpage-month.html">班组</a>
+				<a class="mui-control-item" href="#" data-wid="tab-top-subpage-history.html">项目</a>
+				<a class="mui-control-item" href="#" data-wid="tab-top-subpage-history.html">公司</a>
+			</div>
+		</div>			
+		<!--<div id="main" id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<ul id="eduList" class="mui-table-view mui-table-view-chevron">
 				</ul>
 			</div>
-		</div>
+		</div>-->
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			var baseUrl = "http://106.14.122.40";
+			var baseUrl = "http://xiaomancloud.com";
 			var companyId;
 			mui.init();
 			mui.plusReady(function() {				

@@ -1,4 +1,3 @@
-<!doctype html>
 <html>
 
 	<head>
@@ -6,91 +5,195 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
 		<link href="css/feedback.css" rel="stylesheet" />
 		<style>
-			.mui-bar {
-				background: #555555;
+			body {
+				background-color: #EFEFF4;
 			}
 			
-			.mui-icon{
-				color: #fff;
-			}
-			body{
-				text-align: center;	
+			input,
+			textarea {
+				border: none !important;
 			}
 			
-			label{
-				color: #0062CC;
-			}			
-			
-			.mui-title{
-				color: #fff;
+			textarea {
+				height: 100px;
+				margin-bottom: 0 !important;
+				padding-bottom: 0 !important;
 			}
 			
-			.mui-content-padded {
-				margin-top: 30px;
-			}
-			
-			.mui-input-row {
-				margin-top: 15px;
-			}
-			
-			.pic {
-				margin-right: 10px;
-			}
-			
-			.mui-card{
-				margin-left: 0px;
+			.row {
 				width: 100%;
-			}		
+				background-color: #fff;
+			}
+			
+			p {
+				padding: 10px 15px 0;
+			}
+			
+			button#submit {
+				width: 90%;
+				height: 46px;
+				left: 50%;
+				-webkit-transform: translate(-50%);
+			}
+			
+			.hidden {
+				display: none;
+			}
+			
+			.image-list {
+				width: 100%;
+				height: 85px;
+				background-size: cover;
+				padding: 10px 10px;
+				overflow: hidden;
+			}
+			
+			.image-item {
+				width: 65px;
+				height: 65px;
+				/*background-image: url(image/iconfont-tianjia.png);*/
+				background-size: 100% 100%;
+				display: inline-block;
+				position: relative;
+				border-radius: 5px;
+				margin-right: 10px;
+				margin-bottom: 10px;
+				border: solid 1px #e8e8e8;
+			}
+			
+			.image-item input[type="file"] {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				cursor: pointer;
+				z-index: 0;
+			}
+			
+			.image-item.space {
+				border: none;
+			}
+			
+			.image-item .image-close {
+				position: absolute;
+				display: inline-block;
+				right: -6px;
+				top: -6px;
+				width: 20px;
+				height: 20px;
+				text-align: center;
+				line-height: 20px;
+				border-radius: 12px;
+				background-color: #FF5053;
+				color: #f3f3f3;
+				border: solid 1px #FF5053;
+				font-size: 9px;
+				font-weight: 200;
+				z-index: 1;
+			}
+			
+			.image-item.space .image-close {
+				display: none;
+			}
+			
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">整改完成图片上传</h1>
+			<h1 class="mui-title">安全隐患排查处置表</h1>
 		</header>
-		<div id="main" class="mui-content mui-scroll-wrapper">
-			<form id="upload" action="http://106.14.122.40/user/danger/rectificationImg" method="post" class="mui-input-group" enctype="multipart/form-data">
-				<!--<div class="mui-input-row">
-					<label>隐患编号</label>
-					<input id='dangerId' name="dangerId" type="text" class="mui-input-clear mui-input">
-				</div>-->
+		<!--<div id="main"  class="mui-content">
+			<form id="upload" action="http://xiaomancloud.com/user/danger" method="post" class="mui-input-group" enctype="multipart/form-data">
+				<div>
+					<input id="1" type="hidden" name="userId">
+					<input id="2" type="hidden" name="companyId">
+					<input id="3" type="hidden" name="subsidiaryId">
+				</div>
+				<div class="mui-input-row">
+					<label>隐患部位</label>
+					<input id='position' name="dangerPosition" type="text" class="mui-input-clear mui-input" placeholder="请输入隐患部位">
+				</div>
+				<div class="mui-input-row">
+					<label>隐患描述</label>
+				</div>
+				<div class="mui-input-speech">
+					<textarea id="description" rows="3" placeholder="请输入隐患描述" name="dangerDescription"></textarea>
+				</div>
 				<div class="mui-input-row">
 					<label>隐患截图</label>
-					<input id='file' @change="addImg" type="file" class="mui-input-clear mui-input" placeholder="点击添加整改后的隐患截图">
+					<input id='pic' name="dangerImg" type="file" class="mui-input-clear mui-input" placeholder="点击添加隐患截图">
 				</div>
-				<!--<button style="visibility: hidden;" type="submit" class="mui-btn-green mui-btn-block mui-btn-primary" >提交</button>-->
-			</form>
-			<!--<p>点击空白区域添加图片(提供隐患截图)</p>
-			<div id='image-list' class="row image-list">
-			</div>-->
-			<div class="mui-card">
-				<!--<div class="mui-card-header">
-					<div class="mui-media-body">
-						隐患截图
-					</div>
-				</div>-->
-				<div id='image-list' class="mui-card-content" >
+				<div class="mui-content-padded">
+					<button style="visibility: hidden;" type="submit" class="mui-btn-green mui-btn-block mui-btn-primary" >提交</button>
 				</div>
-			</div>	
+			</form>-->
+		<!--
 			<div id="tip" style="display: none;">
 				<p style="font-size: 1em;">
 					正在上传......
 				</p>
-			</div>		
+			</div>			
 			<div class="mui-content-padded">
 				<button id='submit' class="mui-btn-block mui-btn-primary">提交</button>
 			</div>
+			-->
+		<div class="mui-page-content">
+			<p>隐患部位</p>
+			<div class="row mui-input-row">
+				<textarea id='position' class="mui-input-clear" placeholder="请详细描述隐患发生部位"></textarea>
+			</div>
+			<p>隐患描述</p>
+			<div class="row mui-input-row">
+				<textarea id='description' class="mui-input-clear" placeholder="请详细描述隐患情况"></textarea>
+			</div>
+			<p>隐患类别</p>
+			<button id='showDangerPicker' class="mui-btn mui-btn-block" type='button'>请选择隐患类别</button>
+			<input id="dangerCategory" type="hidden" name="dangerCategory" />
+			<div id="select_content" style="text-align: center;font-size: medium;color: #007AFF;"></div>
+			<p>图片(提供整改后隐患截图)</p>
+			<div id='image-list' class="row image-list">
+			</div>
+			<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
 		</div>
-		<script src="js/jquery.js"></script>
-		<script src="js/mui.min.js"></script>
+		</div>
+	</body>
+	<!--<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
 		<script type="text/javascript">
-			var dangerId;
-			var baseurl = "http://106.14.122.40/";
-			var imgContenter = document.getElementById("image-list");
+			var id_;
+			var class_;
+			var userId;
+			var companyId;
+			var mark = false;
+			var baseurl = "http://xiaomancloud.com/";
 			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
@@ -99,93 +202,116 @@
 					plus.webview.currentWebview().close();
 				};
 				var self = plus.webview.currentWebview();
-				dangerId = self.dangerId;
-				console.log(dangerId);
+				id_ = self.id_;
+				class_ = self.class_;
+				userId = self.userId;
+				companyId = self.companyId;
+				console.log(id_);
+				console.log(class_);
+				console.log(companyId);
+				document.getElementById("1").value = userId;
+				document.getElementById("2").value = companyId;
+				document.getElementById("3").value = id_;
 			});
+			
 			mui.init();
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
 
-//			document.getElementById("file").addEventListener('change', function(e){
-//			    file = jQuery('#file')[0].files[0];
-//			    //添加图片路径到img src中进行预览
-//			    
-//			    //不同浏览器下的路径不同
-//			     function getObjectURL(file) {
-//			          var url = null;
-//			          if (window.createObjectURL != undefined) { // basic
-//			            url = window.createObjectURL(file);
-//			          } else if (window.URL != undefined) { // mozilla(firefox)
-//			            url = window.URL.createObjectURL(file);
-//			          } else if (window.webkitURL != undefined) { // webkit or chrome
-//			            url = window.webkitURL.createObjectURL(file);
-//			          }
-//			          return url;
-//			        }		
-//			       console.log(getObjectURL(file));
-//				var mainimg = document.createElement("img");
-//				mainimg.setAttribute("class", "pic");
-//				mainimg.src = getObjectURL(file);
-//				mainimg.width = "100%";
-//				imgContenter.appendChild(mainimg);
-//			});
-
 			document.getElementById("submit").addEventListener("tap", function() {
-				if(document.getElementById("file").value == ""){
-					plus.nativeUI.toast("请添加整改后隐患图片");
+//				console.log(baseurl + "user/danger");
+				if(document.getElementById("position").value == ""){
+					plus.nativeUI.toast("请输入隐患部位");
+				}else if(document.getElementById("description").value == ""){
+					plus.nativeUI.toast("请输入隐患描述");
+				}else if(document.getElementById("pic").value == ""){
+					plus.nativeUI.toast("请添加隐患图片");
 				}else{
 					var bt_submit = document.getElementById("submit");
 					bt_submit.disabled = "true";
-					document.getElementById("tip").style.display = "inline";					
-					var formData = new FormData();
-					formData.append('dangerImg', $('#file')[0].files[0]);
-					formData.append('dangerId', dangerId);
+					document.getElementById("tip").style.display = "inline";
+					document.getElementById("1").value = userId;
+					console.log(userId);
+					document.getElementById("2").value = companyId;
+					document.getElementById("3").value = id_;
 					$.ajax({
-						url: baseurl + "user/danger/rectificationImg",
-						type: 'POST',
-						cache: false,
-						data: formData,
-						processData: false,
-						contentType: false
+					    url: baseurl + "user/danger",
+					    type: 'POST',
+					    cache: false,
+					    data: new FormData($('#upload')[0]),
+					    processData: false,
+					    contentType: false
 					}).done(function(res) {
 						plus.nativeUI.toast("上传成功");
-						var parent = plus.webview.getWebviewById("safe_handle_table_");
-						mui.fire(parent, "refresh_");
-						plus.webview.currentWebview().close();
+						location.reload();
 					}).fail(function(res) {
-	//					console.log(JSON.stringify(res));
+						console.log(JSON.stringify(res));
 						location.reload();
 						plus.nativeUI.toast("上传失败！请选择小于5M的图片上传");
-					});
+					});					
 				}
 			})
-			
-			function addImg() {
-			    file = jQuery('#file')[0].files[0];
-			    //添加图片路径到img src中进行预览
-			    
-			    //不同浏览器下的路径不同
-			     function getObjectURL(file) {
-			          var url = null;
-			          if (window.createObjectURL != undefined) { // basic
-			            url = window.createObjectURL(file);
-			          } else if (window.URL != undefined) { // mozilla(firefox)
-			            url = window.URL.createObjectURL(file);
-			          } else if (window.webkitURL != undefined) { // webkit or chrome
-			            url = window.webkitURL.createObjectURL(file);
-			          }
-			          return url;
-			        }				
-				console.log(path);
-				var mainimg = document.createElement("img");
-				mainimg.setAttribute("class", "pic");
-				mainimg.src = getObjectURL(file);
-				mainimg.width = "100%";
-				imgContenter.appendChild(mainimg);
-			}			
-		</script>
 	</body>
+		</script>-->
+	<script src="js/jquery.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/photo.js"></script>
+	<script src="js/mui.picker.js"></script>
+	<script src="js/mui.poppicker.js"></script>
+	<script type="text/javascript">
+		var id_;
+		var class_;
+		var userId;
+		var companyId;
+		var mark = false;
+		var baseurl = "http://xiaomancloud.com/";
+		mui.init();
+		mui.plusReady(function() {
+			mui.oldBack = mui.back;
+			var backButtonPress = 0;
+			mui.back = function(event) {
+				plus.webview.currentWebview().close();
+			};
+			var self = plus.webview.currentWebview();
+			id_ = self.id_;
+			class_ = self.class_;
+			userId = self.userId;
+			companyId = self.companyId;
+			console.log(id_);
+			console.log(class_);
+			console.log(companyId);
+			document.getElementById("1").value = userId;
+			document.getElementById("2").value = companyId;
+			document.getElementById("3").value = id_;
+		});
 
+		document.getElementById("close").addEventListener("tap", function() {
+			plus.webview.currentWebview().close();
+		});
+
+		(function($, doc) {
+			$.init();
+			$.ready(function() {
+				//普通示例
+				var dangerPicker = new $.PopPicker();
+				dangerPicker.setData([{
+					value: '1',
+					text: '安全隐患'
+				}, {
+					value: '2',
+					text: '质量隐患'
+				}]);
+				var showDangerPickerButton = doc.getElementById('showDangerPicker');
+				showDangerPickerButton.addEventListener('tap', function(event) {
+					dangerPicker.show(function(items) {
+						document.getElementById("select_content").innerHTML = items[0].text;
+						document.getElementById("dangerCategory").value = items[0].value;
+					});
+				}, false);
+			});
+		})(mui, document);
+	</script>
+	<script src="js/feedback-page.js"></script>
 </html>

@@ -149,32 +149,32 @@
 				<button id='login' class="mui-btn-block mui-btn-primary"  onclick="confirm()" >确认</button>
 			</div>
 		</div>
-		<div id="rule">
+		<!--<div id="rule">
 			点击登陆即表示您同意<a>《隐私条例及服务条款》</a>
-		</div>
+		</div>-->
 		<script src="js/bmob-min.js"></script>
 		<script src="js/bomb.js"></script>
 		<script>
 			var mark = false;
 			var autoLogin = document.getElementById("autoLogin");
-			var baseurl = "http://106.14.122.40/";
+			var baseurl = "http://xiaomancloud.com/";
 
-			function hideRule(){
-				document.getElementById("rule").style.display="none";
-				setTimeout(function(){
-					document.getElementById("rule").style.display="none"
-					},1000);
-			};
-			
-			function showRule(){
-				setTimeout(function(){
-					document.getElementById("rule").style.display="inline"
-					},1000);
-			};
-			
-			function showRule_(){
-				document.getElementById("rule").style.display="inline";
-			};
+//			function hideRule(){
+//				document.getElementById("rule").style.display="none";
+//				setTimeout(function(){
+//					document.getElementById("rule").style.display="none"
+//					},1000);
+//			};
+//			
+//			function showRule(){
+//				setTimeout(function(){
+//					document.getElementById("rule").style.display="inline"
+//					},1000);
+//			};
+//			
+//			function showRule_(){
+//				document.getElementById("rule").style.display="inline";
+//			};
 			
 			mui.plusReady(function() {
 				document.addEventListener("netchange",onNetChange,false);

@@ -1,105 +1,151 @@
-<!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />		
 		<link href="css/feedback.css" rel="stylesheet" />
-		<style>
-			body{
-				text-align: center;
-			}
-			.mui-bar {
-				background: #555555;
-			}
-			
-			.mui-icon{
-				color: #fff;
-			}
-			
-			label{
-				color: #0062CC;
-			}			
-			
-			.mui-title{
-				color: #fff;
-			}
-			
-			.mui-content-padded {
-				margin-top: 30px;
-			}
-			
-			.pic {
-				margin-right: 10px;
-			}
-			
-			#main{
-				margin-top: 10px;
-			}
-		</style>
-	</head>
-
+	<style>
+		body {
+			background-color: #EFEFF4;
+		}
+		input,
+		textarea {
+			border: none !important;
+		}
+		textarea {
+			height: 100px;
+			margin-bottom: 0 !important;
+			padding-bottom: 0 !important;
+		}
+		.row {
+			width: 100%;
+			background-color: #fff;
+		}
+		p {
+			padding: 10px 15px 0;
+		}
+		button#submit { 
+			width: 90%;
+			height: 46px;
+			left: 50%;
+			-webkit-transform: translate(-50%);
+		}
+		.hidden {
+			display: none;
+		}
+		.image-list {
+			width: 100%;
+			height: 85px;
+			background-size: cover;
+			padding: 10px 10px;
+			overflow: hidden;
+		}
+		.image-item {
+			width: 65px;
+			height: 65px;
+			/*background-image: url(image/iconfont-tianjia.png);*/
+			background-size: 100% 100%;
+			display: inline-block;
+			position: relative;
+			border-radius: 5px;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			border: solid 1px #e8e8e8;
+		}
+		.image-item input[type="file"] {
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			cursor: pointer;
+			z-index: 0;
+		}
+		.image-item.space {
+			border: none;
+		}
+		.image-item .image-close {
+			position: absolute;
+			display: inline-block;
+			right: -6px;
+			top: -6px;
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			line-height: 20px;
+			border-radius: 12px;
+			background-color: #FF5053;
+			color: #f3f3f3;
+			border: solid 1px #FF5053;
+			font-size: 9px;
+			font-weight: 200;
+			z-index: 1;
+		}
+		.image-item.space .image-close {
+			display: none;
+		}
+		.mui-btn {
+			font-size: 16px;
+			padding: 8px;
+			margin: 3px;
+		}
+		h5.mui-content-padded {
+			margin-left: 3px;
+			margin-top: 20px !important;
+		}
+		h5.mui-content-padded:first-child {
+			margin-top: 12px !important;
+		}
+		.ui-alert {
+			text-align: center;
+			padding: 20px 10px;
+			font-size: 16px;
+		}
+</style>
+</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="close" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">安全隐患排查处置表</h1>
 		</header>
-		<div id="main"  class="mui-content">
-			<form id="upload" action="http://106.14.122.40/user/danger" method="post" class="mui-input-group" enctype="multipart/form-data">
-				<div>
+		<div class="mui-page-content">
+				<p>隐患部位</p>
+				<div class="row mui-input-row">
 					<input id="1" type="hidden" name="userId">
 					<input id="2" type="hidden" name="companyId">
-					<input id="3" type="hidden" name="subsidiaryId">
+					<input id="3" type="hidden" name="subsidiaryId">					
+					<textarea id='position' class="mui-input-clear" placeholder="请详细描述隐患发生部位"></textarea>
+				</div>				
+				<p>隐患描述</p>
+				<div class="row mui-input-row">
+					<textarea id='description' class="mui-input-clear" placeholder="请详细描述隐患情况"></textarea>
 				</div>
-				<div class="mui-input-row">
-					<label>隐患部位</label>
-					<input id='position' name="dangerPosition" type="text" class="mui-input-clear mui-input" placeholder="请输入隐患部位">
+				<p>隐患类别</p>
+				<button id='showDangerPicker' class="mui-btn mui-btn-block" type='button'>请选择隐患类别</button>
+				<input id="dangerCategory" type="hidden" name="dangerCategory"/>
+				<div id="select_content" style="text-align: center;font-size: medium;color: #007AFF;"></div>
+				<p>图片(提供隐患截图)</p>
+				<div id='image-list' class="row image-list">
 				</div>
-				<div class="mui-input-row">
-					<label>隐患描述</label>
-				</div>
-				<div class="mui-input-speech">
-					<textarea id="description" rows="3" placeholder="请输入隐患描述" name="dangerDescription"></textarea>
-				</div>
-				<div class="mui-input-row">
-					<label>隐患截图</label>
-					<input id='pic' name="dangerImg" type="file" class="mui-input-clear mui-input" placeholder="点击添加隐患截图">
-				</div>
-				<div class="mui-content-padded">
-					<button style="visibility: hidden;" type="submit" class="mui-btn-green mui-btn-block mui-btn-primary" >提交</button>
-				</div>
-			</form>
-			<!--<p>点击空白区域添加图片(提供隐患截图)</p>
-			<div id='image-list' class="row image-list">
-			</div>-->
-			<div id="tip" style="display: none;">
-				<p style="font-size: 1em;">
-					正在上传......
-				</p>
+				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
 			</div>			
-			<div class="mui-content-padded">
-				<button id='submit' class="mui-btn-block mui-btn-primary">提交</button>
-			</div>
-			
-			<!--<div class="mui-content-padded">
-				<button id='test_bt' class="mui-btn-block mui-btn-primary">test</button>
-			</div>			-->
-			
-			<img src="" id="test"/>
-		</div>
 		<script src="js/jquery.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/photo.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>		
 		<script type="text/javascript">
 			var id_;
 			var class_;
 			var userId;
 			var companyId;
 			var mark = false;
-			var baseurl = "http://106.14.122.40/";
-			
+			var baseurl = "http://xiaomancloud.com/";
+			mui.init();			
 			mui.plusReady(function() {
 				mui.oldBack = mui.back;
 				var backButtonPress = 0;
@@ -118,47 +164,33 @@
 				document.getElementById("2").value = companyId;
 				document.getElementById("3").value = id_;
 			});
-			
-			mui.init();
 
 			document.getElementById("close").addEventListener("tap", function() {
 				plus.webview.currentWebview().close();
 			});
-
-			document.getElementById("submit").addEventListener("tap", function() {
-//				console.log(baseurl + "user/danger");
-				if(document.getElementById("position").value == ""){
-					plus.nativeUI.toast("请输入隐患部位");
-				}else if(document.getElementById("description").value == ""){
-					plus.nativeUI.toast("请输入隐患描述");
-				}else if(document.getElementById("pic").value == ""){
-					plus.nativeUI.toast("请添加隐患图片");
-				}else{
-					var bt_submit = document.getElementById("submit");
-					bt_submit.disabled = "true";
-					document.getElementById("tip").style.display = "inline";
-					document.getElementById("1").value = userId;
-					console.log(userId);
-					document.getElementById("2").value = companyId;
-					document.getElementById("3").value = id_;
-					$.ajax({
-					    url: baseurl + "user/danger",
-					    type: 'POST',
-					    cache: false,
-					    data: new FormData($('#upload')[0]),
-					    processData: false,
-					    contentType: false
-					}).done(function(res) {
-						plus.nativeUI.toast("上传成功");
-						location.reload();
-					}).fail(function(res) {
-						console.log(JSON.stringify(res));
-						location.reload();
-						plus.nativeUI.toast("上传失败！请选择小于5M的图片上传");
-					});					
-				}
-			})
+			
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//普通示例
+					var dangerPicker = new $.PopPicker();
+					dangerPicker.setData([{
+						value: '1',
+						text: '安全隐患'
+					}, {
+						value: '2',
+						text: '质量隐患'
+					}]);
+					var showDangerPickerButton = doc.getElementById('showDangerPicker');
+					showDangerPickerButton.addEventListener('tap', function(event) {
+						dangerPicker.show(function(items) {
+							document.getElementById("select_content").innerHTML = items[0].text;
+							document.getElementById("dangerCategory").value = items[0].value;
+						});
+					}, false);
+				});
+			})(mui, document);			
 		</script>
-	</body>
-
+		<script src="js/feedback.js"></script>
+		</body>
 </html>

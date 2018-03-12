@@ -59,13 +59,13 @@
 					</a>
 				</li>
 			</ul>
-			<ul class="mui-table-view" style="margin-top: 25px;">
+			<!--<ul class="mui-table-view" style="margin-top: 25px;">
 				<li class="mui-table-view-cell">
 					<a id="exit" style="text-align: center;color: #007aff;">
 						退出
 					</a>
 				</li>
-			</ul>
+			</ul>-->
 			<ul class="mui-table-view" style="margin-top: 25px;">
 				<li class="mui-table-view-cell">
 					<a id="logout" style="text-align: center;color: #007aff;">
@@ -78,7 +78,7 @@
 	</body>
 	<script src="js/mui.min.js"></script>
 	<script>
-		var baseUrl = "http://106.14.122.40";
+		var baseUrl = "http://xiaomancloud.com";
 		var userName;
 		var userClass;
 		var companyId;
@@ -278,14 +278,18 @@
 						plus.nativeUI.toast("请求失败!");
 					}
 				});
+			} else if(userClass == "501"){
+				
+			} else if(userClass == "601"){
+				
 			} else {
 				document.getElementById("approve").style.display = "none";
 			}
 		});
 
-		document.getElementById("exit").addEventListener('tap', function() {
-			plus.runtime.quit();
-		})
+//		document.getElementById("exit").addEventListener('tap', function() {
+//			plus.runtime.quit();
+//		})
 
 		document.getElementById("logout").addEventListener('tap', function() {
 			localStorage.removeItem("username");
@@ -572,6 +576,10 @@
 						plus.nativeUI.toast("请求失败!");
 					}
 				});
+			} else if(userClass == "501"){
+				
+			} else if(userClass == "601"){
+				
 			} else {
 				document.getElementById("approve").style.display = "none";
 			}

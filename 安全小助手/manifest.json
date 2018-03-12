@@ -3,7 +3,7 @@
 	"id": "H5D566CC8",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "安全管理",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "1.0.1",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -133,7 +133,7 @@
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
-					"auto": "", /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+					 /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
 					"iphone": {
 						"normal": "unpackage/res/icons/57x57.png",/*iPhone普通屏幕程序图标，分辨率：57x57*/
 						"retina": "unpackage/res/icons/114x114.png",/*iPhone高分屏程序图标，分辨率：114x114*/
@@ -155,7 +155,7 @@
 						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
 						"settings-normal": "unpackage/res/icons/29x29.png",/*iPad设置页面程序图标，分辨率：29x29*/
 						"settings-retina": "unpackage/res/icons/58x58.png"
-					}
+					},"appstore":"D:/Desktop/ios_logo_1024.png"
 				},
 				"android": {
 					"mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
@@ -169,8 +169,8 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "D:/Desktop/sls/4or4S 640X960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "D:/Desktop/sls/5or5S 640X1136.png","retina55":"D:/Desktop/sls/6PLUSor7PLUSor8PLUS 1242X2208.png","retina47":"D:/Desktop/sls/6or6S 750X1334.png"
+						"retina35": "D:/Desktop/640X960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina55":"D:/Desktop/6PLUSor7PLUSor8PLUS 1242X2208.png","retina47":"D:/Desktop/6or6S 750X1334.png","retina40":"D:/Desktop/5or5S 640X1136.png"
 					},
 					"ipad": {
 						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -186,9 +186,9 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "D:/Desktop/480X762.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "D:/Desktop/720P 720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "D:/Desktop/1080P 1080X1882.png"
+					"hdpi": "D:/Desktop/手机启动页面/480X762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "D:/Desktop/手机启动页面/720P 720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "D:/Desktop/手机启动页面/1080P 1080X1882.png"
 				}
 			},"debug":true
 		}
@@ -403,7 +403,9 @@
 					"js/feedback.js",
 					"js/photo.js",
 					"safe_handle_table.html",
-					"js/jquery.js"
+					"js/jquery.js",
+					"/js/feedback-page.js",
+					"/js/mui.min.js"
 				],
 				"refer": [
 					"tab-webview-subpage-project.html",
